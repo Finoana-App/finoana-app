@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Raleway } from "next/font/google";
 
 import { Providers } from "@/components/providers";
-import "@workspace/ui/globals.css";
+import "@workspace/ui/styles/globals.css";
 
 const raleway = Raleway({
   subsets: ["latin"],

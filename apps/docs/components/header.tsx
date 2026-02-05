@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
+import Image from "next/image";
 
 export function Header() {
   const { language, setLanguage, t } = useLanguage();
@@ -27,11 +28,21 @@ export function Header() {
         <nav className="flex items-center justify-between h-16 md:h-20">
           <motion.a
             href="#"
-            className="text-xl font-semibold tracking-tight"
+            className="text-xl flex items-center font-semibold tracking-tight"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            Finoana
+            <Image
+              src={
+                theme === "dark"
+                  ? "/images/logo_finoana_v2_monochrome_light_stroke.png"
+                  : "/images/logo_finoana_v2_monochrome_dark_stroke.png"
+              }
+              alt="Finoana"
+              width={100}
+              height={100}
+            />
+            <span>Finoana</span>
           </motion.a>
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
@@ -47,7 +58,7 @@ export function Header() {
           <div className="flex items-center gap-6">
             <motion.button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-lg hover:bg-secondary transition-colors duration-200"
+              className="p-2 rounded-full cursor-pointer hover:bg-secondary transition-colors duration-200"
               whileTap={{ scale: 0.95 }}
               aria-label="Toggle theme"
             >
@@ -57,20 +68,20 @@ export function Header() {
             <div className="lang-toggle">
               <motion.button
                 onClick={() => setLanguage("en")}
-                className={`lang-option ${language === "en" ? "active" : ""}`}
+                className={`lang-option cursor-pointer rounded-full ${language === "en" ? "active" : ""}`}
                 whileTap={{ scale: 0.95 }}
                 layout
               >
-                EN
+                🇺🇸
               </motion.button>
               <span className="text-border">/</span>
               <motion.button
                 onClick={() => setLanguage("fr")}
-                className={`lang-option ${language === "fr" ? "active" : ""}`}
+                className={`lang-option cursor-pointer rounded-full ${language === "fr" ? "active" : ""}`}
                 whileTap={{ scale: 0.95 }}
                 layout
               >
-                FR
+                🇫🇷
               </motion.button>
             </div>
           </div>

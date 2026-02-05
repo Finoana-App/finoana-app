@@ -2,7 +2,7 @@ import { Header } from "@/components/header";
 
 export default function Page() {
   return (
-    <main>
+    <main className="min-h-screen bg-background">
       <Header />
     </main>
   );
