@@ -1,3 +1,4 @@
+import { Features } from "@/components/features";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
@@ -10,6 +11,7 @@ export default function Page() {
       <article>
         <Hero />
         <Vision />
+        <Features />
       </article>
       <Footer />
     </main>
