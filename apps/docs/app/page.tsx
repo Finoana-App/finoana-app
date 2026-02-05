@@ -1,6 +1,7 @@
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
+import { Vision } from "@/components/vision";
 
 export default function Page() {
   return (
@@ -8,6 +9,7 @@ export default function Page() {
       <Header />
       <article>
         <Hero />
+        <Vision />
       </article>
       <Footer />
     </main>
