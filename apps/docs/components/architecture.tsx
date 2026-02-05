@@ -87,7 +87,6 @@ export function Architecture() {
       className="section bg-foreground text-background"
     >
       <div className="container-docs">
-        {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-16 md:mb-24">
           <motion.span
             key={`arch-badge-${language}`}
@@ -97,7 +96,6 @@ export function Architecture() {
           >
             {t("architecture.badge")}
           </motion.span>
-
           <motion.h2
             key={`arch-title-${language}`}
             initial={{ opacity: 0 }}
@@ -106,7 +104,6 @@ export function Architecture() {
           >
             {t("architecture.title")}
           </motion.h2>
-
           <motion.p
             key={`arch-subtitle-${language}`}
             initial={{ opacity: 0 }}
@@ -116,8 +113,6 @@ export function Architecture() {
             {t("architecture.subtitle")}
           </motion.p>
         </div>
-
-        {/* Architecture Blocks */}
         <div className="arch-blocks grid md:grid-cols-3 gap-8 md:gap-12">
           {blocks.map((block) => (
             <motion.div
@@ -143,8 +138,6 @@ export function Architecture() {
             </motion.div>
           ))}
         </div>
-
-        {/* Code-style decoration */}
         <div className="mt-16 md:mt-24 p-6 md:p-8 bg-background/5 rounded-lg border border-background/10 font-mono text-sm">
           <div className="text-background/40 mb-2">{`// system.config`}</div>
           <div className="text-background/80">

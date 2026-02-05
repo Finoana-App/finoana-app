@@ -20,7 +20,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="py-16 md:py-24 border-t border-border">
+    <footer className="py-16 md:py-24 bg-foreground text-background border-t border-border">
       <div className="container-docs">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
@@ -31,8 +31,8 @@ export function Footer() {
               <Image
                 src={
                   theme === "dark"
-                    ? "/images/logo_finoana_v2_monochrome_light_stroke.png"
-                    : "/images/logo_finoana_v2_monochrome_dark_stroke.png"
+                    ? "/images/logo_finoana_v2_monochrome_dark_stroke.png"
+                    : "/images/logo_finoana_v2_monochrome_light_stroke.png"
                 }
                 alt="Finoana"
                 width={100}
@@ -44,7 +44,7 @@ export function Footer() {
               key={`footer-tagline-${language}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mt-2 text-sm text-muted-foreground"
+              className="mt-2 text-sm text-background"
             >
               {t("footer.tagline")}
             </motion.p>
@@ -59,7 +59,7 @@ export function Footer() {
               <a
                 key={link.key}
                 href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200"
+                className="text-sm text-background hover:text-background/70 transition-colors duration-200"
               >
                 {t(link.key)}
               </a>
@@ -71,7 +71,7 @@ export function Footer() {
           key={`footer-copyright-${language}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-sm text-muted-foreground"
+          className="text-sm text-background"
         >
           ©{currentYear} {t("footer.copyright")}
         </motion.p>

@@ -87,7 +87,7 @@ export function Hero() {
           className="hero-element flex flex-col sm:flex-row items-center justify-center gap-4 mt-12"
         >
           <motion.a
-            href="#features"
+            href={`${process.env.NEXT_PUBLIC_REDIRECTION}`}
             className="inline-flex items-center justify-center px-8 py-3.5 bg-foreground text-background font-medium rounded-lg transition-all duration-300 hover:bg-foreground/90"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
