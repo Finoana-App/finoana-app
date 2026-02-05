@@ -3,17 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { gsap } from "gsap";
+import { useTheme } from "next-themes";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Smartphone, Apple, Play } from "lucide-react";
 
 import { useLanguage } from "@/contexts/language-context";
 import { Button } from "@workspace/ui/components/button";
 import { Input } from "@workspace/ui/components/input";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function MobileDownload() {
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   const sectionRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -90,9 +93,16 @@ export function MobileDownload() {
           <div className="reveal-mobile relative mb-12">
             <div className="relative mx-auto w-48 h-96 bg-background rounded-[2.5rem] border-4 border-foreground/20 shadow-2xl overflow-hidden">
               <div className="absolute inset-3 bg-surface rounded-4xl flex flex-col items-center justify-center">
-                <span className="text-2xl font-semibold tracking-tight mb-2">
-                  Finoana
-                </span>
+                <Image
+                  src={
+                    theme === "dark"
+                      ? "/images/logo_finoana_v2_monochrome_light_stroke.png"
+                      : "/images/logo_finoana_v2_monochrome_dark_stroke.png"
+                  }
+                  alt="Finoana"
+                  width={100}
+                  height={100}
+                />
                 <span className="text-xs text-muted-foreground uppercase tracking-widest">
                   {t("mobile.comingSoon")}
                 </span>
