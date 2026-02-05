@@ -1,3 +1,4 @@
+import { Architecture } from "@/components/architecture";
 import { Features } from "@/components/features";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
@@ -12,6 +13,7 @@ export default function Page() {
         <Hero />
         <Vision />
         <Features />
+        <Architecture />
       </article>
       <Footer />
     </main>
