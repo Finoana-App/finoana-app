@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { motion } from "motion/react";
+
 import { useLanguage } from "@/contexts/language-context";
 
 export function Footer() {

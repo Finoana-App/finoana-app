@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { gsap } from "gsap";
+
 import { useLanguage } from "@/contexts/language-context";
 
 export function Hero() {

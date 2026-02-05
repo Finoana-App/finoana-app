@@ -1,7 +1,8 @@
 "use client";
 
-import { LanguageProvider } from "@/contexts/language-context";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+import { LanguageProvider } from "@/contexts/language-context";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

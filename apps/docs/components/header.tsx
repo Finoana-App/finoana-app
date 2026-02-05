@@ -1,10 +1,11 @@
 "use client";
 
 import { motion } from "motion/react";
+import Image from "next/image";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+
 import { useLanguage } from "@/contexts/language-context";
-import Image from "next/image";
 
 export function Header() {
   const { language, setLanguage, t } = useLanguage();
