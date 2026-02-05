@@ -1,11 +1,13 @@
-import { Architecture } from "@/components/architecture";
-import { Features } from "@/components/features";
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
-import { Hero } from "@/components/hero";
-import { MobileDownload } from "@/components/mobile-download";
-import { Values } from "@/components/valuers";
-import { Vision } from "@/components/vision";
+import {
+  Architecture,
+  Features,
+  Footer,
+  Header,
+  Hero,
+  MobileDownload,
+  Values,
+  Vision,
+} from "@/components/landing";
 
 export default function Page() {
   return (
