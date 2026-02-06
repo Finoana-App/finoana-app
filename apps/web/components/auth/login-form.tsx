@@ -6,11 +6,12 @@ import { Button } from '@workspace/ui/components/button';
 import { ArrowRight } from 'lucide-react';
 
 import { Divider, OAuth, AnimatedInput, PasswordInput } from '@/components/auth';
+import { useFocusState } from '@/hooks/use-focus-state';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [focused, setFocused] = useState<string | null>(null);
+  const { setFocused, clearFocus, isFocused } = useFocusState();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,9 +27,9 @@ export function LoginForm() {
         placeholder="your@email.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        focused={focused === 'email'}
+        focused={isFocused('email')}
         onFocus={() => setFocused('email')}
-        onBlur={() => setFocused(null)}
+        onBlur={clearFocus}
       />
       <PasswordInput
         id="password"
@@ -36,9 +37,9 @@ export function LoginForm() {
         placeholder="••••••••"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        focused={focused === 'password'}
+        focused={isFocused('password')}
         onFocus={() => setFocused('password')}
-        onBlur={() => setFocused(null)}
+        onBlur={clearFocus}
         showForgotPassword
       />
       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
