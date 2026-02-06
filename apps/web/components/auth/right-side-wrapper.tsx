@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Heart } from 'lucide-react';
 import gsap from 'gsap';
 
 interface RightSideWrapperProps {
@@ -68,21 +67,6 @@ export function RightSideWrapper({ title, subtitle, children }: RightSideWrapper
         />
       </div>
       <div ref={logoRef} className="relative z-10 mb-12">
-        <div className="mb-8 inline-flex items-center gap-2">
-          <motion.div
-            animate={{
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          >
-            <Heart className="fill-primary text-primary h-6 w-6" />
-          </motion.div>
-          <span className="text-lg font-medium tracking-tight">Finoana</span>
-        </div>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

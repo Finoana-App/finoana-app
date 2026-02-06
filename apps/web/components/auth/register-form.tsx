@@ -11,6 +11,7 @@ export function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const { setFocused, clearFocus, isFocused } = useFocusState();
 
   const handleSubmit = (e: React.FormEvent) => {
