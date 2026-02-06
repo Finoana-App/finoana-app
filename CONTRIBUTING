@@ -1,0 +1,34 @@
+# Contributing to Finoana 🤍
+
+Thank you for your interest in contributing to **Finoana**.  
+Whether you are fixing a bug, improving documentation, refining UI, or proposing new ideas, your contribution is welcome and appreciated.
+
+Finoana aims to be a **safe, respectful, and intentional community**, and this philosophy also applies to how we collaborate.
+
+---
+
+## Before You Start
+
+Please take a moment to:
+- Read this document fully
+- Review the [Code of Conduct](CODE_OF_CONDUCT)
+- Ensure your contribution aligns with the vision of Finoana
+
+> [!NOTE]
+> Contributions should reflect kindness, clarity, and respect for both users and contributors.
+
+---
+
+## Repository Overview
+
+Finoana is structured as a **monorepo** powered by Turborepo.
+
+```text
+apps/
+  docs/        → Documentation & landing website
+  web/         → Main web application
+  mobile/      → Mobile application (Expo)
+
+packages/
+  ui/          → Shared UI components & design system
+  config/      → Shared configuration (ESLint, Tailwind, etc.)
