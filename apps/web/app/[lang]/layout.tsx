@@ -30,7 +30,7 @@ export default async function RootLayout({
   params: Promise<{ lang: Locale }>;
 }>) {
   const { lang } = await params;
-  
+
   return (
     <html lang={lang} suppressHydrationWarning>
       <body className={`${raleway.className} antialiased`}>

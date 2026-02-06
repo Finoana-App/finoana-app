@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InputHTMLAttributes } from 'react';
 
 import Link from 'next/link';
@@ -10,6 +10,8 @@ import { motion } from 'motion/react';
 
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
+import { getDictionary, Locale } from '@/i18n';
+import { usePathname } from 'next/navigation';
 
 interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   id: string;
@@ -36,6 +38,17 @@ export function PasswordInput({
   ...props
 }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
+  const [text, setText] = useState('');
+
+  const pathname = usePathname();
+  const lang = pathname.split('/')[1] as Locale;
+
+
+  useEffect(() => {
+    getDictionary(lang).then((dict) => {
+      setText(dict.auth.forgot);
+    });
+  }, [lang]);
 
   return (
     <motion.div className="space-y-2" variants={inputVariants} animate={focused ? 'focused' : 'unfocused'}>
@@ -48,7 +61,7 @@ export function PasswordInput({
             href={forgotPasswordHref}
             className="text-muted-foreground hover:text-foreground text-xs transition-colors"
           >
-            Forgot?
+            {text}
           </Link>
         )}
       </div>

@@ -2,14 +2,20 @@ import Link from 'next/link';
 
 import { LoginForm, RightSideWrapper } from '@/components/auth';
 
-export default function LoginPage() {
+import { getDictionary, Locale } from '@/i18n';
+
+export default async function LoginPage({ params }: { params: Promise<{ lang: Locale }> }) {
+  const { lang } = await params;
+
+  const dict = await getDictionary(lang);
+
   return (
-    <RightSideWrapper title="Welcome back." subtitle="Sign in to continue your journey.">
+    <RightSideWrapper title={dict.auth.title} subtitle={dict.auth.subtitle}>
       <LoginForm />
       <p className="text-muted-foreground pt-4 text-center text-sm">
-        New here?{' '}
+        {dict.auth.newHere}{' '}
         <Link href="/register" className="text-foreground underline-offset-4 hover:underline">
-          Create an account
+          {dict.auth.createAccount}
         </Link>
       </p>
     </RightSideWrapper>
