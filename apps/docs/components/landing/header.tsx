@@ -42,8 +42,9 @@ export function Header() {
               alt="Finoana"
               width={100}
               height={100}
+              suppressHydrationWarning
             />
-            <span>Finoana</span>
+            <span className="md:block hidden">Finoana</span>
           </motion.a>
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (

@@ -246,8 +246,8 @@ const translations: Translations = {
   "footer.links.terms": { en: "Terms", fr: "Conditions" },
   "footer.links.contact": { en: "Contact", fr: "Contact" },
   "footer.copyright": {
-    en: "Finoana. All rights reserved.",
-    fr: "Finoana. Tous droits réservés.",
+    en: "Finoana by Fiantso Harena. All rights reserved.",
+    fr: "Finoana par Fiantso Harena. Tous droits réservés.",
   },
 };
 

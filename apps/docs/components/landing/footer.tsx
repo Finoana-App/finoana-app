@@ -37,6 +37,7 @@ export function Footer() {
                 alt="Finoana"
                 width={100}
                 height={100}
+                suppressHydrationWarning
               />
               Finoana
             </motion.span>

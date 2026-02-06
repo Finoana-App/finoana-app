@@ -102,6 +102,7 @@ export function MobileDownload() {
                   alt="Finoana"
                   width={100}
                   height={100}
+                  suppressHydrationWarning
                 />
                 <span className="text-xs text-muted-foreground uppercase tracking-widest">
                   {t("mobile.comingSoon")}

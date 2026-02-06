@@ -1,15 +1,15 @@
-import { Button } from "@workspace/ui/components/button";
+"use client";
 
-export default function Page() {
-  return (
-    <div className="flex items-center justify-center min-h-svh">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h1 className="text-2xl font-bold">Finoana Web application</h1>
-        <div className="flex gap-2">
-          <Button>Button</Button>
-          <Button variant="outline">Outline</Button>
-        </div>
-      </div>
-    </div>
-  );
+import { useEffect } from "react";
+
+import { useRouter } from "next/navigation";
+
+export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/login");
+  }, [router]);
+
+  return null;
 }
