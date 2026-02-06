@@ -1,9 +1,10 @@
 'use client';
 
-import { motion } from 'motion/react';
-import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
+
 import { Moon, Sun } from 'lucide-react';
+import { motion } from 'motion/react';
 
 import { useLanguage } from '@/contexts/language-context';
 
