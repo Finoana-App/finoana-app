@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useTheme } from "next-themes";
-import { motion } from "motion/react";
+import Image from 'next/image';
+import { useTheme } from 'next-themes';
+import { motion } from 'motion/react';
 
-import { useLanguage } from "@/contexts/language-context";
+import { useLanguage } from '@/contexts/language-context';
 
 export function Footer() {
   const { t, language } = useLanguage();
@@ -13,26 +13,26 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const links = [
-    { key: "footer.links.about", href: "#" },
-    { key: "footer.links.privacy", href: "#" },
-    { key: "footer.links.terms", href: "#" },
-    { key: "footer.links.contact", href: "#" },
+    { key: 'footer.links.about', href: '#' },
+    { key: 'footer.links.privacy', href: '#' },
+    { key: 'footer.links.terms', href: '#' },
+    { key: 'footer.links.contact', href: '#' },
   ];
 
   return (
-    <footer className="py-16 md:py-24 bg-foreground text-background border-t border-border">
+    <footer className="bg-foreground text-background border-border border-t py-16 md:py-24">
       <div className="container-docs">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
           <div>
             <motion.span
-              className="text-xl flex items-center gap-2 font-semibold tracking-tight"
+              className="flex items-center gap-2 text-xl font-semibold tracking-tight"
               whileHover={{ scale: 1.02 }}
             >
               <Image
                 src={
-                  theme === "dark"
-                    ? "/images/logo_finoana_v2_monochrome_dark_stroke.png"
-                    : "/images/logo_finoana_v2_monochrome_light_stroke.png"
+                  theme === 'dark'
+                    ? '/images/logo_finoana_v2_monochrome_dark_stroke.png'
+                    : '/images/logo_finoana_v2_monochrome_light_stroke.png'
                 }
                 alt="Finoana"
                 width={100}
@@ -45,9 +45,9 @@ export function Footer() {
               key={`footer-tagline-${language}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="mt-2 text-sm text-background"
+              className="text-background mt-2 text-sm"
             >
-              {t("footer.tagline")}
+              {t('footer.tagline')}
             </motion.p>
           </div>
           <motion.nav
@@ -60,7 +60,7 @@ export function Footer() {
               <a
                 key={link.key}
                 href={link.href}
-                className="text-sm text-background hover:text-background/70 transition-colors duration-200"
+                className="text-background hover:text-background/70 text-sm transition-colors duration-200"
               >
                 {t(link.key)}
               </a>
@@ -72,9 +72,9 @@ export function Footer() {
           key={`footer-copyright-${language}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="text-sm text-background"
+          className="text-background text-sm"
         >
-          ©{currentYear} {t("footer.copyright")}
+          ©{currentYear} {t('footer.copyright')}
         </motion.p>
       </div>
     </footer>

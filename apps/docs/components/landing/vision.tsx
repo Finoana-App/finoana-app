@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { motion } from "motion/react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import { useLanguage } from "@/contexts/language-context";
+import { useLanguage } from '@/contexts/language-context';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,24 +16,24 @@ export function Vision() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".vision-reveal",
+        '.vision-reveal',
         { opacity: 0, y: 50 },
         {
           opacity: 1,
           y: 0,
           duration: 0.8,
           stagger: 0.1,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 70%",
-            toggleActions: "play none none reverse",
+            start: 'top 70%',
+            toggleActions: 'play none none reverse',
           },
-        },
+        }
       );
 
       gsap.fromTo(
-        ".vision-card",
+        '.vision-card',
         { opacity: 0, y: 30, scale: 0.98 },
         {
           opacity: 1,
@@ -41,13 +41,13 @@ export function Vision() {
           scale: 1,
           duration: 0.6,
           stagger: 0.15,
-          ease: "power2.out",
+          ease: 'power2.out',
           scrollTrigger: {
-            trigger: ".vision-cards",
-            start: "top 75%",
-            toggleActions: "play none none reverse",
+            trigger: '.vision-cards',
+            start: 'top 75%',
+            toggleActions: 'play none none reverse',
           },
-        },
+        }
       );
     }, sectionRef);
 
@@ -56,33 +56,33 @@ export function Vision() {
 
   const principles = [
     {
-      title: "vision.principle1.title",
-      desc: "vision.principle1.desc",
-      icon: "◯",
+      title: 'vision.principle1.title',
+      desc: 'vision.principle1.desc',
+      icon: '◯',
     },
     {
-      title: "vision.principle2.title",
-      desc: "vision.principle2.desc",
-      icon: "◇",
+      title: 'vision.principle2.title',
+      desc: 'vision.principle2.desc',
+      icon: '◇',
     },
     {
-      title: "vision.principle3.title",
-      desc: "vision.principle3.desc",
-      icon: "△",
+      title: 'vision.principle3.title',
+      desc: 'vision.principle3.desc',
+      icon: '△',
     },
   ];
 
   return (
     <section ref={sectionRef} id="vision" className="section bg-surface">
       <div className="container-docs">
-        <div className="max-w-3xl mx-auto text-center mb-16 md:mb-24">
+        <div className="mx-auto mb-16 max-w-3xl text-center md:mb-24">
           <motion.span
             key={`vision-badge-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="vision-reveal badge-mono"
           >
-            {t("vision.badge")}
+            {t('vision.badge')}
           </motion.span>
 
           <motion.h2
@@ -91,18 +91,18 @@ export function Vision() {
             animate={{ opacity: 1 }}
             className="vision-reveal mt-6 text-balance"
           >
-            {t("vision.title")}
+            {t('vision.title')}
           </motion.h2>
           <motion.p
             key={`vision-desc-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="vision-reveal mt-6 text-lg text-muted-foreground leading-relaxed text-pretty"
+            className="vision-reveal text-muted-foreground mt-6 text-lg leading-relaxed text-pretty"
           >
-            {t("vision.description")}
+            {t('vision.description')}
           </motion.p>
         </div>
-        <div className="vision-cards grid md:grid-cols-3 gap-6 md:gap-8">
+        <div className="vision-cards grid gap-6 md:grid-cols-3 md:gap-8">
           {principles.map((principle) => (
             <motion.div
               key={`${principle.title}-${language}`}
@@ -112,15 +112,11 @@ export function Vision() {
               whileHover={{ y: -4 }}
               transition={{ duration: 0.3 }}
             >
-              <span className="text-2xl mb-4 block text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+              <span className="text-muted-foreground group-hover:text-foreground mb-4 block text-2xl transition-colors duration-300">
                 {principle.icon}
               </span>
-              <h3 className="text-xl font-semibold mb-3">
-                {t(principle.title)}
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                {t(principle.desc)}
-              </p>
+              <h3 className="mb-3 text-xl font-semibold">{t(principle.title)}</h3>
+              <p className="text-muted-foreground leading-relaxed">{t(principle.desc)}</p>
             </motion.div>
           ))}
         </div>

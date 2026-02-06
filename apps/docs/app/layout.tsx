@@ -1,18 +1,18 @@
-import { Metadata } from "next";
-import { Raleway } from "next/font/google";
+import { Metadata } from 'next';
+import { Raleway } from 'next/font/google';
 
-import { Providers } from "@/components/providers";
-import "@workspace/ui/styles/globals.css";
+import { Providers } from '@/components/providers';
+import '@workspace/ui/styles/globals.css';
 
 const raleway = Raleway({
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ['latin'],
+  display: 'swap',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
-  title: "Finoana | Documentation",
-  description: "All documentation about Finoana application goes here",
+  title: 'Finoana | Documentation',
+  description: 'All documentation about Finoana application goes here',
 };
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${raleway.className} antialiased `}>
+      <body className={`${raleway.className} antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

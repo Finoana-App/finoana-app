@@ -1,17 +1,8 @@
-import {
-  Architecture,
-  Features,
-  Footer,
-  Header,
-  Hero,
-  MobileDownload,
-  Values,
-  Vision,
-} from "@/components/landing";
+import { Architecture, Features, Footer, Header, Hero, MobileDownload, Values, Vision } from '@/components/landing';
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-background">
+    <main className="bg-background min-h-screen">
       <Header />
       <article>
         <Hero />

@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useEffect, useRef } from "react";
-import { motion } from "motion/react";
-import { gsap } from "gsap";
+import { useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
+import { gsap } from 'gsap';
 
-import { useLanguage } from "@/contexts/language-context";
+import { useLanguage } from '@/contexts/language-context';
 
 export function Hero() {
   const { t, language } = useLanguage();
@@ -15,26 +15,26 @@ export function Hero() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        ".hero-element",
+        '.hero-element',
         { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
           duration: 1,
           stagger: 0.15,
-          ease: "power3.out",
+          ease: 'power3.out',
           delay: 0.3,
-        },
+        }
       );
       gsap.fromTo(
-        ".hero-line",
+        '.hero-line',
         { scaleX: 0 },
         {
           scaleX: 1,
           duration: 1.2,
-          ease: "power2.out",
+          ease: 'power2.out',
           delay: 0.8,
-        },
+        }
       );
     }, heroRef);
 
@@ -42,10 +42,7 @@ export function Hero() {
   }, []);
 
   return (
-    <section
-      ref={heroRef}
-      className="min-h-screen flex items-center justify-center pt-20"
-    >
+    <section ref={heroRef} className="flex min-h-screen items-center justify-center pt-20">
       <div className="container-docs text-center">
         <motion.div
           key={`badge-${language}`}
@@ -54,7 +51,7 @@ export function Hero() {
           transition={{ duration: 0.4 }}
           className="hero-element"
         >
-          <span className="badge-mono">{t("hero.badge")}</span>
+          <span className="badge-mono">{t('hero.badge')}</span>
         </motion.div>
         <motion.h1
           ref={titleRef}
@@ -64,10 +61,10 @@ export function Hero() {
           transition={{ duration: 0.4 }}
           className="hero-element mt-8 mb-6"
         >
-          {t("hero.title")}
+          {t('hero.title')}
         </motion.h1>
-        <div className="hero-element flex justify-center my-8">
-          <div className="hero-line h-px w-24 bg-foreground origin-left" />
+        <div className="hero-element my-8 flex justify-center">
+          <div className="hero-line bg-foreground h-px w-24 origin-left" />
         </div>
         <motion.p
           ref={subtitleRef}
@@ -75,40 +72,40 @@ export function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
-          className="hero-element max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground leading-relaxed"
+          className="hero-element text-muted-foreground mx-auto max-w-2xl text-lg leading-relaxed md:text-xl"
         >
-          {t("hero.subtitle")}
+          {t('hero.subtitle')}
         </motion.p>
         <motion.div
           key={`cta-${language}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
-          className="hero-element flex flex-col sm:flex-row items-center justify-center gap-4 mt-12"
+          className="hero-element mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <motion.a
             href={`${process.env.NEXT_PUBLIC_REDIRECTION}`}
-            className="inline-flex items-center justify-center px-8 py-3.5 bg-foreground text-background font-medium rounded-lg transition-all duration-300 hover:bg-foreground/90"
+            className="bg-foreground text-background hover:bg-foreground/90 inline-flex items-center justify-center rounded-lg px-8 py-3.5 font-medium transition-all duration-300"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {t("hero.cta.primary")}
+            {t('hero.cta.primary')}
           </motion.a>
           <motion.a
             href="#architecture"
-            className="inline-flex items-center justify-center px-8 py-3.5 border border-border text-foreground font-medium rounded-lg transition-all duration-300 hover:border-foreground/40 hover:bg-secondary"
+            className="border-border text-foreground hover:border-foreground/40 hover:bg-secondary inline-flex items-center justify-center rounded-lg border px-8 py-3.5 font-medium transition-all duration-300"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {t("hero.cta.secondary")}
+            {t('hero.cta.secondary')}
           </motion.a>
         </motion.div>
         <motion.div
           className="hero-element absolute bottom-12 left-1/2 -translate-x-1/2"
           animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <div className="w-px h-16 bg-linear-to-b from-transparent via-border to-border" />
+          <div className="via-border to-border h-16 w-px bg-linear-to-b from-transparent" />
         </motion.div>
       </div>
     </section>
