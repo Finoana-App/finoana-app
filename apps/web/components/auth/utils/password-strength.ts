@@ -33,15 +33,15 @@ export function getPasswordRequirements(password: string): PasswordRequirement[]
   return [
     {
       met: password.length >= 8,
-      text: 'At least 8 characters'
+      text: 'At least 8 characters',
     },
     {
       met: /[A-Z]/.test(password),
-      text: 'One uppercase letter'
+      text: 'One uppercase letter',
     },
     {
       met: /\d/.test(password),
-      text: 'One number'
+      text: 'One number',
     },
   ];
 }

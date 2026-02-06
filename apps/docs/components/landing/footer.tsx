@@ -1,7 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
+
 import { motion } from 'motion/react';
 
 import { useLanguage } from '@/contexts/language-context';

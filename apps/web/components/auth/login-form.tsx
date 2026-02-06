@@ -1,11 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'motion/react';
-import { Button } from '@workspace/ui/components/button';
-import { ArrowRight } from 'lucide-react';
 
-import { Divider, OAuth, AnimatedInput, PasswordInput } from '@/components/auth';
+import { ArrowRight } from 'lucide-react';
+import { motion } from 'motion/react';
+
+import { Button } from '@workspace/ui/components/button';
+
+import { AnimatedInput, Divider, OAuth, PasswordInput } from '@/components/auth';
+
 import { useFocusState } from '@/hooks/use-focus-state';
 
 export function LoginForm() {

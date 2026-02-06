@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import { Raleway } from 'next/font/google';
 
-import { Providers } from '@/components/providers';
 import '@workspace/ui/styles/globals.css';
+
+import { Providers } from '@/components/providers';
 
 const raleway = Raleway({
   subsets: ['latin'],

@@ -1,12 +1,17 @@
-import { getPasswordRequirements, getPasswordStrength, PASSWORD_STRENGTH_CONFIG } from '@/components/auth/utils/password-strength';
 import { useMemo } from 'react';
+
+import {
+  getPasswordRequirements,
+  getPasswordStrength,
+  PASSWORD_STRENGTH_CONFIG,
+} from '@/components/auth/utils/password-strength';
 
 /**
  * Custom hook for password validation and strength calculation
- * 
+ *
  * @param password - The password to validate
  * @returns Object containing password validation results
- * 
+ *
  * @example
  * ```tsx
  * const { strength, requirements, strengthLabel, isValid } = usePasswordValidation(password);
@@ -20,7 +25,7 @@ export function usePasswordValidation(password: string) {
   const strengthConfig = useMemo(() => PASSWORD_STRENGTH_CONFIG[strength], [strength]);
 
   const isValid = useMemo(() => {
-    return requirements.every(req => req.met);
+    return requirements.every((req) => req.met);
   }, [requirements]);
 
   const isStrong = useMemo(() => strength >= 4, [strength]);

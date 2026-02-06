@@ -1,10 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'motion/react';
-import { Button } from '@workspace/ui/components/button';
+
 import { ArrowRight } from 'lucide-react';
-import { Divider, OAuth, AnimatedInput, PasswordInputWithStrength } from '@/components/auth';
+import { motion } from 'motion/react';
+
+import { Button } from '@workspace/ui/components/button';
+
+import { AnimatedInput, Divider, OAuth, PasswordInputWithStrength } from '@/components/auth';
+
 import { useFocusState } from '@/hooks/use-focus-state';
 
 export function RegisterForm() {

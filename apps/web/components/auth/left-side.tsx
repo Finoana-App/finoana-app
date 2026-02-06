@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+
+import gsap from 'gsap';
 import { Heart } from 'lucide-react';
 import { motion } from 'motion/react';
-import gsap from 'gsap';
 
 export function LeftSide() {
   const gridRef = useRef<HTMLDivElement>(null);

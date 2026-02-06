@@ -1,12 +1,15 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
+import { InputHTMLAttributes } from 'react';
+
+import Link from 'next/link';
+
+import { Eye, EyeOff } from 'lucide-react';
 import { motion } from 'motion/react';
+
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
-import { Eye, EyeOff } from 'lucide-react';
-import { InputHTMLAttributes } from 'react';
 
 interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   id: string;

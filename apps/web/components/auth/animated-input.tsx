@@ -1,9 +1,11 @@
 'use client';
 
+import { InputHTMLAttributes } from 'react';
+
 import { motion } from 'motion/react';
+
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
-import { InputHTMLAttributes } from 'react';
 
 interface AnimatedInputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;

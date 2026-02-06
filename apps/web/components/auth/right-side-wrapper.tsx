@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
+
 import gsap from 'gsap';
+import { motion } from 'motion/react';
 
 interface RightSideWrapperProps {
   title: string;

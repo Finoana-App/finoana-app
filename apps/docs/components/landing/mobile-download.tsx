@@ -1,16 +1,19 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'motion/react';
-import { gsap } from 'gsap';
-import { useTheme } from 'next-themes';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Smartphone, Apple, Play } from 'lucide-react';
 
-import { useLanguage } from '@/contexts/language-context';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
+
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Apple, Play, Smartphone } from 'lucide-react';
+import { motion } from 'motion/react';
+
 import { Button } from '@workspace/ui/components/button';
 import { Input } from '@workspace/ui/components/input';
-import Image from 'next/image';
+
+import { useLanguage } from '@/contexts/language-context';
 
 gsap.registerPlugin(ScrollTrigger);
 

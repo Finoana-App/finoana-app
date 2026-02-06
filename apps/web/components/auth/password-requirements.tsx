@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'motion/react';
 import { Check } from 'lucide-react';
+import { motion } from 'motion/react';
+
 import { getPasswordRequirements } from './utils/password-strength';
 
 interface PasswordRequirementsProps {

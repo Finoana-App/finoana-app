@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
+
 import { getPasswordStrength, PASSWORD_STRENGTH_CONFIG } from './utils/password-strength';
 
 interface PasswordStrengthIndicatorProps {
