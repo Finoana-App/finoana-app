@@ -14,7 +14,7 @@ export default async function RegisterPage({ params }: { params: Promise<{ lang:
       <RegisterForm />
       <p className="text-muted-foreground pt-4 text-center text-sm">
         {dict.auth.haveAccount}{' '}
-        <Link href="/login" className="text-foreground underline-offset-4 hover:underline">
+        <Link href={`/${lang}/login`} className="text-foreground underline-offset-4 hover:underline">
           {dict.auth.signin}
         </Link>
       </p>
