@@ -1,10 +1,12 @@
+import { Dictionary } from '@/i18n/dictionaries/en';
+
 export interface PasswordRequirement {
   met: boolean;
   text: string;
 }
 
 export interface PasswordStrengthConfig {
-  label: string;
+  label: keyof Dictionary['auth']['passwordStrength'];
   color: string;
 }
 
@@ -50,9 +52,9 @@ export function getPasswordRequirements(password: string): PasswordRequirement[]
  * Configuration for password strength levels
  */
 export const PASSWORD_STRENGTH_CONFIG: PasswordStrengthConfig[] = [
-  { label: '', color: 'bg-border' },
-  { label: 'Weak', color: 'bg-muted-foreground/30' },
-  { label: 'Fair', color: 'bg-muted-foreground/50' },
-  { label: 'Good', color: 'bg-muted-foreground/70' },
-  { label: 'Strong', color: 'bg-primary' },
+  { label: 'none', color: 'bg-border' },
+  { label: 'weak', color: 'bg-muted-foreground/30' },
+  { label: 'fair', color: 'bg-muted-foreground/50' },
+  { label: 'good', color: 'bg-muted-foreground/70' },
+  { label: 'strong', color: 'bg-primary' },
 ];

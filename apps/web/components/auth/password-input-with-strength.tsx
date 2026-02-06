@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { InputHTMLAttributes } from 'react';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { Eye, EyeOff } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -11,7 +12,9 @@ import { motion } from 'motion/react';
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
 
-import { PasswordRequirements } from './password-requirements';
+import { getDictionary, Locale } from '@/i18n';
+import { Dictionary } from '@/i18n/dictionaries/en';
+
 import { PasswordStrengthIndicator } from './password-strength-indicator';
 
 interface PasswordInputWithStrengthProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -22,7 +25,6 @@ interface PasswordInputWithStrengthProps extends Omit<InputHTMLAttributes<HTMLIn
   showForgotPassword?: boolean;
   forgotPasswordHref?: string;
   showStrengthIndicator?: boolean;
-  showRequirements?: boolean;
 }
 
 const inputVariants = {
@@ -38,13 +40,23 @@ export function PasswordInputWithStrength({
   showForgotPassword = false,
   forgotPasswordHref = '/forgot-password',
   showStrengthIndicator = true,
-  showRequirements = true,
   className = '',
   value = '',
   ...props
 }: PasswordInputWithStrengthProps) {
   const [showPassword, setShowPassword] = useState(false);
   const passwordValue = String(value);
+
+  const [dictionary, setDictionary] = useState<Dictionary | null>(null);
+
+  const pathname = usePathname();
+  const lang = pathname.split('/')[1] as Locale;
+
+  useEffect(() => {
+    getDictionary(lang).then((dict) => {
+      setDictionary(dict);
+    });
+  }, [lang]);
 
   return (
     <div className="space-y-0">
@@ -58,7 +70,7 @@ export function PasswordInputWithStrength({
               href={forgotPasswordHref}
               className="text-muted-foreground hover:text-foreground text-xs transition-colors"
             >
-              Forgot?
+              {dictionary?.auth.forgot || 'Forgot?'}
             </Link>
           )}
         </div>
@@ -80,9 +92,8 @@ export function PasswordInputWithStrength({
           </button>
         </div>
         {error && <p className="text-destructive mt-1 text-xs">{error}</p>}
-        {showStrengthIndicator && <PasswordStrengthIndicator password={passwordValue} />}
+        {showStrengthIndicator && <PasswordStrengthIndicator dictionary={dictionary} password={passwordValue} />}
       </motion.div>
-      {showRequirements && <PasswordRequirements password={passwordValue} />}
     </div>
   );
 }
