@@ -1,7 +1,11 @@
 export const en = {
   auth: {
-    title: 'Welcome back.',
-    subtitle: 'Sign in to continue your journey.',
+    welcomeBack: 'Welcome back.',
+    loginSubtitle: 'Sign in to continue your journey.',
+    joinUs: 'Join us.',
+    registerSubtitle: 'Start your journey in faith today.',
+    username: 'Username',
+    usernamePlaceholder: 'Your username',
     email: 'Email',
     emailPlaceholder: 'your@email.com',
     password: 'Password',
@@ -11,6 +15,15 @@ export const en = {
     google: 'Continue with Google',
     newHere: 'New here?',
     createAccount: 'Create an account',
+    haveAccount: 'Already have an account?',
+    signin: 'Sign in',
+    passwordStrength: {
+      none: '',
+      weak: 'Weak',
+      fair: 'Fair',
+      good: 'Good',
+      strong: 'Strong',
+    },
   },
 };
 

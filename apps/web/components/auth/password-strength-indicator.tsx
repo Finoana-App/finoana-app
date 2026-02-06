@@ -2,13 +2,16 @@
 
 import { motion } from 'motion/react';
 
+import { Dictionary } from '@/i18n/dictionaries/en';
+
 import { getPasswordStrength, PASSWORD_STRENGTH_CONFIG } from './utils/password-strength';
 
 interface PasswordStrengthIndicatorProps {
   password: string;
+  dictionary: Dictionary | null;
 }
 
-export function PasswordStrengthIndicator({ password }: PasswordStrengthIndicatorProps) {
+export function PasswordStrengthIndicator({ password, dictionary }: PasswordStrengthIndicatorProps) {
   if (!password) return null;
 
   const strength = getPasswordStrength(password);
@@ -27,7 +30,9 @@ export function PasswordStrengthIndicator({ password }: PasswordStrengthIndicato
           />
         ))}
       </div>
-      {config?.label && <p className="text-muted-foreground text-xs">{config.label}</p>}
+      {config?.label && (
+        <p className="text-muted-foreground text-xs">{dictionary?.auth.passwordStrength[config.label] || ''}</p>
+      )}
     </motion.div>
   );
 }

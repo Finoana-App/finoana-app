@@ -4,14 +4,15 @@ import { useEffect, useState } from 'react';
 import { InputHTMLAttributes } from 'react';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import { Eye, EyeOff } from 'lucide-react';
 import { motion } from 'motion/react';
 
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
+
 import { getDictionary, Locale } from '@/i18n';
-import { usePathname } from 'next/navigation';
 
 interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   id: string;
@@ -42,7 +43,6 @@ export function PasswordInput({
 
   const pathname = usePathname();
   const lang = pathname.split('/')[1] as Locale;
-
 
   useEffect(() => {
     getDictionary(lang).then((dict) => {

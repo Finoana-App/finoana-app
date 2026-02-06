@@ -10,7 +10,7 @@ export default async function LoginPage({ params }: { params: Promise<{ lang: Lo
   const dict = await getDictionary(lang);
 
   return (
-    <RightSideWrapper title={dict.auth.title} subtitle={dict.auth.subtitle}>
+    <RightSideWrapper title={dict.auth.welcomeBack} subtitle={dict.auth.loginSubtitle}>
       <LoginForm />
       <p className="text-muted-foreground pt-4 text-center text-sm">
         {dict.auth.newHere}{' '}
