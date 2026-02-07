@@ -7,6 +7,15 @@ export const fr: Dictionary = {
     architecture: 'Architecture',
     values: 'Valeurs',
   },
+  hero: {
+    badge: 'Foi · Communauté · Paix',
+    title: 'Renforcer la Foi par la Technologie',
+    subtitle: 'Une plateforme conçue pour soutenir la croissance spirituelle, la construction de communauté et l\'apprentissage basé sur la foi à l\'ère numérique.',
+    cta: {
+      primary: 'Commencer',
+      secondary: 'En Savoir Plus',
+    },
+  },
   auth: {
     welcomeBack: 'Bienvenue.',
     loginSubtitle: 'Connectez-vous pour continuer votre parcours.',

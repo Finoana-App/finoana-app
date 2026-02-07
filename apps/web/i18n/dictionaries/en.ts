@@ -5,6 +5,15 @@ export const en = {
     architecture: 'Architecture',
     values: 'Values',
   },
+  hero: {
+    badge: 'Faith · Community · Peace',
+    title: 'Empowering Faith Through Technology',
+    subtitle: 'A platform designed to support spiritual growth, community building, and faith-based learning in the digital age.',
+    cta: {
+      primary: 'Get Started',
+      secondary: 'Learn More',
+    },
+  },
   auth: {
     welcomeBack: 'Welcome back.',
     loginSubtitle: 'Sign in to continue your journey.',
