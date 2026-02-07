@@ -116,6 +116,16 @@ export const en = {
     notify: 'Notify Me',
     successMessage: "Thank you! We'll notify you when the app launches.",
   },
+  footer: {
+    tagline: 'Empowering faith through technology',
+    links: {
+      about: 'About',
+      privacy: 'Privacy',
+      terms: 'Terms',
+      contact: 'Contact',
+    },
+    copyright: 'Finoana. All rights reserved.',
+  },
   auth: {
     welcomeBack: 'Welcome back.',
     loginSubtitle: 'Sign in to continue your journey.',

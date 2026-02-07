@@ -110,13 +110,24 @@ export const fr: Dictionary = {
   mobile: {
     badge: 'Application Mobile',
     title: 'La Foi Dans Votre Poche',
-    subtitle: 'Restez connecté à votre communauté spirituelle partout, à tout moment. Bientôt disponible sur iOS et Android.',
+    subtitle:
+      'Restez connecté à votre communauté spirituelle partout, à tout moment. Bientôt disponible sur iOS et Android.',
     comingSoon: 'Bientôt Disponible',
     ios: 'App Store',
     android: 'Google Play',
     emailPlaceholder: 'Entrez votre email',
     notify: 'Me Notifier',
     successMessage: "Merci ! Nous vous informerons du lancement de l'application.",
+  },
+  footer: {
+    tagline: 'Renforcer la foi par la technologie',
+    links: {
+      about: 'À propos',
+      privacy: 'Confidentialité',
+      terms: 'Conditions',
+      contact: 'Contact',
+    },
+    copyright: 'Finoana. Tous droits réservés.',
   },
   auth: {
     welcomeBack: 'Bienvenue.',
