@@ -1,6 +1,12 @@
 import { Dictionary } from './en';
 
 export const fr: Dictionary = {
+  nav: {
+    vision: 'Vision',
+    features: 'Fonctionnalités',
+    architecture: 'Architecture',
+    values: 'Valeurs',
+  },
   auth: {
     welcomeBack: 'Bienvenue.',
     loginSubtitle: 'Connectez-vous pour continuer votre parcours.',

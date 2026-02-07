@@ -1,4 +1,10 @@
 export const en = {
+  nav: {
+    vision: 'Vision',
+    features: 'Features',
+    architecture: 'Architecture',
+    values: 'Values',
+  },
   auth: {
     welcomeBack: 'Welcome back.',
     loginSubtitle: 'Sign in to continue your journey.',
