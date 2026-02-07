@@ -107,6 +107,17 @@ export const fr: Dictionary = {
       desc: "Nous favorisons des connexions authentiques et un soutien mutuel plutôt que la comparaison et les indicateurs d'engagement.",
     },
   },
+  mobile: {
+    badge: 'Application Mobile',
+    title: 'La Foi Dans Votre Poche',
+    subtitle: 'Restez connecté à votre communauté spirituelle partout, à tout moment. Bientôt disponible sur iOS et Android.',
+    comingSoon: 'Bientôt Disponible',
+    ios: 'App Store',
+    android: 'Google Play',
+    emailPlaceholder: 'Entrez votre email',
+    notify: 'Me Notifier',
+    successMessage: "Merci ! Nous vous informerons du lancement de l'application.",
+  },
   auth: {
     welcomeBack: 'Bienvenue.',
     loginSubtitle: 'Connectez-vous pour continuer votre parcours.',

@@ -105,6 +105,17 @@ export const en = {
       desc: 'We foster genuine connections and mutual support rather than comparison and engagement metrics.',
     },
   },
+  mobile: {
+    badge: 'Mobile App',
+    title: 'Faith in Your Pocket',
+    subtitle: 'Stay connected to your spiritual community anywhere, anytime. Coming soon to iOS and Android.',
+    comingSoon: 'Coming Soon',
+    ios: 'App Store',
+    android: 'Google Play',
+    emailPlaceholder: 'Enter your email',
+    notify: 'Notify Me',
+    successMessage: "Thank you! We'll notify you when the app launches.",
+  },
   auth: {
     welcomeBack: 'Welcome back.',
     loginSubtitle: 'Sign in to continue your journey.',
