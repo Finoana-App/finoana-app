@@ -5,10 +5,9 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { motion } from 'motion/react';
 
-import { useLanguage } from '@/contexts/language-context';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
-export function Hero() {
-  const { t, language } = useLanguage();
+export function Hero({ dict }: { dict: Dictionary }) {
   const heroRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -46,51 +45,47 @@ export function Hero() {
     <section ref={heroRef} className="flex min-h-screen items-center justify-center pt-20">
       <div className="container-docs text-center">
         <motion.div
-          key={`badge-${language}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
           className="hero-element"
         >
-          <span className="badge-mono">{t('hero.badge')}</span>
+          <span className="badge-mono">{dict.hero.badge}</span>
         </motion.div>
         <motion.h1
           ref={titleRef}
-          key={`title-${language}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
           className="hero-element mt-8 mb-6"
         >
-          {t('hero.title')}
+          {dict.hero.title}
         </motion.h1>
         <div className="hero-element my-8 flex justify-center">
           <div className="hero-line bg-foreground h-px w-24 origin-left" />
         </div>
         <motion.p
           ref={subtitleRef}
-          key={`subtitle-${language}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
           className="hero-element text-muted-foreground mx-auto max-w-2xl text-lg leading-relaxed md:text-xl"
         >
-          {t('hero.subtitle')}
+          {dict.hero.subtitle}
         </motion.p>
         <motion.div
-          key={`cta-${language}`}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4 }}
           className="hero-element mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <motion.a
-            href={`${process.env.NEXT_PUBLIC_REDIRECTION}`}
+            href="/login"
             className="bg-foreground text-background hover:bg-foreground/90 inline-flex items-center justify-center rounded-lg px-8 py-3.5 font-medium transition-all duration-300"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {t('hero.cta.primary')}
+            {dict.hero.cta.primary}
           </motion.a>
           <motion.a
             href="#architecture"
@@ -98,7 +93,7 @@ export function Hero() {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {t('hero.cta.secondary')}
+            {dict.hero.cta.secondary}
           </motion.a>
         </motion.div>
         <motion.div

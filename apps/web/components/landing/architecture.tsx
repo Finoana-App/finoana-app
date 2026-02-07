@@ -6,12 +6,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'motion/react';
 
-import { useLanguage } from '@/contexts/language-context';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Architecture() {
-  const { t, language } = useLanguage();
+export function Architecture({ dict }: { dict: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -56,16 +55,20 @@ export function Architecture() {
 
   const blocks = [
     {
-      title: 'architecture.security.title',
-      items: ['architecture.security.item1', 'architecture.security.item2', 'architecture.security.item3'],
+      title: dict.architecture.security.title,
+      items: [dict.architecture.security.item1, dict.architecture.security.item2, dict.architecture.security.item3],
     },
     {
-      title: 'architecture.performance.title',
-      items: ['architecture.performance.item1', 'architecture.performance.item2', 'architecture.performance.item3'],
+      title: dict.architecture.performance.title,
+      items: [
+        dict.architecture.performance.item1,
+        dict.architecture.performance.item2,
+        dict.architecture.performance.item3,
+      ],
     },
     {
-      title: 'architecture.scale.title',
-      items: ['architecture.scale.item1', 'architecture.scale.item2', 'architecture.scale.item3'],
+      title: dict.architecture.scale.title,
+      items: [dict.architecture.scale.item1, dict.architecture.scale.item2, dict.architecture.scale.item3],
     },
   ];
 
@@ -74,44 +77,32 @@ export function Architecture() {
       <div className="container-docs">
         <div className="mx-auto mb-16 max-w-3xl text-center md:mb-24">
           <motion.span
-            key={`arch-badge-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="arch-reveal bg-background/10 text-background/80 inline-flex items-center rounded-full px-3 py-1 text-xs font-medium tracking-wide uppercase"
           >
-            {t('architecture.badge')}
+            {dict.architecture.badge}
           </motion.span>
-          <motion.h2
-            key={`arch-title-${language}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="arch-reveal mt-6 text-balance"
-          >
-            {t('architecture.title')}
+          <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="arch-reveal mt-6 text-balance">
+            {dict.architecture.title}
           </motion.h2>
           <motion.p
-            key={`arch-subtitle-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="arch-reveal text-background/70 mt-4 text-lg"
           >
-            {t('architecture.subtitle')}
+            {dict.architecture.subtitle}
           </motion.p>
         </div>
         <div className="arch-blocks grid gap-8 md:grid-cols-3 md:gap-12">
-          {blocks.map((block) => (
-            <motion.div
-              key={`${block.title}-${language}`}
-              className="arch-block"
-              whileHover={{ x: 4 }}
-              transition={{ duration: 0.2 }}
-            >
-              <h3 className="border-background/20 mb-6 border-b pb-4 text-xl font-semibold">{t(block.title)}</h3>
+          {blocks.map((block, blockIndex) => (
+            <motion.div key={blockIndex} className="arch-block" whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
+              <h3 className="border-background/20 mb-6 border-b pb-4 text-xl font-semibold">{block.title}</h3>
               <ul className="space-y-4">
-                {block.items.map((item) => (
-                  <li key={`${item}-${language}`} className="text-background/80 flex items-start gap-3">
+                {block.items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="text-background/80 flex items-start gap-3">
                     <span className="text-background/40 mt-1.5 text-xs">●</span>
-                    <span>{t(item)}</span>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>

@@ -6,12 +6,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'motion/react';
 
-import { useLanguage } from '@/contexts/language-context';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Features() {
-  const { t, language } = useLanguage();
+export function Features({ dict }: { dict: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -56,75 +55,68 @@ export function Features() {
 
   const features = [
     {
-      title: 'features.prayer.title',
-      desc: 'features.prayer.desc',
+      title: dict.features.prayer.title,
+      desc: dict.features.prayer.desc,
       number: '01',
     },
     {
-      title: 'features.testimony.title',
-      desc: 'features.testimony.desc',
+      title: dict.features.testimony.title,
+      desc: dict.features.testimony.desc,
       number: '02',
     },
     {
-      title: 'features.groups.title',
-      desc: 'features.groups.desc',
+      title: dict.features.groups.title,
+      desc: dict.features.groups.desc,
       number: '03',
     },
     {
-      title: 'features.resources.title',
-      desc: 'features.resources.desc',
+      title: dict.features.resources.title,
+      desc: dict.features.resources.desc,
       number: '04',
     },
     {
-      title: 'features.moments.title',
-      desc: 'features.moments.desc',
+      title: dict.features.moments.title,
+      desc: dict.features.moments.desc,
       number: '05',
     },
-    { title: 'features.safe.title', desc: 'features.safe.desc', number: '06' },
+    {
+      title: dict.features.safe.title,
+      desc: dict.features.safe.desc,
+      number: '06',
+    },
   ];
 
   return (
     <section ref={sectionRef} id="features" className="section">
       <div className="container-docs">
         <div className="mb-16 max-w-3xl md:mb-24">
-          <motion.span
-            key={`features-badge-${language}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="feature-header badge-mono"
-          >
-            {t('features.badge')}
+          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="feature-header badge-mono">
+            {dict.features.badge}
           </motion.span>
-          <motion.h2
-            key={`features-title-${language}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="feature-header mt-6 text-balance"
-          >
-            {t('features.title')}
+          <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="feature-header mt-6 text-balance">
+            {dict.features.title}
           </motion.h2>
           <motion.p
-            key={`features-subtitle-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="feature-header text-muted-foreground mt-4 text-lg"
           >
-            {t('features.subtitle')}
+            {dict.features.subtitle}
           </motion.p>
         </div>
         <div className="features-grid bg-border grid gap-px overflow-hidden rounded-lg md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
+          {features.map((feature, index) => (
             <motion.div
-              key={`${feature.title}-${language}`}
+              key={index}
               className="feature-item bg-background group cursor-default p-8 md:p-10"
               whileHover={{ backgroundColor: 'hsl(var(--surface))' }}
               transition={{ duration: 0.3 }}
             >
               <span className="text-muted-foreground text-xs font-medium tracking-wider">{feature.number}</span>
               <h3 className="mt-4 mb-3 text-xl font-semibold transition-transform duration-300 group-hover:translate-x-1">
-                {t(feature.title)}
+                {feature.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed">{t(feature.desc)}</p>
+              <p className="text-muted-foreground leading-relaxed">{feature.desc}</p>
             </motion.div>
           ))}
         </div>

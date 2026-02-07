@@ -13,12 +13,11 @@ import { motion } from 'motion/react';
 import { Button } from '@workspace/ui/components/button';
 import { Input } from '@workspace/ui/components/input';
 
-import { useLanguage } from '@/contexts/language-context';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function MobileDownload() {
-  const { t, language } = useLanguage();
+export function MobileDownload({ dict }: { dict: Dictionary }) {
   const { theme } = useTheme();
   const sectionRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState('');
@@ -69,29 +68,26 @@ export function MobileDownload() {
       <div className="container-docs">
         <div className="mx-auto max-w-3xl text-center">
           <motion.div
-            key={`mobile-badge-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="reveal-mobile bg-background border-border mb-8 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs font-medium tracking-wide uppercase"
           >
             <Smartphone className="h-3.5 w-3.5" />
-            {t('mobile.badge')}
+            {dict.mobile.badge}
           </motion.div>
           <motion.h2
-            key={`mobile-title-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="reveal-mobile mb-6 text-3xl font-light tracking-tight md:text-4xl lg:text-5xl"
           >
-            {t('mobile.title')}
+            {dict.mobile.title}
           </motion.h2>
           <motion.p
-            key={`mobile-subtitle-${language}`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="reveal-mobile text-muted-foreground mx-auto mb-12 max-w-xl text-lg"
           >
-            {t('mobile.subtitle')}
+            {dict.mobile.subtitle}
           </motion.p>
           <div className="reveal-mobile relative mb-12">
             <div className="bg-background border-foreground/20 relative mx-auto h-96 w-48 overflow-hidden rounded-[2.5rem] border-4 shadow-2xl">
@@ -108,7 +104,7 @@ export function MobileDownload() {
                   suppressHydrationWarning
                 />
                 <span className="text-muted-foreground text-xs tracking-widest uppercase">
-                  {t('mobile.comingSoon')}
+                  {dict.mobile.comingSoon}
                 </span>
               </div>
               <div className="bg-foreground/20 absolute top-3 left-1/2 h-5 w-20 -translate-x-1/2 rounded-full" />
@@ -120,18 +116,18 @@ export function MobileDownload() {
               <Apple className="h-6 w-6" />
               <div className="text-left">
                 <span className="text-muted-foreground block text-[10px] tracking-wide uppercase">
-                  {t('mobile.comingSoon')}
+                  {dict.mobile.comingSoon}
                 </span>
-                <span className="text-sm font-medium">{t('mobile.ios')}</span>
+                <span className="text-sm font-medium">{dict.mobile.ios}</span>
               </div>
             </div>
             <div className="bg-background border-border flex cursor-not-allowed items-center gap-3 rounded-xl border px-6 py-3 opacity-60">
               <Play className="h-6 w-6" />
               <div className="text-left">
                 <span className="text-muted-foreground block text-[10px] tracking-wide uppercase">
-                  {t('mobile.comingSoon')}
+                  {dict.mobile.comingSoon}
                 </span>
-                <span className="text-sm font-medium">{t('mobile.android')}</span>
+                <span className="text-sm font-medium">{dict.mobile.android}</span>
               </div>
             </div>
           </div>
@@ -140,14 +136,14 @@ export function MobileDownload() {
               <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
                 <Input
                   type="email"
-                  placeholder={t('mobile.emailPlaceholder')}
+                  placeholder={dict.mobile.emailPlaceholder}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-background border-border h-12 flex-1"
                   required
                 />
                 <Button type="submit" className="h-12 px-6">
-                  {t('mobile.notify')}
+                  {dict.mobile.notify}
                 </Button>
               </form>
             ) : (
@@ -156,11 +152,7 @@ export function MobileDownload() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-background border-border rounded-lg border px-6 py-4"
               >
-                <p className="text-muted-foreground text-sm">
-                  {language === 'en'
-                    ? "Thank you! We'll notify you when the app launches."
-                    : "Merci ! Nous vous informerons du lancement de l'application."}
-                </p>
+                <p className="text-muted-foreground text-sm">{dict.mobile.successMessage}</p>
               </motion.div>
             )}
           </div>

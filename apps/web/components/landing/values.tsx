@@ -6,12 +6,11 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'motion/react';
 
-import { useLanguage } from '@/contexts/language-context';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Values() {
-  const { t, language } = useLanguage();
+export function Values({ dict }: { dict: Dictionary }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -55,37 +54,27 @@ export function Values() {
   }, []);
 
   const values = [
-    { title: 'values.faith.title', desc: 'values.faith.desc' },
-    { title: 'values.simplicity.title', desc: 'values.simplicity.desc' },
-    { title: 'values.privacy.title', desc: 'values.privacy.desc' },
-    { title: 'values.community.title', desc: 'values.community.desc' },
+    { title: dict.values.faith.title, desc: dict.values.faith.desc },
+    { title: dict.values.simplicity.title, desc: dict.values.simplicity.desc },
+    { title: dict.values.privacy.title, desc: dict.values.privacy.desc },
+    { title: dict.values.community.title, desc: dict.values.community.desc },
   ];
 
   return (
     <section ref={sectionRef} id="values" className="section bg-surface">
       <div className="container-docs">
         <div className="mx-auto mb-16 max-w-3xl text-center md:mb-24">
-          <motion.span
-            key={`values-badge-${language}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="values-reveal badge-mono"
-          >
-            {t('values.badge')}
+          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="values-reveal badge-mono">
+            {dict.values.badge}
           </motion.span>
-          <motion.h2
-            key={`values-title-${language}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="values-reveal mt-6 text-balance"
-          >
-            {t('values.title')}
+          <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="values-reveal mt-6 text-balance">
+            {dict.values.title}
           </motion.h2>
         </div>
         <div className="values-grid mx-auto grid max-w-4xl gap-6 md:grid-cols-2 md:gap-8">
           {values.map((value, index) => (
             <motion.div
-              key={`${value.title}-${language}`}
+              key={index}
               className="value-card border-border bg-background group relative rounded-lg border p-8 md:p-10"
               whileHover={{
                 borderColor: 'hsl(var(--foreground) / 0.2)',
@@ -96,8 +85,8 @@ export function Values() {
                 {(index + 1).toString().padStart(2, '0')}
               </span>
 
-              <h3 className="mb-4 pr-12 text-xl font-semibold">{t(value.title)}</h3>
-              <p className="text-muted-foreground leading-relaxed">{t(value.desc)}</p>
+              <h3 className="mb-4 pr-12 text-xl font-semibold">{value.title}</h3>
+              <p className="text-muted-foreground leading-relaxed">{value.desc}</p>
             </motion.div>
           ))}
         </div>

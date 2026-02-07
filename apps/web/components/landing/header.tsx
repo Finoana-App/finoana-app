@@ -2,22 +2,37 @@
 
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { Moon, Sun } from 'lucide-react';
 import { motion } from 'motion/react';
 
-import { useLanguage } from '@/contexts/language-context';
+import { Locale } from '@/i18n';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
-export function Header() {
-  const { language, setLanguage, t } = useLanguage();
+export function Header({ currentLang, dict }: { currentLang: Locale; dict: Dictionary }) {
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const navItems = [
-    { key: 'nav.vision', href: '#vision' },
-    { key: 'nav.features', href: '#features' },
-    { key: 'nav.architecture', href: '#architecture' },
-    { key: 'nav.values', href: '#values' },
+    { key: 'vision', label: dict.nav?.vision || 'Vision', href: '#vision' },
+    { key: 'features', label: dict.nav?.features || 'Features', href: '#features' },
+    { key: 'architecture', label: dict.nav?.architecture || 'Architecture', href: '#architecture' },
+    { key: 'values', label: dict.nav?.values || 'Values', href: '#values' },
   ];
+
+  const switchLanguage = (locale: Locale) => {
+    if (!pathname) return;
+
+    const segments = pathname.split('/');
+    segments[1] = locale;
+    const newPath = segments.join('/');
+
+    document.cookie = `NEXT_LOCALE=${locale}; path=/; max-age=31536000`;
+
+    router.push(newPath);
+  };
 
   return (
     <motion.header
@@ -29,7 +44,7 @@ export function Header() {
       <div className="container-docs">
         <nav className="flex h-16 items-center justify-between md:h-20">
           <motion.a
-            href="#"
+            href={`/${currentLang}`}
             className="flex items-center text-xl font-semibold tracking-tight"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -50,7 +65,7 @@ export function Header() {
           <div className="hidden items-center gap-8 md:flex">
             {navItems.map((item) => (
               <a key={item.key} href={item.href} className="nav-link text-sm font-medium">
-                {t(item.key)}
+                {item.label}
               </a>
             ))}
           </div>
@@ -66,19 +81,25 @@ export function Header() {
             </motion.button>
             <div className="lang-toggle">
               <motion.button
-                onClick={() => setLanguage('en')}
-                className={`lang-option cursor-pointer rounded-full ${language === 'en' ? 'active' : ''}`}
+                onClick={() => switchLanguage('en')}
+                className={`lang-option cursor-pointer rounded-full ${
+                  currentLang === 'en' ? 'active' : 'opacity-50 hover:opacity-75'
+                }`}
                 whileTap={{ scale: 0.95 }}
                 layout
+                aria-label="Switch to English"
               >
                 🇺🇸
               </motion.button>
               <span className="text-border">/</span>
               <motion.button
-                onClick={() => setLanguage('fr')}
-                className={`lang-option cursor-pointer rounded-full ${language === 'fr' ? 'active' : ''}`}
+                onClick={() => switchLanguage('fr')}
+                className={`lang-option cursor-pointer rounded-full ${
+                  currentLang === 'fr' ? 'active' : 'opacity-50 hover:opacity-75'
+                }`}
                 whileTap={{ scale: 0.95 }}
                 layout
+                aria-label="Switch to French"
               >
                 🇫🇷
               </motion.button>
