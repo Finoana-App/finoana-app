@@ -1,4 +1,4 @@
-import { Header, Hero } from '@/components/landing';
+import { Header, Hero, Vision } from '@/components/landing';
 
 import { getDictionary, Locale } from '@/i18n';
 
@@ -11,6 +11,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Loc
       <Header currentLang={lang} dict={dict} />
       <article>
         <Hero dict={dict} />
+        <Vision dict={dict} />
       </article>
     </section>
   );

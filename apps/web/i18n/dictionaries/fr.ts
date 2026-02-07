@@ -10,10 +10,28 @@ export const fr: Dictionary = {
   hero: {
     badge: 'Foi · Communauté · Paix',
     title: 'Renforcer la Foi par la Technologie',
-    subtitle: 'Une plateforme conçue pour soutenir la croissance spirituelle, la construction de communauté et l\'apprentissage basé sur la foi à l\'ère numérique.',
+    subtitle:
+      "Une plateforme conçue pour soutenir la croissance spirituelle, la construction de communauté et l'apprentissage basé sur la foi à l'ère numérique.",
     cta: {
       primary: 'Commencer',
       secondary: 'En Savoir Plus',
+    },
+  },
+  vision: {
+    badge: 'Notre Vision',
+    title: 'Construire l\'Avenir de la Foi Numérique',
+    description: 'Nous envisageons un monde où la technologie sert de pont vers une connexion spirituelle plus profonde, un engagement communautaire et une croissance significative dans la foi.',
+    principle1: {
+      title: 'Communauté d\'Abord',
+      desc: 'Créer des espaces où les croyants peuvent se connecter, partager et grandir ensemble dans une communion authentique.',
+    },
+    principle2: {
+      title: 'Centré sur l\'Écriture',
+      desc: 'Ancrer chaque fonctionnalité et interaction dans la vérité et la sagesse bibliques.',
+    },
+    principle3: {
+      title: 'Accessible à Tous',
+      desc: 'Garantir que les ressources spirituelles et la communauté sont disponibles pour tous, partout.',
     },
   },
   auth: {
