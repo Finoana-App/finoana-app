@@ -62,6 +62,29 @@ export const en = {
       desc: 'A moderated environment that protects and nurtures genuine spiritual growth.',
     },
   },
+  architecture: {
+    badge: 'Technical Foundation',
+    title: 'Built on Solid Infrastructure',
+    subtitle: 'Enterprise-grade architecture designed for reliability, security, and growth.',
+    security: {
+      title: 'Security First',
+      item1: 'End-to-end encryption for all communications',
+      item2: 'Zero-knowledge authentication',
+      item3: 'Regular security audits and compliance',
+    },
+    performance: {
+      title: 'Lightning Fast',
+      item1: 'Global CDN for instant content delivery',
+      item2: 'Optimized database queries',
+      item3: 'Smart caching strategies',
+    },
+    scale: {
+      title: 'Built to Scale',
+      item1: 'Microservices architecture',
+      item2: 'Auto-scaling infrastructure',
+      item3: 'Load balancing and redundancy',
+    },
+  },
   auth: {
     welcomeBack: 'Welcome back.',
     loginSubtitle: 'Sign in to continue your journey.',

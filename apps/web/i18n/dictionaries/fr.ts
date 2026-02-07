@@ -64,6 +64,29 @@ export const fr: Dictionary = {
       desc: 'Un environnement modéré qui protège et nourrit une croissance spirituelle authentique.',
     },
   },
+  architecture: {
+    badge: 'Fondation Technique',
+    title: 'Construit sur une Infrastructure Solide',
+    subtitle: 'Architecture de niveau entreprise conçue pour la fiabilité, la sécurité et la croissance.',
+    security: {
+      title: 'Sécurité Avant Tout',
+      item1: 'Chiffrement de bout en bout pour toutes les communications',
+      item2: 'Authentification à connaissance nulle',
+      item3: 'Audits de sécurité réguliers et conformité',
+    },
+    performance: {
+      title: 'Ultra Rapide',
+      item1: 'CDN global pour une livraison de contenu instantanée',
+      item2: 'Requêtes de base de données optimisées',
+      item3: 'Stratégies de mise en cache intelligentes',
+    },
+    scale: {
+      title: 'Conçu pour Évoluer',
+      item1: 'Architecture de microservices',
+      item2: 'Infrastructure à mise à l\'échelle automatique',
+      item3: 'Équilibrage de charge et redondance',
+    },
+  },
   auth: {
     welcomeBack: 'Bienvenue.',
     loginSubtitle: 'Connectez-vous pour continuer votre parcours.',
