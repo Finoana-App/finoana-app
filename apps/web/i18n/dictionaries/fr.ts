@@ -83,8 +83,28 @@ export const fr: Dictionary = {
     scale: {
       title: 'Conçu pour Évoluer',
       item1: 'Architecture de microservices',
-      item2: 'Infrastructure à mise à l\'échelle automatique',
+      item2: "Infrastructure à mise à l'échelle automatique",
       item3: 'Équilibrage de charge et redondance',
+    },
+  },
+  values: {
+    badge: 'Nos Valeurs',
+    title: 'Ce en Quoi Nous Croyons',
+    faith: {
+      title: 'Centré sur la Foi',
+      desc: 'Chaque décision et fonctionnalité est ancrée dans les principes bibliques et conçue pour honorer Dieu.',
+    },
+    simplicity: {
+      title: 'Simplicité Radicale',
+      desc: 'Nous croyons que les outils puissants doivent être intuitifs et accessibles à tous, quelle que soit la capacité technique.',
+    },
+    privacy: {
+      title: 'La Vie Privée Compte',
+      desc: 'Votre parcours spirituel est personnel. Nous protégeons vos données et vous donnons le contrôle total sur ce que vous partagez.',
+    },
+    community: {
+      title: 'Communauté Plutôt que Compétition',
+      desc: "Nous favorisons des connexions authentiques et un soutien mutuel plutôt que la comparaison et les indicateurs d'engagement.",
     },
   },
   auth: {

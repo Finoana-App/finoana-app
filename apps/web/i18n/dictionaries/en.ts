@@ -85,6 +85,26 @@ export const en = {
       item3: 'Load balancing and redundancy',
     },
   },
+  values: {
+    badge: 'Our Values',
+    title: 'What We Stand For',
+    faith: {
+      title: 'Faith-Centered',
+      desc: 'Every decision and feature is grounded in biblical principles and designed to honor God.',
+    },
+    simplicity: {
+      title: 'Radical Simplicity',
+      desc: 'We believe powerful tools should be intuitive and accessible to everyone, regardless of technical ability.',
+    },
+    privacy: {
+      title: 'Privacy Matters',
+      desc: 'Your spiritual journey is personal. We protect your data and give you full control over what you share.',
+    },
+    community: {
+      title: 'Community Over Competition',
+      desc: 'We foster genuine connections and mutual support rather than comparison and engagement metrics.',
+    },
+  },
   auth: {
     welcomeBack: 'Welcome back.',
     loginSubtitle: 'Sign in to continue your journey.',

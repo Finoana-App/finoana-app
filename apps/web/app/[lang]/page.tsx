@@ -1,4 +1,4 @@
-import { Architecture, Features, Header, Hero, Vision } from '@/components/landing';
+import { Architecture, Features, Header, Hero, Values, Vision } from '@/components/landing';
 
 import { getDictionary, Locale } from '@/i18n';
 
@@ -14,6 +14,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: Loc
         <Vision dict={dict} />
         <Features dict={dict} />
         <Architecture dict={dict} />
+        <Values dict={dict} />
       </article>
     </section>
   );
