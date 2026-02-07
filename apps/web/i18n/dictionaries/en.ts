@@ -18,7 +18,8 @@ export const en = {
   vision: {
     badge: 'Our Vision',
     title: 'Building the Future of Digital Faith',
-    description: 'We envision a world where technology serves as a bridge to deeper spiritual connection, community engagement, and meaningful growth in faith.',
+    description:
+      'We envision a world where technology serves as a bridge to deeper spiritual connection, community engagement, and meaningful growth in faith.',
     principle1: {
       title: 'Community First',
       desc: 'Creating spaces where believers can connect, share, and grow together in authentic fellowship.',
@@ -30,6 +31,35 @@ export const en = {
     principle3: {
       title: 'Accessible to All',
       desc: 'Ensuring that spiritual resources and community are available to everyone, everywhere.',
+    },
+  },
+  features: {
+    badge: 'Core Features',
+    title: 'Everything You Need for Spiritual Growth',
+    subtitle: 'Powerful tools designed to enhance your faith journey and connect with your community.',
+    prayer: {
+      title: 'Prayer Requests',
+      desc: 'Share prayer needs and intercede for others in a supportive community environment.',
+    },
+    testimony: {
+      title: 'Share Testimonies',
+      desc: "Celebrate God's work in your life and inspire others with stories of faith.",
+    },
+    groups: {
+      title: 'Small Groups',
+      desc: 'Join or create small groups for Bible study, fellowship, and accountability.',
+    },
+    resources: {
+      title: 'Study Resources',
+      desc: 'Access sermons, devotionals, and biblical resources to deepen your understanding.',
+    },
+    moments: {
+      title: 'Daily Moments',
+      desc: 'Capture and share meaningful moments of faith throughout your day.',
+    },
+    safe: {
+      title: 'Safe Space',
+      desc: 'A moderated environment that protects and nurtures genuine spiritual growth.',
     },
   },
   auth: {
