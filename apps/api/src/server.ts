@@ -3,10 +3,9 @@ import express, { type Express } from 'express';
 import helmet from 'helmet';
 import { pino } from 'pino';
 
-import { userRouter } from './api/user/user.route';
-import rateLimiter from './common/middlewares/rate-limiter';
-import requestLogger from './common/middlewares/request-logger';
-import { env } from './common/utils/env-config';
+import { userRouter } from '@/api/user/user.route';
+import { ErrorHandler, RateLimiter, RequestLogger } from '@/common/middlewares';
+import { env } from '@/common/utils';
 
 const logger = pino({ name: 'server start' });
 const app: Express = express();
@@ -18,10 +17,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: env.NODE_ENV === 'development' ? '*' : env.CORS_ORIGIN, credentials: true }));
 app.use(helmet());
-app.use(rateLimiter);
+app.use(RateLimiter);
 
-app.use(requestLogger);
+app.use(RequestLogger);
 
 app.use(`${BASE_URL}/users`, userRouter);
+
+app.use(ErrorHandler());
 
 export { app, logger };

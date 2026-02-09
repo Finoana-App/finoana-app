@@ -10,7 +10,7 @@ import { RegisterInputSchema } from './user.model';
 import { UserRepository } from './user.repository';
 
 class UserService {
-  private userRepository: UserRepository;
+  private readonly userRepository: UserRepository;
 
   constructor(repository: UserRepository = new UserRepository()) {
     this.userRepository = repository;
