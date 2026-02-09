@@ -46,7 +46,7 @@ export function PasswordInput({
 
   useEffect(() => {
     getDictionary(lang).then((dict) => {
-      setText(dict.auth.forgot);
+      setText(dict.auth.resetPassword.forgot);
     });
   }, [lang]);
 
