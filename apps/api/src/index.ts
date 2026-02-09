@@ -1,11 +1,33 @@
-import express from 'express';
+import chalk from 'chalk';
 
-const app = express();
+import { app, logger } from '@/server';
+import { env } from '@/common/utils/env-config';
 
-app.get('/', (_req, res) => {
-  res.json({ message: 'Hello World!' });
+const server = app.listen(env.PORT, () => {
+  const { NODE_ENV, HOST, PORT } = env;
+  console.log(
+    chalk.green.bold(`
+███████╗██╗███╗   ██╗ ██████╗  █████╗ ███╗   ██╗ █████╗ 
+██╔════╝██║████╗  ██║██╔═══██╗██╔══██╗████╗  ██║██╔══██╗
+█████╗  ██║██╔██╗ ██║██║   ██║███████║██╔██╗ ██║███████║
+██╔══╝  ██║██║╚██╗██║██║   ██║██╔══██║██║╚██╗██║██╔══██║
+██║     ██║██║ ╚████║╚██████╔╝██║  ██║██║ ╚████║██║  ██║
+╚═╝     ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
+
+        ☆ Finoana API successfully started ☆
+`)
+  );
+  logger.info(`Server (${NODE_ENV}) running on port http://${HOST}:${PORT}`);
 });
 
-app.listen(3001, () => {
-  console.log('Server is running on PORT 3001');
-});
+const onCloseSignal = () => {
+  logger.info('sigint received, shutting down');
+  server.close(() => {
+    logger.info('server closed');
+    process.exit();
+  });
+  setTimeout(() => process.exit(1), 10000).unref();
+};
+
+process.on('SIGINT', onCloseSignal);
+process.on('SIGTERM', onCloseSignal);
