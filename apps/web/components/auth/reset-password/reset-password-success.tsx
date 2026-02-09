@@ -5,9 +5,12 @@ import { motion } from 'motion/react';
 
 import { Button } from '@workspace/ui/components/button';
 
+import { Dictionary } from '@/i18n/dictionaries/en';
+
 interface ResetPasswordSuccessProps {
   email: string;
   onRetry: () => void;
+  dictionary: Dictionary | null;
 }
 
 const containerVariants = {
@@ -15,7 +18,7 @@ const containerVariants = {
   unfocused: { scale: 1, transition: { duration: 0.2 } },
 };
 
-export function ResetPasswordSuccess({ email, onRetry }: ResetPasswordSuccessProps) {
+export function ResetPasswordSuccess({ email, onRetry, dictionary }: ResetPasswordSuccessProps) {
   return (
     <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="visible">
       <div className="flex justify-center">
@@ -28,11 +31,11 @@ export function ResetPasswordSuccess({ email, onRetry }: ResetPasswordSuccessPro
         <p className="font-medium">{email}</p>
       </div>
       <Button variant="outline" onClick={onRetry}>
-        Try again
+        {dictionary?.auth.resetPassword.tryAgain}
       </Button>
       <Link href="/login" className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
         <ArrowLeft className="h-4 w-4" />
-        Back to sign in
+        {dictionary?.auth.resetPassword.backToSignIn}
       </Link>
     </motion.div>
   );

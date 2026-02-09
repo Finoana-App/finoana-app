@@ -9,7 +9,10 @@ export default async function ForgotPassword({ params }: { params: Promise<{ lan
   const dict = await getDictionary(lang);
 
   return (
-    <RightSideWrapper title={dict.auth.forgotPassword} subtitle={dict.auth.forgotPasswordSubtitle}>
+    <RightSideWrapper
+      title={dict.auth.resetPassword.forgotPassword}
+      subtitle={dict.auth.resetPassword.forgotPasswordSubtitle}
+    >
       <ResetPasswordForm />
     </RightSideWrapper>
   );
