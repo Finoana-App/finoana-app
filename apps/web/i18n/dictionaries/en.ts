@@ -140,6 +140,7 @@ export const en = {
       forgot: 'Forgot?',
       forgotPassword: 'Forgot Password?',
       forgotPasswordSubtitle: "Enter your email address and we'll send you a link to reset your password.",
+      mailSentTo: "Email sent to",
       sending: 'Sending...',
       sendResetLink: 'Send reset link',
       tryAgain: 'Try again',

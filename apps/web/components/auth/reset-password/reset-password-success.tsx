@@ -27,10 +27,10 @@ export function ResetPasswordSuccess({ email, onRetry, dictionary }: ResetPasswo
         </div>
       </div>
       <div className="bg-secondary rounded-2xl p-4 text-center">
-        <p className="text-xs tracking-wider uppercase">Email sent to</p>
+        <p className="text-xs tracking-wider uppercase">{dictionary?.auth.resetPassword.mailSentTo}</p>
         <p className="font-medium">{email}</p>
       </div>
-      <Button variant="outline" onClick={onRetry}>
+      <Button variant="outline" onClick={onRetry} className="h-14 w-full rounded-2xl">
         {dictionary?.auth.resetPassword.tryAgain}
       </Button>
       <Link href="/login" className="text-muted-foreground flex items-center justify-center gap-2 text-sm">

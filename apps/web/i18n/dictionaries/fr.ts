@@ -144,6 +144,7 @@ export const fr: Dictionary = {
       forgotPassword: 'Mot de passe oublié ?',
       forgotPasswordSubtitle:
         'Entrez votre email et nous vous enverrons un lien pour réinitialiser votre mot de passe.',
+      mailSentTo: 'Email envoyé à',
       sending: 'Envoi...',
       sendResetLink: 'Envoyer le lien de réinitialisation',
       tryAgain: 'Réessayer',
