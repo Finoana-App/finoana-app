@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 
-import { app, logger } from '@/server';
 import { env } from '@/common/utils/env-config';
+import { app, logger } from '@/server';
 
 const server = app.listen(env.PORT, () => {
   const { NODE_ENV, HOST, PORT } = env;
