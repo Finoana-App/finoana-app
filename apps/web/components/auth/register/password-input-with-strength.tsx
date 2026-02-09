@@ -70,7 +70,7 @@ export function PasswordInputWithStrength({
               href={forgotPasswordHref}
               className="text-muted-foreground hover:text-foreground text-xs transition-colors"
             >
-              {dictionary?.auth.forgot || 'Forgot?'}
+              {dictionary?.auth.resetPassword.forgot || 'Forgot?'}
             </Link>
           )}
         </div>
