@@ -1,6 +1,16 @@
 {
   "name": "web",
   "version": "0.0.1",
+  "author": "Fiantso Harena",
+  "description": "Finoana is a Christian community platform focused on spiritual sharing, mutual support, collective prayer, and uplifting resources, all within a safe, respectful environment free from distracting algorithms",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Finoana-App/finoana-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Finoana-App/finoana-app/issues"
+  },
+  "homepage": "https://github.com/Finoana-App/finoana-api#readme",
   "type": "module",
   "private": true,
   "scripts": {
