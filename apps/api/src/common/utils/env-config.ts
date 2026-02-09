@@ -9,6 +9,13 @@ const envSchema = z.object({
   PORT: z.coerce.number().int().positive().default(8080),
   CORS_ORIGIN: z.string().default('http://localhost:3000'),
 
+  COMMON_RATE_LIMIT_MAX_REQUESTS: z.coerce.number().int().positive().default(100),
+  COMMON_RATE_LIMIT_WINDOW_MS: z.coerce
+    .number()
+    .int()
+    .positive()
+    .default(15 * 60 * 1000), // 15 min in ms
+
   DATABASE_URL: z.string().url(),
 
   FIREBASE_PRIVATE_KEY: z.string().nonempty(),

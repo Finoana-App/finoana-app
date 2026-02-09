@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import { pino } from 'pino';
 
 import { userRouter } from './api/user/user.route';
+import rateLimiter from './common/middlewares/rate-limiter';
 import { env } from './common/utils/env-config';
 
 const logger = pino({ name: 'server start' });
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: env.NODE_ENV === 'development' ? '*' : env.CORS_ORIGIN, credentials: true }));
 app.use(helmet());
+app.use(rateLimiter);
 
 app.use(`${BASE_URL}/users`, userRouter);
 
