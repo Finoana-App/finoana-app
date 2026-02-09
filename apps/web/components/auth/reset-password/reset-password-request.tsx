@@ -15,7 +15,7 @@ import { useFocusState } from '@/hooks/use-focus-state';
 import { getDictionary, Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
-import { AnimatedInput } from '../animated-input';
+import { AnimatedInput } from '../shared/animated-input';
 
 interface ResetPasswordRequestProps {
   email: string;
