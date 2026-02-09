@@ -11,10 +11,18 @@
     "url": "https://github.com/Finoana-App/finoana-app/issues"
   },
   "homepage": "https://github.com/Finoana-App/finoana-api#readme",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node --import=tsx --watch src/index.ts"
   },
   "keywords": [],
-  "packageManager": "pnpm@10.4.1"
+  "packageManager": "pnpm@10.4.1",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@workspace/eslint-config": "workspace:^",
+    "@workspace/typescript-config": "workspace:*",
+    "tsx": "^4.21.0"
+  }
 }
