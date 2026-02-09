@@ -137,6 +137,8 @@ export const en = {
     emailPlaceholder: 'your@email.com',
     password: 'Password',
     forgot: 'Forgot?',
+    forgotPassword: 'Forgot Password?',
+    forgotPasswordSubtitle: "Enter your email address and we'll send you a link to reset your password.",
     continue: 'Continue',
     divider: 'or',
     google: 'Continue with Google',
