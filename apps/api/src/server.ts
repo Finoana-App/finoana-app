@@ -3,6 +3,7 @@ import express, { type Express } from 'express';
 import helmet from 'helmet';
 import { pino } from 'pino';
 
+import { healthCheckRouter } from '@/api/health-check/health-check.route';
 import { userRouter } from '@/api/user/user.route';
 import { ErrorHandler, RateLimiter, RequestLogger } from '@/common/middlewares';
 import { env } from '@/common/utils';
@@ -21,6 +22,7 @@ app.use(RateLimiter);
 
 app.use(RequestLogger);
 
+app.use(`${BASE_URL}/`, healthCheckRouter);
 app.use(`${BASE_URL}/users`, userRouter);
 
 app.use(ErrorHandler());
