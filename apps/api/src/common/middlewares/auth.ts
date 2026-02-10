@@ -2,9 +2,9 @@ import { eq } from 'drizzle-orm';
 import type { NextFunction, Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-import { auth } from '../config/firebase';
-import { db } from '../databases';
-import { usersTable } from '../databases/schema';
+import { auth } from '@/common/config/firebase';
+import { db } from '@/common/databases';
+import { usersTable } from '@/common/databases/schema';
 
 export interface AuthRequest extends Request {
   user?: {
@@ -18,7 +18,7 @@ export interface AuthRequest extends Request {
 export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    if (!authHeader?.startsWith('Bearer ')) {
       return res.status(StatusCodes.UNAUTHORIZED).json({ error: 'No token provided' });
     }
 
@@ -27,7 +27,7 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
 
     const [dbUser] = await db.select().from(usersTable).where(eq(usersTable.firebaseUid, decodedToken.uid)).limit(1);
 
-    if (!dbUser || !dbUser.isActive) {
+    if (!dbUser?.isActive) {
       return res.status(StatusCodes.FORBIDDEN).json({ error: 'User not found or inactive' });
     }
 
