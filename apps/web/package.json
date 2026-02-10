@@ -22,6 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.20",
     "@workspace/ui": "workspace:*",
     "gsap": "^3.14.2",
     "lucide-react": "^0.563.0",
