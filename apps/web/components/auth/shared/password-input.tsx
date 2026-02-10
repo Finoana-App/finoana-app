@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -37,7 +36,7 @@ export function PasswordInput({
   forgotPasswordHref = '/forgot-password',
   className = '',
   ...props
-}: PasswordInputProps) {
+}: Readonly<PasswordInputProps>) {
   const [showPassword, setShowPassword] = useState(false);
   const [text, setText] = useState('');
 

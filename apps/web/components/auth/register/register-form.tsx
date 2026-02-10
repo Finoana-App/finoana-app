@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { SubmitEvent, useEffect, useState } from 'react';
 
 import { usePathname } from 'next/navigation';
 
@@ -33,7 +33,7 @@ export function RegisterForm() {
     });
   }, [lang]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log({ name, email, password });
   };

@@ -18,7 +18,7 @@ const containerVariants = {
   unfocused: { scale: 1, transition: { duration: 0.2 } },
 };
 
-export function ResetPasswordSuccess({ email, onRetry, dictionary }: ResetPasswordSuccessProps) {
+export function ResetPasswordSuccess({ email, onRetry, dictionary }: Readonly<ResetPasswordSuccessProps>) {
   return (
     <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="visible">
       <div className="flex justify-center">

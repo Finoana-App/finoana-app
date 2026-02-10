@@ -23,7 +23,7 @@ import { useCallback, useState } from 'react';
 export type FocusState = string | null;
 
 export function useFocusState() {
-  const [focused, setFocusedState] = useState<FocusState>(null);
+  const [focusedState, setFocusedState] = useState<FocusState>(null);
 
   const setFocused = useCallback((fieldId: string) => {
     setFocusedState(fieldId);
@@ -33,10 +33,10 @@ export function useFocusState() {
     setFocusedState(null);
   }, []);
 
-  const isFocused = useCallback((fieldId: string) => focused === fieldId, [focused]);
+  const isFocused = useCallback((fieldId: string) => focusedState === fieldId, [focusedState]);
 
   return {
-    focused,
+    focusedState,
     setFocused,
     clearFocus,
     isFocused,

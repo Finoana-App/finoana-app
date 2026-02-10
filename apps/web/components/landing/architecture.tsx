@@ -10,7 +10,7 @@ import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Architecture({ dict }: { dict: Dictionary }) {
+export function Architecture({ dict }: Readonly<{ dict: Dictionary }>) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -55,10 +55,12 @@ export function Architecture({ dict }: { dict: Dictionary }) {
 
   const blocks = [
     {
+      id: 1,
       title: dict.architecture.security.title,
       items: [dict.architecture.security.item1, dict.architecture.security.item2, dict.architecture.security.item3],
     },
     {
+      id: 2,
       title: dict.architecture.performance.title,
       items: [
         dict.architecture.performance.item1,
@@ -67,6 +69,7 @@ export function Architecture({ dict }: { dict: Dictionary }) {
       ],
     },
     {
+      id: 3,
       title: dict.architecture.scale.title,
       items: [dict.architecture.scale.item1, dict.architecture.scale.item2, dict.architecture.scale.item3],
     },
@@ -95,12 +98,12 @@ export function Architecture({ dict }: { dict: Dictionary }) {
           </motion.p>
         </div>
         <div className="arch-blocks grid gap-8 md:grid-cols-3 md:gap-12">
-          {blocks.map((block, blockIndex) => (
-            <motion.div key={blockIndex} className="arch-block" whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
+          {blocks.map((block) => (
+            <motion.div key={block.id} className="arch-block" whileHover={{ x: 4 }} transition={{ duration: 0.2 }}>
               <h3 className="border-background/20 mb-6 border-b pb-4 text-xl font-semibold">{block.title}</h3>
               <ul className="space-y-4">
-                {block.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="text-background/80 flex items-start gap-3">
+                {block.items.map((item) => (
+                  <li key={item} className="text-background/80 flex items-start gap-3">
                     <span className="text-background/40 mt-1.5 text-xs">●</span>
                     <span>{item}</span>
                   </li>

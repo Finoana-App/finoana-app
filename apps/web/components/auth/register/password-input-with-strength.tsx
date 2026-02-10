@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -43,7 +42,7 @@ export function PasswordInputWithStrength({
   className = '',
   value = '',
   ...props
-}: PasswordInputWithStrengthProps) {
+}: Readonly<PasswordInputWithStrengthProps>) {
   const [showPassword, setShowPassword] = useState(false);
   const passwordValue = String(value);
 

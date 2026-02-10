@@ -11,7 +11,7 @@ interface PasswordStrengthIndicatorProps {
   dictionary: Dictionary | null;
 }
 
-export function PasswordStrengthIndicator({ password, dictionary }: PasswordStrengthIndicatorProps) {
+export function PasswordStrengthIndicator({ password, dictionary }: Readonly<PasswordStrengthIndicatorProps>) {
   if (!password) return null;
 
   const strength = getPasswordStrength(password);

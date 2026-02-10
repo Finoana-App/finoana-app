@@ -30,7 +30,9 @@ export function ResetPasswordForm() {
 
   return (
     <AnimatePresence mode="wait">
-      {!isSuccess ? (
+      {isSuccess ? (
+        <ResetPasswordSuccess key="success" email={email} onRetry={reset} dictionary={dictionary} />
+      ) : (
         <ResetPasswordRequest
           key="request"
           email={email}
@@ -39,8 +41,6 @@ export function ResetPasswordForm() {
           onEmailChange={setEmail}
           onSubmit={submit}
         />
-      ) : (
-        <ResetPasswordSuccess key="success" email={email} onRetry={reset} dictionary={dictionary} />
       )}
     </AnimatePresence>
   );

@@ -32,7 +32,7 @@ export function ResetPasswordRequest({
   dictionary,
   onEmailChange,
   onSubmit,
-}: ResetPasswordRequestProps) {
+}: Readonly<ResetPasswordRequestProps>) {
   const { setFocused, clearFocus, isFocused } = useFocusState();
 
   return (

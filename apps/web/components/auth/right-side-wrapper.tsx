@@ -11,7 +11,7 @@ interface RightSideWrapperProps {
   children: React.ReactNode;
 }
 
-export function RightSideWrapper({ title, subtitle, children }: RightSideWrapperProps) {
+export function RightSideWrapper({ title, subtitle, children }: Readonly<RightSideWrapperProps>) {
   const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

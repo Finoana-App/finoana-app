@@ -37,17 +37,17 @@ function AnimatedBlob({
   className,
   animate,
   transition,
-}: {
+}: Readonly<{
   className: string;
   animate: Record<string, number[]>;
   transition: Record<string, unknown>;
-}) {
+}>) {
   return (
     <motion.div className={`absolute rounded-full blur-3xl ${className}`} animate={animate} transition={transition} />
   );
 }
 
-export function NotFound({ redirect }: NotFoundProps) {
+export function NotFound({ redirect }: Readonly<NotFoundProps>) {
   const pathname = usePathname();
 
   return (
@@ -97,7 +97,7 @@ export function NotFound({ redirect }: NotFoundProps) {
           <Button
             variant="ghost"
             className="text-muted-foreground hover:text-foreground h-11 gap-2 rounded-full px-6"
-            onClick={() => window.history.back()}
+            onClick={() => globalThis.history.back()}
           >
             <ArrowLeft className="h-4 w-4" />
             Go back

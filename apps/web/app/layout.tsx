@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   description: 'Finoana christian community web platform',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${raleway.className} antialiased`}>
         <Providers>{children}</Providers>
       </body>

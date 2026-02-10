@@ -10,7 +10,7 @@ import { motion } from 'motion/react';
 import { Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
-export function Header({ currentLang, dict }: { currentLang: Locale; dict: Dictionary }) {
+export function Header({ currentLang, dict }: Readonly<{ currentLang: Locale; dict: Dictionary }>) {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const router = useRouter();

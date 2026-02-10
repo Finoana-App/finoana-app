@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 
 import { Button } from '@workspace/ui/components/button';
 
-export function OAuth({ text }: { text: string }) {
+export function OAuth({ text }: Readonly<{ text: string }>) {
   return (
     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
       <Button

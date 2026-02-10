@@ -19,7 +19,14 @@ const inputVariants = {
   unfocused: { scale: 1, transition: { duration: 0.2 } },
 };
 
-export function AnimatedInput({ id, label, focused = false, error, className = '', ...props }: AnimatedInputProps) {
+export function AnimatedInput({
+  id,
+  label,
+  focused = false,
+  error,
+  className = '',
+  ...props
+}: Readonly<AnimatedInputProps>) {
   return (
     <motion.div className="space-y-2" variants={inputVariants} animate={focused ? 'focused' : 'unfocused'}>
       <Label htmlFor={id} className="text-muted-foreground text-xs tracking-wider uppercase">

@@ -10,7 +10,7 @@ import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Values({ dict }: { dict: Dictionary }) {
+export function Values({ dict }: Readonly<{ dict: Dictionary }>) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ export function Values({ dict }: { dict: Dictionary }) {
         <div className="values-grid mx-auto grid max-w-4xl gap-6 md:grid-cols-2 md:gap-8">
           {values.map((value, index) => (
             <motion.div
-              key={index}
+              key={value.title}
               className="value-card border-border bg-background group relative rounded-lg border p-8 md:p-10"
               whileHover={{
                 borderColor: 'hsl(var(--foreground) / 0.2)',

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { SubmitEvent, useEffect, useRef, useState } from 'react';
 
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
@@ -17,7 +17,7 @@ import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function MobileDownload({ dict }: { dict: Dictionary }) {
+export function MobileDownload({ dict }: Readonly<{ dict: Dictionary }>) {
   const { theme } = useTheme();
   const sectionRef = useRef<HTMLElement>(null);
   const [email, setEmail] = useState('');
@@ -55,7 +55,7 @@ export function MobileDownload({ dict }: { dict: Dictionary }) {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (email) {
       setSubmitted(true);
@@ -132,7 +132,15 @@ export function MobileDownload({ dict }: { dict: Dictionary }) {
             </div>
           </div>
           <div className="reveal-mobile mx-auto max-w-md">
-            {!submitted ? (
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-background border-border rounded-lg border px-6 py-4"
+              >
+                <p className="text-muted-foreground text-sm">{dict.mobile.successMessage}</p>
+              </motion.div>
+            ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
                 <Input
                   type="email"
@@ -146,14 +154,6 @@ export function MobileDownload({ dict }: { dict: Dictionary }) {
                   {dict.mobile.notify}
                 </Button>
               </form>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-background border-border rounded-lg border px-6 py-4"
-              >
-                <p className="text-muted-foreground text-sm">{dict.mobile.successMessage}</p>
-              </motion.div>
             )}
           </div>
         </div>

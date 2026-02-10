@@ -10,7 +10,7 @@ import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Vision({ dict }: { dict: Dictionary }) {
+export function Vision({ dict }: Readonly<{ dict: Dictionary }>) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -91,9 +91,9 @@ export function Vision({ dict }: { dict: Dictionary }) {
           </motion.p>
         </div>
         <div className="vision-cards grid gap-6 md:grid-cols-3 md:gap-8">
-          {principles.map((principle, index) => (
+          {principles.map((principle) => (
             <motion.div
-              key={index}
+              key={principle.title}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="vision-card doc-card group"

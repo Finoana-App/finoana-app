@@ -7,7 +7,7 @@ import { motion } from 'motion/react';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
 
-export function Hero({ dict }: { dict: Dictionary }) {
+export function Hero({ dict }: Readonly<{ dict: Dictionary }>) {
   const heroRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);

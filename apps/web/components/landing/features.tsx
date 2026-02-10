@@ -10,7 +10,7 @@ import { Dictionary } from '@/i18n/dictionaries/en';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Features({ dict }: { dict: Dictionary }) {
+export function Features({ dict }: Readonly<{ dict: Dictionary }>) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -105,9 +105,9 @@ export function Features({ dict }: { dict: Dictionary }) {
           </motion.p>
         </div>
         <div className="features-grid bg-border grid gap-px overflow-hidden rounded-lg md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <motion.div
-              key={index}
+              key={feature.number}
               className="feature-item bg-background group cursor-default p-8 md:p-10"
               whileHover={{ backgroundColor: 'hsl(var(--surface))' }}
               transition={{ duration: 0.3 }}

@@ -1,5 +1,4 @@
-import { RightSideWrapper } from '@/components/auth';
-import { ResetPasswordForm } from '@/components/auth';
+import { ResetPasswordForm, RightSideWrapper } from '@/components/auth';
 
 import { getDictionary, Locale } from '@/i18n';
 

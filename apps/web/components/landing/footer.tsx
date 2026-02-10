@@ -7,7 +7,7 @@ import { motion } from 'motion/react';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
 
-export function Footer({ dict }: { dict: Dictionary }) {
+export function Footer({ dict }: Readonly<{ dict: Dictionary }>) {
   const { theme } = useTheme();
 
   const currentYear = new Date().getFullYear();
