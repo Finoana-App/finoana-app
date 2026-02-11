@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
+import { toast } from 'sonner';
 
 import { Button } from '@workspace/ui/components/button';
 
@@ -22,7 +23,7 @@ export function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [dictionary, setDictionary] = useState<Dictionary | null>(null);
 
   const { setFocused, clearFocus, isFocused } = useFocusState();
@@ -46,26 +47,31 @@ export function RegisterForm() {
   };
 
   const handleGoogleSignIn = async () => {
-    setError(null);
+    setErrorMessage(null);
     try {
       await signInWithGoogle();
       router.push(`/${lang}/dashboard`);
-    } catch (error: any) {
-      setError(error.message || 'Google sign-in failed. Please try again.');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+        toast.error(error.message, {
+          description: errorMessage,
+          position: 'top-center',
+          duration: 5000,
+        });
+      } else {
+        setErrorMessage('Google sign-in failed. Please try again.');
+        toast.error('Something went wrong', {
+          description: errorMessage,
+          position: 'top-center',
+          duration: 5000,
+        });
+      }
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {!error && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800"
-        >
-          Misy olana eto
-        </motion.div>
-      )}
       <AnimatedInput
         id="name"
         type="text"

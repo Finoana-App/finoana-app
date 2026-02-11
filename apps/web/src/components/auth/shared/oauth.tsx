@@ -8,7 +8,7 @@ export function OAuth({ text, onClick }: Readonly<{ text: string; onClick: () =>
       <Button
         type="button"
         variant="outline"
-        className="border-border hover:bg-secondary h-12 w-full rounded-2xl transition-all"
+        className="border-border hover:bg-secondary h-12 w-full cursor-pointer rounded-2xl transition-all"
         onClick={onClick}
       >
         <svg className="h-4 w-4" viewBox="0 0 24 24">

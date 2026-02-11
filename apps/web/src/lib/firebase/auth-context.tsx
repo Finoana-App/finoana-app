@@ -146,11 +146,27 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   const signInWithGoogle = useCallback((): Promise<void> => {
     return withAuthAction(async () => {
       const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(auth, provider);
 
-      await registerMutation.mutateAsync({
-        displayName: result.user.displayName || 'Google User',
-      } as SignUpInput);
+      provider.addScope('profile');
+      provider.addScope('email');
+
+      provider.setCustomParameters({
+        prompt: 'select_account',
+      });
+
+      try {
+        const result = await signInWithPopup(auth, provider);
+
+        if (result.user) {
+          await registerMutation.mutateAsync({
+            displayName: result.user.displayName || result.user.email?.split('@')[0] || 'Google User',
+            email: result.user.email,
+          } as SignUpInput);
+        }
+      } catch (error) {
+        console.error('Google sign-in error:', error);
+        throw error;
+      }
     });
   }, [withAuthAction, registerMutation]);
 
