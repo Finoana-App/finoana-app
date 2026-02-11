@@ -2,7 +2,7 @@
 
 import { SubmitEvent, useEffect, useState } from 'react';
 
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -13,6 +13,8 @@ import { AnimatedInput, Divider, OAuth, PasswordInputWithStrength } from '@/comp
 
 import { useFocusState } from '@/hooks/use-focus-state';
 
+import { useAuthContext } from '@/lib/firebase/auth-context';
+
 import { getDictionary, Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
@@ -20,9 +22,14 @@ export function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
   const [dictionary, setDictionary] = useState<Dictionary | null>(null);
 
   const { setFocused, clearFocus, isFocused } = useFocusState();
+
+  const { signInWithGoogle } = useAuthContext();
+
+  const router = useRouter();
 
   const pathname = usePathname();
   const lang = pathname.split('/')[1] as Locale;
@@ -38,8 +45,27 @@ export function RegisterForm() {
     console.log({ name, email, password });
   };
 
+  const handleGoogleSignIn = async () => {
+    setError(null);
+    try {
+      await signInWithGoogle();
+      router.push(`/${lang}/dashboard`);
+    } catch (error: any) {
+      setError(error.message || 'Google sign-in failed. Please try again.');
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {!error && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800"
+        >
+          Misy olana eto
+        </motion.div>
+      )}
       <AnimatedInput
         id="name"
         type="text"
@@ -82,7 +108,7 @@ export function RegisterForm() {
         </Button>
       </motion.div>
       <Divider text={dictionary?.auth.divider as string} />
-      <OAuth text={dictionary?.auth.google as string} />
+      <OAuth text={dictionary?.auth.google as string} onClick={handleGoogleSignIn} />
     </form>
   );
 }

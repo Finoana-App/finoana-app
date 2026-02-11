@@ -2,13 +2,14 @@ import { motion } from 'motion/react';
 
 import { Button } from '@workspace/ui/components/button';
 
-export function OAuth({ text }: Readonly<{ text: string }>) {
+export function OAuth({ text, onClick }: Readonly<{ text: string; onClick: () => void }>) {
   return (
     <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
       <Button
         type="button"
         variant="outline"
         className="border-border hover:bg-secondary h-12 w-full rounded-2xl transition-all"
+        onClick={onClick}
       >
         <svg className="h-4 w-4" viewBox="0 0 24 24">
           <path

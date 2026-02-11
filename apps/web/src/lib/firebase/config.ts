@@ -1,29 +1,32 @@
-import { getApps, initializeApp } from 'firebase/app';
-import { Auth, getAuth } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
+function getFirebaseConfig() {
+  const {
+    NEXT_PUBLIC_FIREBASE_API_KEY,
+    NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    NEXT_PUBLIC_FIREBASE_APP_ID,
+  } = process.env;
 
-const requiredEnvVars = [
-  'NEXT_PUBLIC_FIREBASE_API_KEY',
-  'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
-  'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
-];
-
-for (const envVar of requiredEnvVars) {
-  if (!process.env[envVar]) {
-    throw new Error(`Missing required environment variable: ${envVar}`);
+  if (!NEXT_PUBLIC_FIREBASE_API_KEY || !NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || !NEXT_PUBLIC_FIREBASE_PROJECT_ID) {
+    throw new Error('Missing required Firebase environment variables. Check .env.local');
   }
+
+  return {
+    apiKey: NEXT_PUBLIC_FIREBASE_API_KEY || 'SOME_API_KEY',
+    authDomain: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN || 'SOME_AUTH_DOMAIN',
+    projectId: NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'SOME_PROJECT_ID',
+    storageBucket: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || 'SOME_STORAGE_BUCKET',
+    messagingSenderId: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || 'SOME_MESSAGING_SENDER_ID',
+    appId: NEXT_PUBLIC_FIREBASE_APP_ID || 'SOME_APP_ID',
+  };
 }
 
-const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+const firebaseConfig = getFirebaseConfig();
 
-export const auth: Auth = getAuth(app);
-
-export default app;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+export { app, auth };
