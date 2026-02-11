@@ -169,17 +169,7 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
       signInWithGoogle,
       signOut,
     }),
-    [
-      state.firebaseUser,
-      state.loading,
-      state.error,
-      appUser,
-      isLoadingUser,
-      signIn,
-      signUp,
-      signInWithGoogle,
-      signOut,
-    ]
+    [state.firebaseUser, state.loading, state.error, appUser, isLoadingUser, signIn, signUp, signInWithGoogle, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

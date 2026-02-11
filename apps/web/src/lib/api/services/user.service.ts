@@ -1,4 +1,4 @@
-import { ApiResponse, SignUpInput, RegisterResponse } from '@workspace/types';
+import { ApiResponse, RegisterResponse, SignUpInput } from '@workspace/types';
 
 import { apiClient } from '../client';
 
