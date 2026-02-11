@@ -36,6 +36,23 @@ export interface User {
 }
 
 /**
+ * SignInInput request payload
+ */
+export type SignInInput = Pick<User, 'email'> & { password: string };
+
+/**
+ * Register request payload
+ */
+export type SignUpInput = Pick<User, 'email' | 'displayName'> & {
+  password: string;
+  acceptTerms?: boolean;
+};
+
+export interface RegisterResponse {
+  user: User;
+}
+
+/**
  * API Error response structure
  */
 export interface ApiErrorResponse {
