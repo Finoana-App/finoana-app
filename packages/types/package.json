@@ -1,0 +1,12 @@
+{
+  "name": "@workspace/types",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "packageManager": "pnpm@10.4.1"
+}
