@@ -13,7 +13,7 @@ import {
 
 import type { SignUpInput, User } from '@workspace/types';
 
-import { useCurrentUser, useRegister } from '@/lib/hooks/use-auth';
+import { useCurrentUser, useRegister } from '@/lib/hooks/use-user';
 
 import { auth } from './config';
 
