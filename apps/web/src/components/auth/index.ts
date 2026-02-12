@@ -1,5 +1,6 @@
 export * from './left-side';
 export * from './right-side-wrapper';
+export * from './protected-route';
 
 export * from './login/login-form';
 
