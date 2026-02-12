@@ -161,6 +161,14 @@ export const en = {
       good: 'Good',
       strong: 'Strong',
     },
+    errors: {
+      nameRequired: 'Name is required',
+      emailRequired: 'Email is required',
+      passwordRequired: 'Password is required',
+      passwordMin: 'Password must be at least 6 characters',
+      registrationFailed: 'Registration failed. Please try again.',
+      googleFailed: 'Google sign-in failed. Please try again.',
+    },
   },
 };
 

@@ -165,5 +165,13 @@ export const fr: Dictionary = {
       good: 'Bon',
       strong: 'Fort',
     },
+    errors: {
+      nameRequired: 'Le nom est requis',
+      emailRequired: "L'email est requis",
+      passwordRequired: 'Le mot de passe est requis',
+      passwordMin: 'Le mot de passe doit contenir au moins 6 caractères',
+      registrationFailed: "L'inscription a échoué. Veuillez réessayer.",
+      googleFailed: 'La connexion avec Google a échoué. Veuillez réessayer.',
+    },
   },
 };

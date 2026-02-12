@@ -51,12 +51,20 @@ export function RegisterForm() {
   const validateForm = (): FieldErrors => {
     const newErrors: FieldErrors = {};
 
-    if (!name.trim()) newErrors.name = 'Name is required';
-    if (!email.trim()) newErrors.email = 'Email is required';
+    if (!dictionary) return newErrors;
+
+    if (!name.trim()) {
+      newErrors.name = dictionary.auth.errors.nameRequired;
+    }
+
+    if (!email.trim()) {
+      newErrors.email = dictionary.auth.errors.emailRequired;
+    }
+
     if (!password.trim()) {
-      newErrors.password = 'Password is required';
+      newErrors.password = dictionary.auth.errors.passwordRequired;
     } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = dictionary.auth.errors.passwordMin;
     }
 
     return newErrors;
@@ -77,7 +85,8 @@ export function RegisterForm() {
       await signUp({ email, password, displayName: name });
       router.push(`/${lang}/dashboard`);
     } catch (err: unknown) {
-      const message = err instanceof Error && err.message ? err.message : 'Registration failed. Please try again.';
+      const fallback = dictionary?.auth.errors.registrationFailed;
+      const message = err instanceof Error && err.message ? err.message : fallback;
 
       setErrors({ general: message });
 
@@ -95,7 +104,8 @@ export function RegisterForm() {
       await signInWithGoogle();
       router.push(`/${lang}/dashboard`);
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Google sign-in failed. Please try again.';
+      const fallback = dictionary?.auth.errors.googleFailed;
+      const message = err instanceof Error && err.message ? err.message : fallback;
 
       setErrors({ general: message });
 
