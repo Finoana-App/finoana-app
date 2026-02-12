@@ -45,7 +45,6 @@ export type SignInInput = Pick<User, 'email'> & { password: string };
  */
 export type SignUpInput = Pick<User, 'email' | 'displayName'> & {
   password: string;
-  acceptTerms?: boolean;
 };
 
 export interface RegisterResponse {
