@@ -12,7 +12,6 @@ import { userService } from '@/lib/api/services/user.service';
 export const authKeys = {
   all: ['auth'] as const,
   currentUser: () => [...authKeys.all, 'currentUser'] as const,
-  profile: () => [...authKeys.all, 'profile'] as const,
 };
 
 export function useRegister() {

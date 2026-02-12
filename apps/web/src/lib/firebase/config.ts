@@ -9,16 +9,6 @@ function getFirebaseConfig() {
   const messagingSenderId = process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID;
   const appId = process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
 
-  console.log('Firebase env vars check:', {
-    apiKey: apiKey ? 'present' : 'missing',
-    authDomain: authDomain ? 'present' : 'missing',
-    projectId: projectId ? 'present' : 'missing',
-    storageBucket: storageBucket ? 'present' : 'missing',
-    messagingSenderId: messagingSenderId ? 'present' : 'missing',
-    appId: appId ? 'present' : 'missing',
-    allPublicVars: Object.keys(process.env).filter((key) => key.startsWith('NEXT_PUBLIC_')),
-  });
-
   if (!apiKey) {
     throw new Error(
       'NEXT_PUBLIC_FIREBASE_API_KEY is not defined!\n' +
@@ -40,10 +30,6 @@ function getFirebaseConfig() {
 }
 
 const firebaseConfig = getFirebaseConfig();
-console.log('Firebase initialized with config:', {
-  ...firebaseConfig,
-  apiKey: firebaseConfig.apiKey?.substring(0, 5) + '...',
-});
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

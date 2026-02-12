@@ -171,7 +171,10 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   }, [withAuthAction, registerMutation]);
 
   const signOut = useCallback((): Promise<void> => {
-    return withAuthAction(() => firebaseSignOut(auth));
+    return withAuthAction(async () => {
+      await firebaseSignOut(auth);
+      globalThis.location.href = '/login';
+    });
   }, [withAuthAction]);
 
   const value = useMemo<AuthContextValue>(

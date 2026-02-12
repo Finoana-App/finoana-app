@@ -24,6 +24,9 @@ class UserService {
       }
 
       const token = authHeader.split('Bearer ')[1];
+
+      console.log('This is the token', token);
+
       const decodedToken = await auth.verifyIdToken(token as string);
 
       const validatedData = RegisterInputSchema.parse(req.body);
@@ -54,6 +57,27 @@ class UserService {
       const errorMessage = `Error creating user:, ${(ex as Error).message}`;
       logger.error(errorMessage);
       return ServiceResponse.failure('An error occurred while creating user.', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async whoami(req: AuthRequest, _res: Response) {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+      }
+
+      const user = await this.userRepository.findById(userId);
+
+      if (!user) {
+        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+      }
+
+      return ServiceResponse.success('User found', user);
+    } catch (ex) {
+      const errorMessage = `Error finding user:, ${(ex as Error).message}`;
+      logger.error(errorMessage);
+      return ServiceResponse.failure('An error occurred while finding user.', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
 }

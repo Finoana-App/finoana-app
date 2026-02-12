@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 import { db } from '@/common/databases';
 import { usersTable } from '@/common/databases/schema';
@@ -34,5 +34,26 @@ export class UserRepository {
       })
       .where(eq(usersTable.id, id))
       .returning();
+  }
+
+  async findById(id: string) {
+    const [user] = await db
+      .select({
+        id: usersTable.id,
+        email: usersTable.email,
+        displayName: usersTable.displayName,
+        photoUrl: usersTable.photoUrl,
+        bio: usersTable.bio,
+        role: usersTable.role,
+        privacyLevel: usersTable.privacyLevel,
+        isVerified: usersTable.isVerified,
+        createdAt: usersTable.createdAt,
+        lastSeenAt: usersTable.lastSeenAt,
+      })
+      .from(usersTable)
+      .where(and(eq(usersTable.id, id), eq(usersTable.isActive, true)))
+      .limit(1);
+
+    return user;
   }
 }
