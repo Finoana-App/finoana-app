@@ -19,15 +19,21 @@ import { useAuthContext } from '@/lib/firebase/auth-context';
 import { getDictionary, Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
+type FieldErrors = {
+  email?: string;
+  password?: string;
+  general?: string;
+};
+
 export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [dictionnary, setDictionnary] = useState<Dictionary | null>(null);
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [dictionary, setDictionary] = useState<Dictionary | null>(null);
 
   const { setFocused, clearFocus, isFocused } = useFocusState();
 
-  const { signInWithGoogle } = useAuthContext();
+  const { loading, signIn, signInWithGoogle } = useAuthContext();
 
   const router = useRouter();
 
@@ -36,36 +42,71 @@ export function LoginForm() {
 
   useEffect(() => {
     getDictionary(lang).then((dict) => {
-      setDictionnary(dict);
+      setDictionary(dict);
     });
   }, [lang]);
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const validateForm = (): FieldErrors => {
+    const newErrors: FieldErrors = {};
+
+    if (!dictionary) return newErrors;
+
+    if (!email.trim()) {
+      newErrors.email = dictionary.auth.errors.emailRequired;
+    }
+
+    if (!password.trim()) {
+      newErrors.password = dictionary.auth.errors.passwordRequired;
+    } else if (password.length < 6) {
+      newErrors.password = dictionary.auth.errors.passwordMin;
+    }
+
+    return newErrors;
+  };
+
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ email, password });
+    setErrors({});
+
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    try {
+      await signIn({ email, password });
+      router.push(`/${lang}/dashboard`);
+    } catch (err: unknown) {
+      const fallback = dictionary?.auth.errors.loginFailed;
+      const message = err instanceof Error && err.message ? err.message : fallback;
+
+      setErrors({ general: message });
+
+      toast.error(message, {
+        position: 'top-center',
+        duration: 5000,
+      });
+    }
   };
 
   const handleGoogleSignIn = async () => {
-    setErrorMessage(null);
+    setErrors({});
+
     try {
       await signInWithGoogle();
       router.push(`/${lang}/dashboard`);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
-        toast.error(error.message, {
-          description: errorMessage,
-          position: 'top-center',
-          duration: 5000,
-        });
-      } else {
-        setErrorMessage('Google sign-in failed. Please try again.');
-        toast.error('Something went wrong', {
-          description: errorMessage,
-          position: 'top-center',
-          duration: 5000,
-        });
-      }
+    } catch (err: unknown) {
+      const fallback = dictionary?.auth.errors.googleFailed;
+      const message = err instanceof Error && err.message ? err.message : fallback;
+
+      setErrors({ general: message });
+
+      toast.error(message, {
+        position: 'top-center',
+        duration: 5000,
+      });
     }
   };
 
@@ -74,17 +115,18 @@ export function LoginForm() {
       <AnimatedInput
         id="email"
         type="email"
-        label={dictionnary?.auth.email as string}
-        placeholder={dictionnary?.auth.emailPlaceholder as string}
+        label={dictionary?.auth.email as string}
+        placeholder={dictionary?.auth.emailPlaceholder as string}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         focused={isFocused('email')}
         onFocus={() => setFocused('email')}
         onBlur={clearFocus}
+        error={errors.email}
       />
       <PasswordInput
         id="password"
-        label={dictionnary?.auth.password as string}
+        label={dictionary?.auth.password as string}
         placeholder="••••••••"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -92,18 +134,29 @@ export function LoginForm() {
         onFocus={() => setFocused('password')}
         onBlur={clearFocus}
         showForgotPassword
+        error={errors.password}
       />
       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
         <Button
           type="submit"
-          className="group bg-primary hover:bg-primary/90 h-14 w-full gap-2 rounded-2xl text-base font-medium transition-all"
+          className="group bg-primary hover:bg-primary/90 h-14 w-full cursor-pointer gap-2 rounded-2xl text-base font-medium transition-all"
+          disabled={loading}
         >
-          {dictionnary?.auth.continue as string}
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          {loading ? (
+            <>
+              <span className="border-background h-4 w-4 animate-spin rounded-full border-2 border-t-transparent" />
+              {dictionary?.auth.connexion}
+            </>
+          ) : (
+            <>
+              {dictionary?.auth.continue}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </>
+          )}
         </Button>
       </motion.div>
-      <Divider text={dictionnary?.auth.divider as string} />
-      <OAuth text={dictionnary?.auth.google as string} onClick={handleGoogleSignIn} />
+      <Divider text={dictionary?.auth.divider as string} />
+      <OAuth text={dictionary?.auth.google as string} onClick={handleGoogleSignIn} />
     </form>
   );
 }

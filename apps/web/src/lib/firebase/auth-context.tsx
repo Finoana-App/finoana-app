@@ -9,11 +9,12 @@ import {
   User as FirebaseUser,
   GoogleAuthProvider,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   updateProfile,
 } from 'firebase/auth';
 
-import type { SignUpInput, User } from '@workspace/types';
+import type { SignInInput, SignUpInput, User } from '@workspace/types';
 
 import { useCurrentUser, useRegister } from '@/lib/hooks/use-user';
 
@@ -24,6 +25,7 @@ interface AuthContextValue {
   user: User | null;
   loading: boolean;
   error: string | null;
+  signIn: (data: SignInInput) => Promise<void>;
   signUp: (data: SignUpInput) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -116,6 +118,17 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
     }
   }, []);
 
+  const signIn = useCallback(
+    (data: SignInInput): Promise<void> => {
+      return withAuthAction(async () => {
+        const { email, password } = data;
+
+        await signInWithEmailAndPassword(auth, email, password);
+      });
+    },
+    [withAuthAction]
+  );
+
   const signUp = useCallback(
     (data: SignUpInput): Promise<void> => {
       return withAuthAction(async () => {
@@ -181,11 +194,12 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
       user: (appUser as unknown as User) || null,
       loading: state.loading || isLoadingUser,
       error: state.error,
+      signIn,
       signUp,
       signInWithGoogle,
       signOut,
     }),
-    [state.firebaseUser, state.loading, state.error, appUser, isLoadingUser, signUp, signInWithGoogle, signOut]
+    [state.firebaseUser, state.loading, state.error, appUser, isLoadingUser, signIn, signUp, signInWithGoogle, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
