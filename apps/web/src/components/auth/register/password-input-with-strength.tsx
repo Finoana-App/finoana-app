@@ -90,7 +90,7 @@ export function PasswordInputWithStrength({
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
         </div>
-        {error && <p className="text-destructive mt-1 text-xs">{error}</p>}
+        {error && <p className="text-muted-foreground mt-1 text-xs">{error}</p>}
         {showStrengthIndicator && <PasswordStrengthIndicator dictionary={dictionary} password={passwordValue} />}
       </motion.div>
     </div>

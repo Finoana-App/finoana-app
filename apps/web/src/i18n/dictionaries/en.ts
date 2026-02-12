@@ -151,6 +151,7 @@ export const en = {
     google: 'Continue with Google',
     newHere: 'New here?',
     createAccount: 'Create an account',
+    creatingAccount: 'Creating account...',
     haveAccount: 'Already have an account?',
     signin: 'Sign in',
     passwordStrength: {

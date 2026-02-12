@@ -155,6 +155,7 @@ export const fr: Dictionary = {
     google: 'Continuer avec google',
     newHere: 'Vous êtes nouveau ?',
     createAccount: 'Créer un compte',
+    creatingAccount: 'Création du compte...',
     haveAccount: 'Vous avez déjà un compte ?',
     signin: 'Se connecter',
     passwordStrength: {

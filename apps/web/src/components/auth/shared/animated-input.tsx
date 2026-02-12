@@ -37,7 +37,7 @@ export function AnimatedInput({
         className={`bg-secondary placeholder:text-muted-foreground/50 focus-visible:ring-primary/20 h-14 rounded-2xl border-0 px-5 text-base transition-all focus-visible:ring-1 ${className}`}
         {...props}
       />
-      {error && <p className="text-destructive mt-1 text-xs">{error}</p>}
+      {error && <p className="text-muted-foreground mt-1 text-xs">{error}</p>}
     </motion.div>
   );
 }

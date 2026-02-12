@@ -19,16 +19,23 @@ import { useAuthContext } from '@/lib/firebase/auth-context';
 import { getDictionary, Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
+type FieldErrors = {
+  name?: string;
+  email?: string;
+  password?: string;
+  general?: string;
+};
+
 export function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [errors, setErrors] = useState<FieldErrors>({});
   const [dictionary, setDictionary] = useState<Dictionary | null>(null);
 
   const { setFocused, clearFocus, isFocused } = useFocusState();
 
-  const { signUp, signInWithGoogle } = useAuthContext();
+  const { loading, signUp, signInWithGoogle } = useAuthContext();
 
   const router = useRouter();
 
@@ -41,65 +48,61 @@ export function RegisterForm() {
     });
   }, [lang]);
 
+  const validateForm = (): FieldErrors => {
+    const newErrors: FieldErrors = {};
+
+    if (!name.trim()) newErrors.name = 'Name is required';
+    if (!email.trim()) newErrors.email = 'Email is required';
+    if (!password.trim()) {
+      newErrors.password = 'Password is required';
+    } else if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+
+    return newErrors;
+  };
+
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setErrorMessage(null);
+    setErrors({});
 
-    if (!name.trim()) {
-      setErrorMessage('Name is required');
-      return;
-    }
-    if (!email.trim()) {
-      setErrorMessage('Email is required');
-      return;
-    }
-    if (password.length < 6) {
-      setErrorMessage('Password must be at least 6 characters');
+    const validationErrors = validateForm();
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
     try {
       await signUp({ email, password, displayName: name });
       router.push(`/${lang}/dashboard`);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message || 'Registration failed. Please try again.');
-        toast.error(error.message, {
-          description: errorMessage,
-          position: 'top-center',
-          duration: 5000,
-        });
-      } else {
-        setErrorMessage('Registration failed. Please try again.');
-        toast.error('Registration failed. Please try again.', {
-          position: 'top-center',
-          duration: 5000,
-        });
-      }
+    } catch (err: unknown) {
+      const message = err instanceof Error && err.message ? err.message : 'Registration failed. Please try again.';
+
+      setErrors({ general: message });
+
+      toast.error(message, {
+        position: 'top-center',
+        duration: 5000,
+      });
     }
   };
 
   const handleGoogleSignIn = async () => {
-    setErrorMessage(null);
+    setErrors({});
+
     try {
       await signInWithGoogle();
       router.push(`/${lang}/dashboard`);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
-        toast.error(error.message, {
-          description: errorMessage,
-          position: 'top-center',
-          duration: 5000,
-        });
-      } else {
-        setErrorMessage('Google sign-in failed. Please try again.');
-        toast.error('Something went wrong', {
-          description: errorMessage,
-          position: 'top-center',
-          duration: 5000,
-        });
-      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Google sign-in failed. Please try again.';
+
+      setErrors({ general: message });
+
+      toast.error(message, {
+        position: 'top-center',
+        duration: 5000,
+      });
     }
   };
 
@@ -115,6 +118,7 @@ export function RegisterForm() {
         focused={isFocused('name')}
         onFocus={() => setFocused('name')}
         onBlur={clearFocus}
+        error={errors.name}
       />
       <AnimatedInput
         id="email"
@@ -126,6 +130,7 @@ export function RegisterForm() {
         focused={isFocused('email')}
         onFocus={() => setFocused('email')}
         onBlur={clearFocus}
+        error={errors.email}
       />
       <PasswordInputWithStrength
         id="password"
@@ -136,14 +141,25 @@ export function RegisterForm() {
         focused={isFocused('password')}
         onFocus={() => setFocused('password')}
         onBlur={clearFocus}
+        error={errors.password}
       />
       <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
         <Button
           type="submit"
-          className="group bg-primary hover:bg-primary/90 h-14 w-full gap-2 rounded-2xl text-base font-medium transition-all"
+          className="group bg-primary hover:bg-primary/90 h-14 w-full cursor-pointer gap-2 rounded-2xl text-base font-medium transition-all"
+          disabled={loading}
         >
-          {dictionary?.auth.createAccount}
-          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          {loading ? (
+            <>
+              <span className="border-background h-4 w-4 animate-spin rounded-full border-2 border-t-transparent" />
+              {dictionary?.auth.creatingAccount}
+            </>
+          ) : (
+            <>
+              {dictionary?.auth.createAccount}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </>
+          )}
         </Button>
       </motion.div>
       <Divider text={dictionary?.auth.divider as string} />
