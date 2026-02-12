@@ -9,6 +9,11 @@ class UserController {
     const serviceResponse = await userService.create(req, res);
     return res.status(serviceResponse.statusCode).json(serviceResponse);
   };
+
+  public getProfile: RequestHandler = async (req: AuthRequest, res: Response) => {
+    const serviceResponse = await userService.whoami(req, res);
+    return res.status(serviceResponse.statusCode).json(serviceResponse);
+  };
 }
 
 export const userController = new UserController();

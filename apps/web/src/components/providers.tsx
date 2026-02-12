@@ -4,7 +4,11 @@ import * as React from 'react';
 
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 
-import { QueryClientProviderWrapper } from './query-client-provider';
+import { Toaster } from '@workspace/ui/components/sonner';
+
+import { AuthProvider } from '@/lib/firebase/auth-context';
+
+import { QueryProvider } from './query-provider';
 
 export function Providers({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -15,7 +19,12 @@ export function Providers({ children }: Readonly<{ children: React.ReactNode }>)
       disableTransitionOnChange
       enableColorScheme
     >
-      <QueryClientProviderWrapper>{children}</QueryClientProviderWrapper>
+      <QueryProvider>
+        <AuthProvider>
+          {children}
+          <Toaster />
+        </AuthProvider>
+      </QueryProvider>
     </NextThemesProvider>
   );
 }
