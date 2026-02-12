@@ -12,15 +12,17 @@
 <p>❝A safe space for faith, prayer, and community❞</p>
 
 <div align="center" style="margin-bottom: 1rem; margin-top: 1rem;">
-  <img src="https://img.shields.io/badge/React-19.1.0-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+  <img src="https://img.shields.io/badge/React-000000?style=for-the-badge&logo=react&logoColor=white">
+  <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white">
   <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white">
-  <img src="https://img.shields.io/badge/Expo-54.0.3-000020?style=for-the-badge&logo=expo&logoColor=white">
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
-  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
+  <img src="https://img.shields.io/badge/Firebase-000000?style=for-the-badge&logo=firebase&logoColor=white">
+    <img src="https://img.shields.io/badge/Postgresql-000000?style=for-the-badge&logo=postgresql&logoColor=white">
+  <img src="https://img.shields.io/badge/Drizzle-000000?style=for-the-badge&logo=drizzle&logoColor=white">
+  <img src="https://img.shields.io/badge/TypeScript-000000?style=for-the-badge&logo=typescript&logoColor=white">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-000000?style=for-the-badge&logo=tailwind-css&logoColor=white">
   <img src="https://img.shields.io/badge/shadcn/UI-000000?style=for-the-badge&logo=react&logoColor=white">
-  <img src="https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white">
-  <img src="https://img.shields.io/badge/Turborepo-EF4444?style=for-the-badge&logo=turborepo&logoColor=white">
-  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
+  <img src="https://img.shields.io/badge/Motion-000000?style=for-the-badge&logo=framer&logoColor=white">
+  <img src="https://img.shields.io/badge/Turborepo-000000?style=for-the-badge&logo=turborepo&logoColor=white">
 </div>
 
 </div>
@@ -43,16 +45,3 @@ The goal is to offer a **peaceful, respectful, and intentional digital space**, 
 
 This repository uses a **monorepo architecture** powered by **Turborepo**.  
 It hosts multiple applications and shared packages in a single codebase, enabling consistency, reuse, and scalable development.
-
-### 📁 Repository Structure
-
-```text
-apps/
-  docs/        → Landing page and documentation website
-  web/         → Main web application
-  mobile/      → Mobile application (Expo, coming soon)
-
-packages/
-  ui/          → Shared UI components, styles, and design tokens
-  config/      → Shared configuration (ESLint, Tailwind, etc.)
-```
