@@ -4,17 +4,14 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 
 import { FirebaseError } from 'firebase/app';
 import {
-  createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   User as FirebaseUser,
   GoogleAuthProvider,
   onAuthStateChanged,
-  signInWithEmailAndPassword,
   signInWithPopup,
-  updateProfile,
 } from 'firebase/auth';
 
-import type { SignInInput, SignUpInput, User } from '@workspace/types';
+import type { SignUpInput, User } from '@workspace/types';
 
 import { useCurrentUser, useRegister } from '@/lib/hooks/use-auth';
 
@@ -25,8 +22,6 @@ interface AuthContextValue {
   user: User | null;
   loading: boolean;
   error: string | null;
-  signIn: (input: SignInInput) => Promise<void>;
-  signUp: (input: SignUpInput) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -118,31 +113,6 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
     }
   }, []);
 
-  const signIn = useCallback(
-    ({ email, password }: SignInInput): Promise<void> => {
-      return withAuthAction(() => signInWithEmailAndPassword(auth, email, password).then(() => {}));
-    },
-    [withAuthAction]
-  );
-
-  const signUp = useCallback(
-    async ({ email, password, displayName, acceptTerms }: SignUpInput): Promise<void> => {
-      return withAuthAction(async () => {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-        await updateProfile(userCredential.user, { displayName });
-
-        try {
-          await registerMutation.mutateAsync({ displayName, acceptTerms } as SignUpInput);
-        } catch (error) {
-          await userCredential.user.delete();
-          throw error;
-        }
-      });
-    },
-    [withAuthAction, registerMutation]
-  );
-
   const signInWithGoogle = useCallback((): Promise<void> => {
     return withAuthAction(async () => {
       const provider = new GoogleAuthProvider();
@@ -183,12 +153,10 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
       user: (appUser as unknown as User) || null,
       loading: state.loading || isLoadingUser,
       error: state.error,
-      signIn,
-      signUp,
       signInWithGoogle,
       signOut,
     }),
-    [state.firebaseUser, state.loading, state.error, appUser, isLoadingUser, signIn, signUp, signInWithGoogle, signOut]
+    [state.firebaseUser, state.loading, state.error, appUser, isLoadingUser, signInWithGoogle, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
