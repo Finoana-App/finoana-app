@@ -4,16 +4,18 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useS
 
 import { FirebaseError } from 'firebase/app';
 import {
+  createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   User as FirebaseUser,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
 
 import type { SignUpInput, User } from '@workspace/types';
 
-import { useCurrentUser, useRegister } from '@/lib/hooks/use-auth';
+import { useCurrentUser, useRegister } from '@/lib/hooks/use-user';
 
 import { auth } from './config';
 
@@ -22,6 +24,7 @@ interface AuthContextValue {
   user: User | null;
   loading: boolean;
   error: string | null;
+  signUp: (data: SignUpInput) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
 }
@@ -113,6 +116,31 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
     }
   }, []);
 
+  const signUp = useCallback(
+    (data: SignUpInput): Promise<void> => {
+      return withAuthAction(async () => {
+        const { email, password, displayName } = data;
+
+        const credential = await createUserWithEmailAndPassword(auth, email, password);
+
+        const firebaseUser = credential.user;
+
+        if (firebaseUser) {
+          await updateProfile(firebaseUser, {
+            displayName,
+          });
+        }
+
+        await registerMutation.mutateAsync({
+          email,
+          displayName,
+          password,
+        });
+      });
+    },
+    [withAuthAction, registerMutation]
+  );
+
   const signInWithGoogle = useCallback((): Promise<void> => {
     return withAuthAction(async () => {
       const provider = new GoogleAuthProvider();
@@ -153,10 +181,11 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
       user: (appUser as unknown as User) || null,
       loading: state.loading || isLoadingUser,
       error: state.error,
+      signUp,
       signInWithGoogle,
       signOut,
     }),
-    [state.firebaseUser, state.loading, state.error, appUser, isLoadingUser, signInWithGoogle, signOut]
+    [state.firebaseUser, state.loading, state.error, appUser, isLoadingUser, signUp, signInWithGoogle, signOut]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -28,7 +28,7 @@ export function RegisterForm() {
 
   const { setFocused, clearFocus, isFocused } = useFocusState();
 
-  const { signInWithGoogle } = useAuthContext();
+  const { signUp, signInWithGoogle } = useAuthContext();
 
   const router = useRouter();
 
@@ -41,9 +41,42 @@ export function RegisterForm() {
     });
   }, [lang]);
 
-  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log({ name, email, password });
+    setErrorMessage(null);
+
+    if (!name.trim()) {
+      setErrorMessage('Name is required');
+      return;
+    }
+    if (!email.trim()) {
+      setErrorMessage('Email is required');
+      return;
+    }
+    if (password.length < 6) {
+      setErrorMessage('Password must be at least 6 characters');
+      return;
+    }
+
+    try {
+      await signUp({ email, password, displayName: name });
+      router.push(`/${lang}/dashboard`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setErrorMessage(error.message || 'Registration failed. Please try again.');
+        toast.error(error.message, {
+          description: errorMessage,
+          position: 'top-center',
+          duration: 5000,
+        });
+      } else {
+        setErrorMessage('Registration failed. Please try again.');
+        toast.error('Registration failed. Please try again.', {
+          position: 'top-center',
+          duration: 5000,
+        });
+      }
+    }
   };
 
   const handleGoogleSignIn = async () => {
