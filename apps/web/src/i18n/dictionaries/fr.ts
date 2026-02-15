@@ -181,15 +181,11 @@ export const fr: Dictionary = {
   dashboard: {
     navigation: {
       home: 'Accueil',
-      explore: 'Explorer',
-      notifications: 'Notifications',
-      bookmarks: 'Favoris',
-      community: 'Communauté',
-      devotionals: 'Dévotions',
       profile: 'Profil',
       settings: 'Paramètres',
-      createPost: 'Créer',
       faithCommunity: 'Foi en communauté',
-    } satisfies Record<NavigationKey | 'createPost' | 'faithCommunity', string>,
+      shareThought: 'Partager un pensée',
+      logout: 'Se deconnecter',
+    } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
   },
 };
