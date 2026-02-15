@@ -8,13 +8,14 @@ import Link from 'next/link';
 
 import { Home, Menu, PenSquare, Settings, User } from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
+import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
 import { Button } from '@workspace/ui/components/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@workspace/ui/components/sheet';
 
 import { useDictionary } from '@/hooks/use-dictionary';
 
-import { currentUser } from '@/assets/mocks';
+import { useCurrentUser } from '@/lib/hooks/use-user';
+
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 import { NavItem } from './nav-item';
@@ -26,6 +27,8 @@ export const NAVIGATION: NavItem[] = [
 ];
 
 export function UserProfileLink({ onClick }: Readonly<{ onClick?: () => void }>) {
+  const { data: currentUser } = useCurrentUser();
+
   return (
     <Link
       href="/profile"
@@ -33,12 +36,13 @@ export function UserProfileLink({ onClick }: Readonly<{ onClick?: () => void }>)
       className="hover:bg-secondary flex items-center gap-3 rounded-lg px-3 py-2 transition-colors"
     >
       <Avatar className="ring-primary/20 h-10 w-10 ring-2">
-        <AvatarImage src={currentUser.avatar} alt={currentUser.name} />
-        <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+        <AvatarImage src={currentUser?.photoUrl ?? undefined} alt={`@${currentUser?.displayName}`} />
+        <AvatarFallback className="font-bold">{currentUser?.displayName?.charAt(0)}</AvatarFallback>
+        <AvatarBadge className="bg-green-600 dark:bg-green-800" />
       </Avatar>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">{currentUser.name}</p>
-        <p className="text-muted-foreground truncate text-xs">@{currentUser.username}</p>
+        <p className="truncate text-sm font-medium">{currentUser?.displayName}</p>
+        <p className="text-muted-foreground truncate text-xs">@{currentUser?.email}</p>
       </div>
     </Link>
   );

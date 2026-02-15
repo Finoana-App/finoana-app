@@ -1,4 +1,4 @@
-import { ApiResponse, RegisterResponse, SignUpInput } from '@workspace/types';
+import { ApiResponse, RegisterResponse, SignUpInput, User } from '@workspace/types';
 
 import { apiClient } from '../client';
 
@@ -15,7 +15,7 @@ export const userService = {
    * Get current user profile
    * Useful for rehydrating user state on app load
    */
-  getCurrentUser: async (): Promise<ApiResponse<RegisterResponse>> => {
-    return apiClient.get<RegisterResponse>('/users/me');
+  getCurrentUser: async (): Promise<ApiResponse<User>> => {
+    return apiClient.get<User>('/users/me');
   },
 };
