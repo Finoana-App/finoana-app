@@ -5,15 +5,7 @@ import { usePathname } from 'next/navigation';
 
 import { cn } from '@workspace/ui/lib/utils';
 
-export type NavigationKey =
-  | 'home'
-  | 'explore'
-  | 'notifications'
-  | 'bookmarks'
-  | 'community'
-  | 'devotionals'
-  | 'profile'
-  | 'settings';
+export type NavigationKey = 'home' | 'profile' | 'settings';
 
 export type NavItem = {
   key: NavigationKey;

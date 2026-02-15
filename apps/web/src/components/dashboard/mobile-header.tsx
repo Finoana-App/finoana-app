@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Bell, Bookmark, BookOpen, Home, Menu, PenSquare, Search, Settings, User, Users } from 'lucide-react';
+import { Home, Menu, PenSquare, Settings, User } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
 import { Button } from '@workspace/ui/components/button';
@@ -21,11 +21,6 @@ import { NavItem } from './nav-item';
 
 export const NAVIGATION: NavItem[] = [
   { key: 'home', href: '/', icon: Home },
-  { key: 'explore', href: '/explore', icon: Search },
-  { key: 'notifications', href: '/notifications', icon: Bell, badge: 3 },
-  { key: 'bookmarks', href: '/bookmarks', icon: Bookmark },
-  { key: 'community', href: '/community', icon: Users },
-  { key: 'devotionals', href: '/devotionals', icon: BookOpen },
   { key: 'profile', href: '/profile', icon: User },
   { key: 'settings', href: '/settings', icon: Settings },
 ];
@@ -67,8 +62,8 @@ export function MobileHeader() {
         <SheetContent side="left" className="w-72 p-0">
           <div className="flex h-full flex-col px-4 py-6">
             <SheetTitle>
-              <div className="mb-8 w-full bg-red-300 px-3">
-                <div className="flex items-center gap-2">
+              <div className="mb-8 w-full px-3">
+                <div className="flex flex-col items-center justify-center gap-2">
                   <Image
                     src={
                       theme === 'dark'
@@ -80,8 +75,10 @@ export function MobileHeader() {
                     height={100}
                     suppressHydrationWarning
                   />
+                  <SheetDescription className="text-muted-foreground mt-1 text-xs">
+                    {dictionary?.dashboard.navigation.faithCommunity}
+                  </SheetDescription>
                 </div>
-                <SheetDescription className="text-muted-foreground mt-1 text-xs">Faith in Community</SheetDescription>
               </div>
             </SheetTitle>
             <nav className="flex-1 space-y-1">

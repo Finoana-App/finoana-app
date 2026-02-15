@@ -177,16 +177,10 @@ export const en = {
   dashboard: {
     navigation: {
       home: 'Home',
-      explore: 'Explore',
-      notifications: 'Notifications',
-      bookmarks: 'Bookmarks',
-      community: 'Community',
-      devotionals: 'Devotionals',
       profile: 'Profile',
       settings: 'Settings',
-      createPost: 'Create post',
       faithCommunity: 'Faith in Community',
-    } satisfies Record<NavigationKey | 'createPost' | 'faithCommunity', string>,
+    } satisfies Record<NavigationKey | 'faithCommunity', string>,
   },
 };
 
