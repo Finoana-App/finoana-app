@@ -2,27 +2,32 @@
 
 import { useState } from 'react';
 
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
 import Link from 'next/link';
 
-import { Bell, Bookmark, BookOpen, Heart, Home, Menu, PenSquare, Search, Settings, User, Users } from 'lucide-react';
+import { Bell, Bookmark, BookOpen, Home, Menu, PenSquare, Search, Settings, User, Users } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
 import { Button } from '@workspace/ui/components/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@workspace/ui/components/sheet';
 
+import { useDictionary } from '@/hooks/use-dictionary';
+
 import { currentUser } from '@/assets/mocks';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
 import { NavItem } from './nav-item';
 
-export const NAVIGATION = [
-  { name: 'Home', href: '/', icon: Home },
-  { name: 'Explore', href: '/explore', icon: Search },
-  { name: 'Notifications', href: '/notifications', icon: Bell, badge: 3 },
-  { name: 'Bookmarks', href: '/bookmarks', icon: Bookmark },
-  { name: 'Community', href: '/community', icon: Users },
-  { name: 'Devotionals', href: '/devotionals', icon: BookOpen },
-  { name: 'Profile', href: '/profile', icon: User },
-  { name: 'Settings', href: '/settings', icon: Settings },
+export const NAVIGATION: NavItem[] = [
+  { key: 'home', href: '/', icon: Home },
+  { key: 'explore', href: '/explore', icon: Search },
+  { key: 'notifications', href: '/notifications', icon: Bell, badge: 3 },
+  { key: 'bookmarks', href: '/bookmarks', icon: Bookmark },
+  { key: 'community', href: '/community', icon: Users },
+  { key: 'devotionals', href: '/devotionals', icon: BookOpen },
+  { key: 'profile', href: '/profile', icon: User },
+  { key: 'settings', href: '/settings', icon: Settings },
 ];
 
 export function UserProfileLink({ onClick }: Readonly<{ onClick?: () => void }>) {
@@ -47,28 +52,47 @@ export function UserProfileLink({ onClick }: Readonly<{ onClick?: () => void }>)
 export function MobileHeader() {
   const [open, setOpen] = useState(false);
 
+  const { theme } = useTheme();
+
+  const { dictionary, lang } = useDictionary<Dictionary>();
+
   return (
     <header className="border-border bg-background/95 sticky top-0 z-50 flex items-center justify-between border-b px-4 py-3 backdrop-blur-md lg:hidden">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label="Open menu">
+          <Button variant="ghost" className="cursor-pointer" size="icon" aria-label="Open menu">
             <Menu className="h-5 w-5" />
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="w-72 p-0">
           <div className="flex h-full flex-col px-4 py-6">
             <SheetTitle>
-              <div className="mb-8 px-3">
-                <h1 className="font-display text-primary flex items-center gap-2 text-2xl font-bold">
-                  <Heart className="fill-primary h-6 w-6" />
-                  Finoana
-                </h1>
+              <div className="mb-8 w-full bg-red-300 px-3">
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={
+                      theme === 'dark'
+                        ? '/images/logo_finoana_v2_monochrome_light_stroke.png'
+                        : '/images/logo_finoana_v2_monochrome_dark_stroke.png'
+                    }
+                    alt="Finoana"
+                    width={100}
+                    height={100}
+                    suppressHydrationWarning
+                  />
+                </div>
                 <SheetDescription className="text-muted-foreground mt-1 text-xs">Faith in Community</SheetDescription>
               </div>
             </SheetTitle>
             <nav className="flex-1 space-y-1">
               {NAVIGATION.map((item) => (
-                <NavItem key={item.name} item={item} onClick={() => setOpen(false)} />
+                <NavItem
+                  key={item.key}
+                  item={item}
+                  label={dictionary?.dashboard.navigation[item.key] || ''}
+                  lang={lang}
+                  onClick={() => setOpen(false)}
+                />
               ))}
             </nav>
             <div className="border-border border-t pt-4">
@@ -77,8 +101,7 @@ export function MobileHeader() {
           </div>
         </SheetContent>
       </Sheet>
-      <Link href="/" className="flex items-center gap-2">
-        <Heart className="text-primary fill-primary h-5 w-5" />
+      <Link href={`/${lang}`} className="flex items-center gap-2">
         <span className="font-display text-lg font-bold">Finoana</span>
       </Link>
       <Button variant="ghost" size="icon" aria-label="Create post">

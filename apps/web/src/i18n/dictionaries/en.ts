@@ -1,3 +1,5 @@
+import { NavigationKey } from '@/components/dashboard';
+
 export const en = {
   nav: {
     vision: 'Vision',
@@ -171,6 +173,20 @@ export const en = {
       registrationFailed: 'Registration failed. Please try again.',
       googleFailed: 'Google sign-in failed. Please try again.',
     },
+  },
+  dashboard: {
+    navigation: {
+      home: 'Home',
+      explore: 'Explore',
+      notifications: 'Notifications',
+      bookmarks: 'Bookmarks',
+      community: 'Community',
+      devotionals: 'Devotionals',
+      profile: 'Profile',
+      settings: 'Settings',
+      createPost: 'Create post',
+      faithCommunity: 'Faith in Community',
+    } satisfies Record<NavigationKey | 'createPost' | 'faithCommunity', string>,
   },
 };
 
