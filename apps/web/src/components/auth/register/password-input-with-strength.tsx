@@ -10,10 +10,11 @@ import { motion } from 'motion/react';
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
 
+import { useDictionary } from '@/hooks/use-dictionary';
+
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 import { PasswordStrengthIndicator } from './password-strength-indicator';
-import { useDictionary } from '@/hooks/use-dictionary';
 
 interface PasswordInputWithStrengthProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   id: string;

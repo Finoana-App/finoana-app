@@ -11,6 +11,7 @@ import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
 
 import { useDictionary } from '@/hooks/use-dictionary';
+
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
@@ -38,7 +39,7 @@ export function PasswordInput({
   ...props
 }: Readonly<PasswordInputProps>) {
   const [showPassword, setShowPassword] = useState(false);
-  const { dictionary } = useDictionary<Dictionary>()
+  const { dictionary } = useDictionary<Dictionary>();
 
   return (
     <motion.div className="space-y-2" variants={inputVariants} animate={focused ? 'focused' : 'unfocused'}>

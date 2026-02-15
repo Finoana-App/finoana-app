@@ -2,13 +2,13 @@
 
 import { AnimatePresence } from 'motion/react';
 
+import { useDictionary } from '@/hooks/use-dictionary';
 import { useResetPassword } from '@/hooks/use-reset-password';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 import { ResetPasswordRequest } from './reset-password-request';
 import { ResetPasswordSuccess } from './reset-password-success';
-import { useDictionary } from '@/hooks/use-dictionary';
 
 export function ResetPasswordForm() {
   const { dictionary } = useDictionary<Dictionary>();

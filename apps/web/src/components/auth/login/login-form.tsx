@@ -12,12 +12,12 @@ import { Button } from '@workspace/ui/components/button';
 
 import { AnimatedInput, Divider, OAuth, PasswordInput } from '@/components/auth';
 
+import { useDictionary } from '@/hooks/use-dictionary';
 import { useFocusState } from '@/hooks/use-focus-state';
 
 import { useAuthContext } from '@/lib/firebase/auth-context';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
-import { useDictionary } from '@/hooks/use-dictionary';
 
 type FieldErrors = {
   email?: string;

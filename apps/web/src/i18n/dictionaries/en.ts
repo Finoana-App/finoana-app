@@ -180,7 +180,9 @@ export const en = {
       profile: 'Profile',
       settings: 'Settings',
       faithCommunity: 'Faith in Community',
-    } satisfies Record<NavigationKey | 'faithCommunity', string>,
+      shareThought: 'Share Thought',
+      logout: 'Logout',
+    } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
   },
 };
 
