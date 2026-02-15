@@ -1,8 +1,8 @@
 'use client';
 
-import { SubmitEvent, useEffect, useState } from 'react';
+import { SubmitEvent, useState } from 'react';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -16,8 +16,8 @@ import { useFocusState } from '@/hooks/use-focus-state';
 
 import { useAuthContext } from '@/lib/firebase/auth-context';
 
-import { getDictionary, Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
+import { useDictionary } from '@/hooks/use-dictionary';
 
 type FieldErrors = {
   email?: string;
@@ -29,7 +29,8 @@ export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [dictionary, setDictionary] = useState<Dictionary | null>(null);
+
+  const { dictionary } = useDictionary<Dictionary>();
 
   const { setFocused, clearFocus, isFocused } = useFocusState();
 
@@ -37,28 +38,19 @@ export function LoginForm() {
 
   const router = useRouter();
 
-  const pathname = usePathname();
-  const lang = pathname.split('/')[1] as Locale;
-
-  useEffect(() => {
-    getDictionary(lang).then((dict) => {
-      setDictionary(dict);
-    });
-  }, [lang]);
-
   const validateForm = (): FieldErrors => {
     const newErrors: FieldErrors = {};
 
     if (!dictionary) return newErrors;
 
     if (!email.trim()) {
-      newErrors.email = dictionary.auth.errors.emailRequired;
+      newErrors.email = dictionary?.auth.errors.emailRequired;
     }
 
     if (!password.trim()) {
-      newErrors.password = dictionary.auth.errors.passwordRequired;
+      newErrors.password = dictionary?.auth.errors.passwordRequired;
     } else if (password.length < 6) {
-      newErrors.password = dictionary.auth.errors.passwordMin;
+      newErrors.password = dictionary?.auth.errors.passwordMin;
     }
 
     return newErrors;
@@ -77,7 +69,7 @@ export function LoginForm() {
 
     try {
       await signIn({ email, password });
-      router.push(`/${lang}/dashboard`);
+      router.push('/dashboard');
     } catch (err: unknown) {
       const fallback = dictionary?.auth.errors.loginFailed;
       const message = err instanceof Error && err.message ? err.message : fallback;
@@ -96,7 +88,7 @@ export function LoginForm() {
 
     try {
       await signInWithGoogle();
-      router.push(`/${lang}/dashboard`);
+      router.push('/dashboard');
     } catch (err: unknown) {
       const fallback = dictionary?.auth.errors.googleFailed;
       const message = err instanceof Error && err.message ? err.message : fallback;
@@ -116,7 +108,7 @@ export function LoginForm() {
         id="email"
         type="email"
         label={dictionary?.auth.email as string}
-        placeholder={dictionary?.auth.emailPlaceholder as string}
+        placeholder={dictionary?.auth.emailPlaceholder}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         focused={isFocused('email')}

@@ -1,8 +1,8 @@
 'use client';
 
-import { SubmitEvent, useEffect, useState } from 'react';
+import { SubmitEvent, useState } from 'react';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -12,11 +12,11 @@ import { Button } from '@workspace/ui/components/button';
 
 import { AnimatedInput, Divider, OAuth, PasswordInputWithStrength } from '@/components/auth';
 
+import { useDictionary } from '@/hooks/use-dictionary';
 import { useFocusState } from '@/hooks/use-focus-state';
 
 import { useAuthContext } from '@/lib/firebase/auth-context';
 
-import { getDictionary, Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 type FieldErrors = {
@@ -31,22 +31,14 @@ export function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [dictionary, setDictionary] = useState<Dictionary | null>(null);
+
+  const { dictionary } = useDictionary<Dictionary>();
 
   const { setFocused, clearFocus, isFocused } = useFocusState();
 
   const { loading, signUp, signInWithGoogle } = useAuthContext();
 
   const router = useRouter();
-
-  const pathname = usePathname();
-  const lang = pathname.split('/')[1] as Locale;
-
-  useEffect(() => {
-    getDictionary(lang).then((dict) => {
-      setDictionary(dict);
-    });
-  }, [lang]);
 
   const validateForm = (): FieldErrors => {
     const newErrors: FieldErrors = {};
@@ -83,7 +75,7 @@ export function RegisterForm() {
 
     try {
       await signUp({ email, password, displayName: name });
-      router.push(`/${lang}/dashboard`);
+      router.push('/dashboard');
     } catch (err: unknown) {
       const fallback = dictionary?.auth.errors.registrationFailed;
       const message = err instanceof Error && err.message ? err.message : fallback;
@@ -102,7 +94,7 @@ export function RegisterForm() {
 
     try {
       await signInWithGoogle();
-      router.push(`/${lang}/dashboard`);
+      router.push('/dashboard');
     } catch (err: unknown) {
       const fallback = dictionary?.auth.errors.googleFailed;
       const message = err instanceof Error && err.message ? err.message : fallback;
