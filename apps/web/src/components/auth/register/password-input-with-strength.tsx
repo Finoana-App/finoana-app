@@ -1,9 +1,8 @@
 'use client';
 
-import { InputHTMLAttributes, useEffect, useState } from 'react';
+import { InputHTMLAttributes, useState } from 'react';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 import { Eye, EyeOff } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -11,10 +10,10 @@ import { motion } from 'motion/react';
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
 
-import { getDictionary, Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 import { PasswordStrengthIndicator } from './password-strength-indicator';
+import { useDictionary } from '@/hooks/use-dictionary';
 
 interface PasswordInputWithStrengthProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   id: string;
@@ -46,16 +45,7 @@ export function PasswordInputWithStrength({
   const [showPassword, setShowPassword] = useState(false);
   const passwordValue = String(value);
 
-  const [dictionary, setDictionary] = useState<Dictionary | null>(null);
-
-  const pathname = usePathname();
-  const lang = pathname.split('/')[1] as Locale;
-
-  useEffect(() => {
-    getDictionary(lang).then((dict) => {
-      setDictionary(dict);
-    });
-  }, [lang]);
+  const { dictionary } = useDictionary<Dictionary>();
 
   return (
     <div className="space-y-0">
@@ -69,7 +59,7 @@ export function PasswordInputWithStrength({
               href={forgotPasswordHref}
               className="text-muted-foreground hover:text-foreground text-xs transition-colors"
             >
-              {dictionary?.auth.resetPassword.forgot || 'Forgot?'}
+              {dictionary?.auth.resetPassword.forgot}
             </Link>
           )}
         </div>

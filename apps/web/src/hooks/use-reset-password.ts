@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+/**
+ * TODO: Implement reset password functionality
+ */
 export function useResetPassword() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
