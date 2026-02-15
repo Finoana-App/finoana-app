@@ -1,3 +1,5 @@
+import { NavigationKey } from '@/components/dashboard';
+
 import { Dictionary } from './en';
 
 export const fr: Dictionary = {
@@ -175,5 +177,19 @@ export const fr: Dictionary = {
       registrationFailed: "L'inscription a échoué. Veuillez réessayer.",
       googleFailed: 'La connexion avec Google a échoué. Veuillez réessayer.',
     },
+  },
+  dashboard: {
+    navigation: {
+      home: 'Accueil',
+      explore: 'Explorer',
+      notifications: 'Notifications',
+      bookmarks: 'Favoris',
+      community: 'Communauté',
+      devotionals: 'Dévotions',
+      profile: 'Profil',
+      settings: 'Paramètres',
+      createPost: 'Créer',
+      faithCommunity: 'Foi en communauté',
+    } satisfies Record<NavigationKey | 'createPost' | 'faithCommunity', string>,
   },
 };
