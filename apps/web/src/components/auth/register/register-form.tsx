@@ -20,6 +20,7 @@ import { Dictionary } from '@/i18n/dictionaries/en';
 
 type FieldErrors = {
   name?: string;
+  firstName?: string;
   email?: string;
   password?: string;
   general?: string;
@@ -27,6 +28,7 @@ type FieldErrors = {
 
 export function RegisterForm() {
   const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -46,6 +48,10 @@ export function RegisterForm() {
 
     if (!name.trim()) {
       newErrors.name = dictionary.auth.errors.nameRequired;
+    }
+
+    if (!firstName.trim()) {
+      newErrors.firstName = dictionary.auth.errors.firstNameRequired;
     }
 
     if (!email.trim()) {
@@ -73,7 +79,13 @@ export function RegisterForm() {
     }
 
     try {
-      await signUp({ email, password, displayName: name });
+      await signUp({
+        email,
+        password,
+        firstName: firstName.trim(),
+        name: name.trim(),
+        displayName: `${firstName.trim()} ${name.trim()}`.trim() || email.split('@')[0],
+      });
       router.push('/dashboard');
     } catch (err: unknown) {
       const fallback = dictionary?.auth.errors.registrationFailed;
@@ -109,18 +121,32 @@ export function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <AnimatedInput
-        id="name"
-        type="text"
-        label={dictionary?.auth.username as string}
-        placeholder={dictionary?.auth.usernamePlaceholder as string}
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        focused={isFocused('name')}
-        onFocus={() => setFocused('name')}
-        onBlur={clearFocus}
-        error={errors.name}
-      />
+      <div className="grid grid-cols-2 gap-4">
+        <AnimatedInput
+          id="name"
+          type="text"
+          label={dictionary?.auth.name as string}
+          placeholder={dictionary?.auth.namePlaceholder as string}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          focused={isFocused('name')}
+          onFocus={() => setFocused('name')}
+          onBlur={clearFocus}
+          error={errors.name}
+        />
+        <AnimatedInput
+          id="firstName"
+          type="text"
+          label={dictionary?.auth.firstName as string}
+          placeholder={dictionary?.auth.firstNamePlaceholder as string}
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          focused={isFocused('firstName')}
+          onFocus={() => setFocused('firstName')}
+          onBlur={clearFocus}
+          error={errors.firstName}
+        />
+      </div>
       <AnimatedInput
         id="email"
         type="email"

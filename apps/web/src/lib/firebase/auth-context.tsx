@@ -132,22 +132,26 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   const signUp = useCallback(
     (data: SignUpInput): Promise<void> => {
       return withAuthAction(async () => {
-        const { email, password, displayName } = data;
+        const { email, password, firstName = '', name = '', username } = data;
 
-        const credential = await createUserWithEmailAndPassword(auth, email, password);
-
+        const credential = await createUserWithEmailAndPassword(auth, email, password as string);
         const firebaseUser = credential.user;
+
+        const computedDisplayName =
+          [firstName.trim(), name.trim()].filter(Boolean).join(' ') || email.split('@')[0] || 'New User';
 
         if (firebaseUser) {
           await updateProfile(firebaseUser, {
-            displayName,
+            displayName: computedDisplayName,
           });
         }
 
         await registerMutation.mutateAsync({
           email,
-          displayName,
-          password,
+          firstName: firstName.trim(),
+          name: name.trim(),
+          displayName: computedDisplayName,
+          username: username?.trim().toLowerCase(),
         });
       });
     },
@@ -157,27 +161,44 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
   const signInWithGoogle = useCallback((): Promise<void> => {
     return withAuthAction(async () => {
       const provider = new GoogleAuthProvider();
-
       provider.addScope('profile');
       provider.addScope('email');
+      provider.setCustomParameters({ prompt: 'select_account' });
 
-      provider.setCustomParameters({
-        prompt: 'select_account',
-      });
+      const result = await signInWithPopup(auth, provider);
+      const firebaseUser = result.user;
 
-      try {
-        const result = await signInWithPopup(auth, provider);
+      if (!firebaseUser?.email) return;
 
-        if (result.user) {
-          await registerMutation.mutateAsync({
-            displayName: result.user.displayName || result.user.email?.split('@')[0] || 'Google User',
-            email: result.user.email,
-          } as SignUpInput);
+      let givenName = '';
+      let familyName = '';
+
+      const idTokenResult = await firebaseUser.getIdTokenResult();
+      const claims = idTokenResult.claims;
+
+      givenName = ((claims.given_name as string) ?? '').trim();
+      familyName = ((claims.family_name as string) ?? '').trim();
+
+      if (!givenName && !familyName && firebaseUser.displayName) {
+        const parts = firebaseUser.displayName.trim().split(/\s+/);
+        if (parts.length >= 2) {
+          givenName = parts[0] || '';
+          familyName = parts.slice(1).join(' ');
+        } else {
+          givenName = parts[0] || '';
         }
-      } catch (error) {
-        console.error('Google sign-in error:', error);
-        throw error;
       }
+
+      const computedDisplayName =
+        [givenName, familyName].filter(Boolean).join(' ') || firebaseUser.email?.split('@')[0] || 'User';
+
+      await registerMutation.mutateAsync({
+        email: firebaseUser.email,
+        firstName: givenName.trim(),
+        name: familyName.trim(),
+        displayName: computedDisplayName,
+        username: undefined,
+      });
     });
   }, [withAuthAction, registerMutation]);
 

@@ -44,7 +44,7 @@ export function UserProfileLink({ onClick, lang }: Readonly<{ onClick?: () => vo
       </Avatar>
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-medium">{currentUser?.displayName}</p>
-        <p className="text-muted-foreground truncate text-xs">@{currentUser?.email}</p>
+        <p className="text-muted-foreground truncate text-xs">{currentUser?.email}</p>
       </div>
     </Link>
   );

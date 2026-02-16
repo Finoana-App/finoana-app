@@ -1,4 +1,4 @@
-export * from './profile/cover';
+export * from './profile/banner';
 
 export * from './app-sidebar';
 export * from './mobile-header';
