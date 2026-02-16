@@ -6,6 +6,7 @@ import { useFocusState } from '@/hooks/use-focus-state';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 import { AnimatedInput } from '../auth';
+import { VerseOfTheDay } from './verse-of-the-day';
 
 export function RightSidebar() {
   const { setFocused, clearFocus, isFocused } = useFocusState();
@@ -23,6 +24,7 @@ export function RightSidebar() {
           onBlur={clearFocus}
         />
       </div>
+      <VerseOfTheDay title={dictionary?.dashboard.verseOfTheDayTitle as string} />
     </aside>
   );
 }
