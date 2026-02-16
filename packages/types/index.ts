@@ -75,3 +75,13 @@ export interface ApiSuccessResponse<T> {
  * Generic API response
  */
 export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
+
+/**
+ * Verse of the day response structure
+ */
+export type VerseOfTheDay = {
+  citation: string;
+  passage: string;
+  images: string[];
+  version: string;
+};

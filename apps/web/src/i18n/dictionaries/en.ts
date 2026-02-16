@@ -184,7 +184,7 @@ export const en = {
       logout: 'Logout',
     } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
     searchPlaceholder: 'Search prayers, people, topics...',
-    verseOfTheDayTitle: 'Verse of the day'
+    verseOfTheDayTitle: 'Verse of the day',
   },
 };
 

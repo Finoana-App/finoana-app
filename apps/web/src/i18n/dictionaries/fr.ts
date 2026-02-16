@@ -188,6 +188,6 @@ export const fr: Dictionary = {
       logout: 'Se deconnecter',
     } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
     searchPlaceholder: 'Rechercher des prières, des personnes, des sujets...',
-    verseOfTheDayTitle: 'Verset du jour'
+    verseOfTheDayTitle: 'Verset du jour',
   },
 };
