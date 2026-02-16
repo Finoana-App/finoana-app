@@ -40,9 +40,7 @@ export interface User {
   privacyLevel: PrivacyLevel;
 
   isActive: boolean;
-  isVerified: boolean;
 
-  lastSeenAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }

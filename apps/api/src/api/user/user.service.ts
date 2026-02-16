@@ -120,20 +120,25 @@ class UserService {
   }
 
   private async generateUniqueUsername(firstName: string, familyName: string, maxAttempts = 8): Promise<string> {
-    const f = firstName.toLowerCase().trim();
-    const l = familyName.toLowerCase().trim();
+    const f = firstName.toLowerCase().replaceAll(/\s+/g, '').trim();
+    const l = familyName.toLowerCase().replaceAll(/\s+/g, '').trim();
 
     if (!f && !l) {
-      return `user_${Math.random().toString(36).slice(2, 9)}`; // 7 chars
+      return `user_${Math.random().toString(36).slice(2, 9)}`;
     }
 
-    const patterns = [
-      `${f}${l ? l.charAt(0) : ''}`, // fiantso r → fiantsor
-      `${f}.${l ? l.charAt(0) : ''}`, // fiantso.r
-      `${f}_${l ? l.charAt(0) : ''}`, // fiantso_r
-      `${f}${l || ''}`, // fiantsoravoajanahary
-      `${f.slice(0, 5)}${l ? l.slice(0, 5) : ''}`, // fiant ravoaj
-    ];
+    const patterns: string[] = [];
+
+    if (l) {
+      patterns.push(`${f}${l.charAt(0)}`);
+      patterns.push(`${f}.${l.charAt(0)}`);
+      patterns.push(`${f}${l}`);
+      patterns.push(`${f}.${l}`);
+      patterns.push(`${f.slice(0, 7)}${l.slice(0, 7)}`);
+    } else {
+      patterns.push(f);
+      if (f.length >= 4) patterns.push(`${f}mg`);
+    }
 
     for (const base of patterns) {
       if (base.length >= 4 && !(await this.userRepository.usernameExists(base))) {
@@ -141,7 +146,7 @@ class UserService {
       }
     }
 
-    const bestBase = patterns[0] || `${f}${l ? l.charAt(0) : ''}`;
+    const bestBase = patterns[0] || f;
     for (let i = 2; i <= maxAttempts + 1; i++) {
       const candidate = `${bestBase}${i}`;
       if (!(await this.userRepository.usernameExists(candidate))) {
@@ -149,8 +154,9 @@ class UserService {
       }
     }
 
-    const shortRandom = Math.random().toString(36).slice(2, 7);
-    return `${f.slice(0, 4) || 'usr'}_${shortRandom}`;
+    const prefix = f.slice(0, 6) || 'user';
+    const random = Math.random().toString(36).slice(2, 8);
+    return `${prefix}${random}`;
   }
 }
 

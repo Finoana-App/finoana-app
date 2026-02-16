@@ -10,6 +10,7 @@ import { Skeleton } from '@workspace/ui/components/skeleton';
 import { formatJoinDate } from '@/components/utils/date-format';
 
 export function Banner({ currentUser, isLoading }: Readonly<{ currentUser: User | undefined; isLoading: boolean }>) {
+  console.log(currentUser);
   if (isLoading) {
     return (
       <div className="relative">
@@ -50,7 +51,7 @@ export function Banner({ currentUser, isLoading }: Readonly<{ currentUser: User 
         </div>
         <div className="mb-4">
           <h2 className="text-xl font-bold sm:text-2xl">{currentUser?.displayName || 'Anonymous User'}</h2>
-          <p className="text-muted-foreground text-sm sm:text-base">{currentUser?.email}</p>
+          <p className="text-muted-foreground text-sm sm:text-base">@{currentUser?.username.split(' ').join('')}</p>
         </div>
         {currentUser?.bio && <p className="text-foreground mb-4 text-sm sm:text-base">{currentUser.bio}</p>}
         <div className="text-muted-foreground mb-4 flex flex-wrap gap-4 text-sm">

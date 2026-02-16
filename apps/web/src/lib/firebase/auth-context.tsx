@@ -170,17 +170,27 @@ export function AuthProvider({ children }: Readonly<AuthProviderProps>) {
 
       if (!firebaseUser?.email) return;
 
+      let givenName = '';
+      let familyName = '';
+
       const idTokenResult = await firebaseUser.getIdTokenResult();
       const claims = idTokenResult.claims;
 
-      const givenName = (claims.given_name as string | undefined) ?? '';
-      const familyName = (claims.family_name as string | undefined) ?? '';
+      givenName = ((claims.given_name as string) ?? '').trim();
+      familyName = ((claims.family_name as string) ?? '').trim();
+
+      if (!givenName && !familyName && firebaseUser.displayName) {
+        const parts = firebaseUser.displayName.trim().split(/\s+/);
+        if (parts.length >= 2) {
+          givenName = parts[0] || '';
+          familyName = parts.slice(1).join(' ');
+        } else {
+          givenName = parts[0] || '';
+        }
+      }
 
       const computedDisplayName =
-        [givenName.trim(), familyName.trim()].filter(Boolean).join(' ') ||
-        firebaseUser.displayName ||
-        firebaseUser.email.split('@')[0] ||
-        'Google User';
+        [givenName, familyName].filter(Boolean).join(' ') || firebaseUser.email?.split('@')[0] || 'User';
 
       await registerMutation.mutateAsync({
         email: firebaseUser.email,
