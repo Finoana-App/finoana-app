@@ -1,3 +1,6 @@
+// ────────────────────────────────────────────────
+//          User related types
+// ────────────────────────────────────────────────
 /**
  * User role enum
  */
@@ -8,7 +11,7 @@ export enum UserRole {
 }
 
 /**
- * Privacy Level Enum
+ * Privacy level enum
  */
 export enum PrivacyLevel {
   PUBLIC = 'public',
@@ -17,42 +20,93 @@ export enum PrivacyLevel {
 }
 
 /**
- * User entity
+ * Core user entity (shape returned by most API endpoints and stored in app state)
  */
 export interface User {
   id: string;
   firebaseUid: string;
+
   email: string;
+  username: string;
+
+  firstName: string;
+  name: string;
   displayName: string;
+
   photoUrl: string | null;
   bio: string | null;
+
   role: UserRole;
   privacyLevel: PrivacyLevel;
+
   isActive: boolean;
   isVerified: boolean;
+
   lastSeenAt: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
 /**
- * SignInInput request payload
+ * Shape of minimal user info (e.g. for lists, mentions, cards)
  */
-export type SignInInput = Pick<User, 'email'> & { password: string };
+export interface UserPreview {
+  id: string;
+  username: string;
+  displayName: string;
+  photoUrl: string | null;
+  role?: UserRole;
+  isVerified?: boolean;
+}
 
 /**
- * Register request payload
+ * Input for email/password sign-in
  */
-export type SignUpInput = Pick<User, 'email' | 'displayName'> & {
+export interface SignInInput {
+  email: string;
   password: string;
-};
+}
 
+/**
+ * Input for registration (client → Firebase Auth + your backend)
+ *
+ * password is required for email/password signup,
+ * but optional for social providers (Google, etc.)
+ */
+export interface SignUpInput {
+  email: string;
+  password?: string;
+
+  firstName?: string;
+  name?: string;
+  displayName?: string;
+
+  username?: string;
+}
+
+/**
+ * Payload sent to your backend's /register endpoint
+ * (after Firebase Auth user is created)
+ */
+export interface RegisterBackendPayload {
+  email: string;
+  firstName?: string;
+  name?: string;
+  displayName?: string;
+  username?: string;
+}
+
+/**
+ * Response from successful registration
+ */
 export interface RegisterResponse {
+  success: true;
+  message: string;
   user: User;
 }
 
 /**
- * API Error response structure
+ * Standardized API error shape (used by ServiceResponse.failure)
  */
 export interface ApiErrorResponse {
   success: false;
@@ -62,9 +116,9 @@ export interface ApiErrorResponse {
 }
 
 /**
- * API Success response structure
+ * Standardized API success shape (used by ServiceResponse.success)
  */
-export interface ApiSuccessResponse<T> {
+export interface ApiSuccessResponse<T = unknown> {
   success: true;
   message: string;
   statusCode: number;
@@ -72,16 +126,19 @@ export interface ApiSuccessResponse<T> {
 }
 
 /**
- * Generic API response
+ * Union of success/error API responses
  */
-export type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse;
+export type ApiResponse<T = unknown> = ApiSuccessResponse<T> | ApiErrorResponse;
 
+// ────────────────────────────────────────────────
+//          Verse of the day
+// ────────────────────────────────────────────────
 /**
- * Verse of the day response structure
+ * Verse of the day (seems unrelated but keeping it)
  */
-export type VerseOfTheDay = {
+export interface VerseOfTheDay {
   citation: string;
   passage: string;
   images: string[];
   version: string;
-};
+}

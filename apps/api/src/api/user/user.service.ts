@@ -25,34 +25,72 @@ class UserService {
 
       const token = authHeader.split('Bearer ')[1];
 
-      console.log('This is the token', token);
+      console.log(token);
 
       const decodedToken = await auth.verifyIdToken(token as string);
 
-      const validatedData = RegisterInputSchema.parse(req.body);
-      const existingUser = await this.userRepository.findByFirebaseUid(decodedToken.uid);
-      if (existingUser) {
-        if (!existingUser.isActive) {
-          await this.userRepository.reactivate(existingUser.id);
+      const input = RegisterInputSchema.parse(req.body);
+
+      const existing = await this.userRepository.findByFirebaseUid(decodedToken.uid);
+
+      if (existing) {
+        if (!existing.isActive) {
+          await this.userRepository.reactivate(existing.id);
         }
 
-        return ServiceResponse.success('Account reactivated successfully', {
-          id: existingUser.id,
-          email: existingUser.email,
-          displayName: existingUser.displayName,
-          photoUrl: existingUser.photoUrl,
-          role: existingUser.role,
+        return ServiceResponse.success('Account ready', {
+          id: existing.id,
+          email: existing.email,
+          username: existing.username,
+          name: existing.name,
+          firstName: existing.firstName,
+          displayName: existing.displayName,
+          photoUrl: existing.photoUrl,
+          role: existing.role,
           isActive: true,
         });
       }
 
-      const newUser = await this.userRepository.create(decodedToken.uid, {
-        ...validatedData,
-        email: decodedToken.email ?? '',
-        photoUrl: decodedToken.picture ?? '',
-      });
+      const firstName = input.firstName?.trim() || decodedToken.given_name || '';
+      const familyName = input.name?.trim() || decodedToken.family_name || decodedToken.name || '';
+      const emailPrefix = decodedToken.email?.split('@')[0]?.toLowerCase() || '';
 
-      return ServiceResponse.success('User created successfully', newUser);
+      const displayName =
+        [firstName, familyName].filter(Boolean).join(' ') || emailPrefix || `user_${decodedToken.uid.slice(-8)}`;
+
+      let username = input.username?.trim().toLowerCase();
+
+      if (username) {
+        if (await this.userRepository.usernameExists(username)) {
+          return ServiceResponse.failure('Username already taken. Please choose another.', null, StatusCodes.CONFLICT);
+        }
+      } else {
+        username = await this.generateUniqueUsername(firstName, familyName);
+      }
+
+      const userData = {
+        email: decodedToken.email ?? '',
+        username,
+        name: familyName,
+        firstName,
+        displayName,
+        photoUrl: decodedToken.picture ?? null,
+        bio: input.bio ?? null,
+      };
+
+      const [newUser] = await this.userRepository.create(decodedToken.uid, userData);
+
+      return ServiceResponse.success('User created successfully', {
+        id: newUser?.id,
+        email: newUser?.email,
+        username: newUser?.username,
+        name: newUser?.name,
+        firstName: newUser?.firstName,
+        displayName: newUser?.displayName,
+        photoUrl: newUser?.photoUrl,
+        role: newUser?.role,
+        isActive: true,
+      });
     } catch (ex) {
       const errorMessage = `Error creating user:, ${(ex as Error).message}`;
       logger.error(errorMessage);
@@ -79,6 +117,40 @@ class UserService {
       logger.error(errorMessage);
       return ServiceResponse.failure('An error occurred while finding user.', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
+  }
+
+  private async generateUniqueUsername(firstName: string, familyName: string, maxAttempts = 8): Promise<string> {
+    const f = firstName.toLowerCase().trim();
+    const l = familyName.toLowerCase().trim();
+
+    if (!f && !l) {
+      return `user_${Math.random().toString(36).slice(2, 9)}`; // 7 chars
+    }
+
+    const patterns = [
+      `${f}${l ? l.charAt(0) : ''}`, // fiantso r → fiantsor
+      `${f}.${l ? l.charAt(0) : ''}`, // fiantso.r
+      `${f}_${l ? l.charAt(0) : ''}`, // fiantso_r
+      `${f}${l || ''}`, // fiantsoravoajanahary
+      `${f.slice(0, 5)}${l ? l.slice(0, 5) : ''}`, // fiant ravoaj
+    ];
+
+    for (const base of patterns) {
+      if (base.length >= 4 && !(await this.userRepository.usernameExists(base))) {
+        return base;
+      }
+    }
+
+    const bestBase = patterns[0] || `${f}${l ? l.charAt(0) : ''}`;
+    for (let i = 2; i <= maxAttempts + 1; i++) {
+      const candidate = `${bestBase}${i}`;
+      if (!(await this.userRepository.usernameExists(candidate))) {
+        return candidate;
+      }
+    }
+
+    const shortRandom = Math.random().toString(36).slice(2, 7);
+    return `${f.slice(0, 4) || 'usr'}_${shortRandom}`;
   }
 }
 
