@@ -5,12 +5,11 @@ import { SubmitEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { ArrowRight } from 'lucide-react';
-import { motion } from 'motion/react';
 import { toast } from 'sonner';
 
-import { Button } from '@workspace/ui/components/button';
-
 import { AnimatedInput, Divider, OAuth, PasswordInput } from '@/components/auth';
+
+import { AnimatedButton } from '@/components/shared';
 
 import { useDictionary } from '@/hooks/use-dictionary';
 import { useFocusState } from '@/hooks/use-focus-state';
@@ -128,25 +127,14 @@ export function LoginForm() {
         showForgotPassword
         error={errors.password}
       />
-      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-        <Button
-          type="submit"
-          className="group bg-primary hover:bg-primary/90 h-14 w-full cursor-pointer gap-2 rounded-2xl text-base font-medium transition-all"
-          disabled={loading}
-        >
-          {loading ? (
-            <>
-              <span className="border-background h-4 w-4 animate-spin rounded-full border-2 border-t-transparent" />
-              {dictionary?.auth.connexion}
-            </>
-          ) : (
-            <>
-              {dictionary?.auth.continue}
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </>
-          )}
-        </Button>
-      </motion.div>
+      <AnimatedButton
+        type="submit"
+        loading={loading}
+        loadingText={dictionary?.auth.connexion}
+        icon={<ArrowRight className="h-4 w-4" />}
+      >
+        {dictionary?.auth.continue}
+      </AnimatedButton>
       <Divider text={dictionary?.auth.divider as string} />
       <OAuth text={dictionary?.auth.google as string} onClick={handleGoogleSignIn} />
     </form>

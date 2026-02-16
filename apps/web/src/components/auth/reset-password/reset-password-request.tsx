@@ -5,13 +5,12 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Mail } from 'lucide-react';
 import { motion } from 'motion/react';
 
-import { Button } from '@workspace/ui/components/button';
+import { AnimatedButton } from '@/components/shared';
+import { AnimatedInput } from '@/components/shared/animated-input';
 
 import { useFocusState } from '@/hooks/use-focus-state';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
-
-import { AnimatedInput } from '../shared/animated-input';
 
 interface ResetPasswordRequestProps {
   email: string;
@@ -63,10 +62,15 @@ export function ResetPasswordRequest({
         onFocus={() => setFocused('email')}
         onBlur={clearFocus}
       />
-      <Button type="submit" disabled={!email || isLoading} className="h-14 w-full rounded-2xl">
-        {isLoading ? dictionary?.auth.resetPassword.sending : dictionary?.auth.resetPassword.sendResetLink}
-        {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
-      </Button>
+      <AnimatedButton
+        type="submit"
+        loading={isLoading}
+        loadingText={dictionary?.auth.resetPassword.sending}
+        icon={<ArrowRight className="h-4 w-4" />}
+        disabled={!email}
+      >
+        {dictionary?.auth.resetPassword.sendResetLink}
+      </AnimatedButton>
       <Link href="/login" className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
         <ArrowLeft className="h-4 w-4" />
         {dictionary?.auth.resetPassword.backToSignIn}

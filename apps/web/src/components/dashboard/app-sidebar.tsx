@@ -4,9 +4,6 @@ import { useTheme } from 'next-themes';
 import Image from 'next/image';
 
 import { LogOut, PenSquare } from 'lucide-react';
-import { motion } from 'motion/react';
-
-import { Button } from '@workspace/ui/components/button';
 
 import { useDictionary } from '@/hooks/use-dictionary';
 
@@ -14,6 +11,7 @@ import { useAuthContext } from '@/lib/firebase/auth-context';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
 
+import { AnimatedButton } from '../shared';
 import { NAVIGATION, UserProfileLink } from './mobile-header';
 import { NavItem } from './nav-item';
 
@@ -50,25 +48,12 @@ export function AppSidebar() {
         ))}
       </nav>
       <div className="my-6 space-y-2">
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Button
-            onClick={() => console.log('Create post')}
-            className="group bg-primary hover:bg-primary/90 h-14 w-full cursor-pointer gap-2 rounded-2xl text-base font-medium transition-all"
-          >
-            {dictionary?.dashboard.navigation.shareThought}
-            <PenSquare className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Button>
-        </motion.div>
-        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-          <Button
-            onClick={() => signOut()}
-            className="group border-border text-primary hover:bg-secondary h-14 w-full cursor-pointer gap-2 rounded-2xl bg-transparent text-base font-medium transition-all"
-            disabled={loading}
-          >
-            {dictionary?.dashboard.navigation.logout}
-            <LogOut className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Button>
-        </motion.div>
+        <AnimatedButton onClick={() => console.log('Create post')} icon={<PenSquare className="h-4 w-4" />}>
+          {dictionary?.dashboard.navigation.shareThought}
+        </AnimatedButton>
+        <AnimatedButton variant="secondary" onClick={signOut} disabled={loading} icon={<LogOut className="h-4 w-4" />}>
+          {dictionary?.dashboard.navigation.logout}
+        </AnimatedButton>
       </div>
       <div className="border-sidebar-border border-t pt-4">
         <UserProfileLink />
