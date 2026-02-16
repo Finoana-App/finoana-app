@@ -2,9 +2,9 @@
 
 import { motion } from 'motion/react';
 
-import { Dictionary } from '@/i18n/dictionaries/en';
+import { getPasswordStrength, PASSWORD_STRENGTH_CONFIG } from '@/components/utils/password-strength';
 
-import { getPasswordStrength, PASSWORD_STRENGTH_CONFIG } from '../utils/password-strength';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
 interface PasswordStrengthIndicatorProps {
   password: string;

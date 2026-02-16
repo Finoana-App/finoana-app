@@ -4,7 +4,7 @@ import {
   getPasswordRequirements,
   getPasswordStrength,
   PASSWORD_STRENGTH_CONFIG,
-} from '@/components/auth/utils/password-strength';
+} from '@/components/utils/password-strength';
 
 export function usePasswordValidation(password: string) {
   const strength = useMemo(() => getPasswordStrength(password), [password]);
