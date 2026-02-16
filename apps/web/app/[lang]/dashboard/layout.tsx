@@ -1,6 +1,6 @@
 import { ProtectedRoute } from '@/components/auth';
 
-import { AppSidebar, MobileHeader } from '@/components/dashboard';
+import { AppSidebar, MobileHeader, RightSidebar } from '@/components/dashboard';
 
 export default function DashboardLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -11,6 +11,9 @@ export default function DashboardLayout({ children }: Readonly<{ children: React
           <AppSidebar />
         </div>
         <main className="border-border min-w-0 flex-1 border-x pb-20 lg:pb-0">{children}</main>
+        <div className="hidden shrink-0 xl:block xl:w-80">
+          <RightSidebar />
+        </div>
       </div>
     </ProtectedRoute>
   );

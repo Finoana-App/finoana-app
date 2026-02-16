@@ -183,6 +183,7 @@ export const en = {
       shareThought: 'Share Thought',
       logout: 'Logout',
     } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
+    searchPlaceholder: 'Search prayers, people, topics...',
   },
 };
 

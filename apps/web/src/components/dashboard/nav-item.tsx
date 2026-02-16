@@ -31,7 +31,7 @@ export function NavItem({ item, label, lang, onClick }: Readonly<NavItemProps>) 
       onClick={onClick}
       aria-label={label}
       className={cn(
-        'flex items-center text-foreground font-semibold h-14 gap-3 rounded-2xl px-3 text-base transition-all',
+        'text-foreground flex h-14 items-center gap-3 rounded-2xl px-3 text-base font-semibold transition-all',
         isActive ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-secondary'
       )}
     >
