@@ -23,7 +23,7 @@ interface NavItemProps {
 
 export function NavItem({ item, label, lang, onClick }: Readonly<NavItemProps>) {
   const pathname = usePathname();
-  const isActive = pathname.startsWith(item.href);
+  const isActive = pathname?.split('/')[3] === item.href.split('/')[2];
 
   return (
     <Link
@@ -31,8 +31,8 @@ export function NavItem({ item, label, lang, onClick }: Readonly<NavItemProps>) 
       onClick={onClick}
       aria-label={label}
       className={cn(
-        'flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-all',
-        isActive ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-secondary'
+        'text-foreground flex h-14 items-center gap-3 rounded-2xl px-3 text-base font-semibold transition-all',
+        isActive ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-secondary'
       )}
     >
       <item.icon className="h-5 w-5" />

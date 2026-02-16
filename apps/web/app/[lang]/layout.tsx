@@ -11,11 +11,11 @@ export default async function LangLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: string }>;
+  params: Promise<{ lang: Locale }>;
 }) {
   const { lang } = await params;
 
-  if (!i18n.locales.includes(lang as Locale)) {
+  if (!i18n.locales.includes(lang)) {
     notFound();
   }
 

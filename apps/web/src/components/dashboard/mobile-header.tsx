@@ -16,22 +16,24 @@ import { useDictionary } from '@/hooks/use-dictionary';
 
 import { useCurrentUser } from '@/lib/hooks/use-user';
 
+import { Locale } from '@/i18n';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 import { NavItem } from './nav-item';
 
+const BASE_URL = '/dashboard';
 export const NAVIGATION: NavItem[] = [
-  { key: 'home', href: '/', icon: Home },
-  { key: 'profile', href: '/profile', icon: User },
-  { key: 'settings', href: '/settings', icon: Settings },
+  { key: 'home', href: BASE_URL, icon: Home },
+  { key: 'profile', href: `${BASE_URL}/profile`, icon: User },
+  { key: 'settings', href: `${BASE_URL}/settings`, icon: Settings },
 ];
 
-export function UserProfileLink({ onClick }: Readonly<{ onClick?: () => void }>) {
+export function UserProfileLink({ onClick, lang }: Readonly<{ onClick?: () => void; lang: Locale }>) {
   const { data: currentUser } = useCurrentUser();
 
   return (
     <Link
-      href="/profile"
+      href={`/${lang}${BASE_URL}/profile`}
       onClick={onClick}
       className="hover:bg-secondary flex items-center gap-3 rounded-lg px-3 py-2 transition-colors"
     >
@@ -97,7 +99,7 @@ export function MobileHeader() {
               ))}
             </nav>
             <div className="border-border border-t pt-4">
-              <UserProfileLink onClick={() => setOpen(false)} />
+              <UserProfileLink lang={lang} onClick={() => setOpen(false)} />
             </div>
           </div>
         </SheetContent>

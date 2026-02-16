@@ -9,7 +9,7 @@ import { Label } from '@workspace/ui/components/label';
 
 interface AnimatedInputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
-  label: string;
+  label?: string;
   focused?: boolean;
   error?: string;
 }

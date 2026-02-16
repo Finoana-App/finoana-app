@@ -187,5 +187,8 @@ export const fr: Dictionary = {
       shareThought: 'Partager un pensée',
       logout: 'Se deconnecter',
     } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
+    searchPlaceholder: 'Rechercher des prières, des personnes, des sujets...',
+    verseOfTheDayTitle: 'Verset du jour',
+    rightSidebarFooter: 'Marche ensemble en foi. Partagez l’amour, répandez l’espoir, construisez la communauté.',
   },
 };

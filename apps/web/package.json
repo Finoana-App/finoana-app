@@ -22,6 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@glowstudent/youversion": "^2.2.2",
     "@tanstack/react-query": "^5.90.21",
     "@workspace/types": "workspace:*",
     "@workspace/ui": "workspace:*",

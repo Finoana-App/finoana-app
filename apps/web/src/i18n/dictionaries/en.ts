@@ -183,6 +183,9 @@ export const en = {
       shareThought: 'Share Thought',
       logout: 'Logout',
     } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
+    searchPlaceholder: 'Search prayers, people, topics...',
+    verseOfTheDayTitle: 'Verse of the day',
+    rightSidebarFooter: 'Walking together in faith. Share love, spread hope, build community.',
   },
 };
 

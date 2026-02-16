@@ -2,7 +2,7 @@ import { ResetPasswordForm, RightSideWrapper } from '@/components/auth';
 
 import { getDictionary, Locale } from '@/i18n';
 
-export default async function ForgotPassword({ params }: { params: Promise<{ lang: Locale }> }) {
+export default async function ForgotPasswordPage({ params }: { params: Promise<{ lang: Locale }> }) {
   const { lang } = await params;
 
   const dict = await getDictionary(lang);
