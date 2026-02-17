@@ -189,6 +189,16 @@ export const en = {
     searchPlaceholder: 'Search prayers, people, topics...',
     verseOfTheDayTitle: 'Verse of the day',
     rightSidebarFooter: 'Walking together in faith. Share love, spread hope, build community.',
+    profile: {
+      title: 'Profile',
+      editProfile: 'Edit Profile',
+      joined: 'Joined',
+      privacy: {
+        public: 'Public',
+        private: 'Private',
+        anonymous: 'Anonymous',
+      },
+    },
   },
 };
 
