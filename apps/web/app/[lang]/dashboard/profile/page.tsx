@@ -1,6 +1,9 @@
 'use client';
 
+import { useState } from 'react';
+
 import { Banner } from '@/components/dashboard';
+import { EditProfileDialog } from '@/components/dashboard/profile/edit-profile-dialog';
 
 import { useDictionary } from '@/hooks/use-dictionary';
 
@@ -9,7 +12,10 @@ import { useCurrentUser } from '@/lib/hooks/use-user';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 export default function ProfilePage() {
+  const [isEditOpen, setEditOpen] = useState(false);
+
   const { data: currentUser, isLoading } = useCurrentUser();
+
   const { dictionary } = useDictionary<Dictionary>();
 
   return (
@@ -18,7 +24,13 @@ export default function ProfilePage() {
         <h1 className="text-xl font-semibold">{dictionary?.dashboard.profile.title}</h1>
         <span className="text-muted-foreground text-sm">0 posts</span>
       </header>
-      <Banner dictionary={dictionary} user={currentUser} isLoading={isLoading} />
+      <Banner
+        dictionary={dictionary}
+        user={currentUser}
+        isLoading={isLoading}
+        onEditProfile={() => setEditOpen(true)}
+      />
+      {currentUser && <EditProfileDialog open={isEditOpen} onOpenChange={setEditOpen} />}
     </section>
   );
 }

@@ -11,6 +11,7 @@ import { UserAvatar } from './user-avatar';
 interface UserIdentityProps {
   user: User;
   dictionary: Dictionary | null;
+  onEditClick?: () => void;
 }
 
 interface UserPrivacyBadgeProps {
@@ -57,7 +58,7 @@ export function UserPrivacyBadge({ privacyLevel, dictionary }: Readonly<UserPriv
   );
 }
 
-export function UserIdentity({ user, dictionary }: Readonly<UserIdentityProps>) {
+export function UserIdentity({ user, dictionary, onEditClick }: Readonly<UserIdentityProps>) {
   return (
     <div className="flex w-full items-end justify-between gap-4">
       <div className="flex flex-col items-start gap-4">
@@ -72,7 +73,7 @@ export function UserIdentity({ user, dictionary }: Readonly<UserIdentityProps>) 
           <UserPrivacyBadge privacyLevel={user.privacyLevel} dictionary={dictionary} />
         </div>
       </div>
-      <Button variant="outline" className="gap-2">
+      <Button variant="outline" className="gap-2 cursor-pointer" onClick={onEditClick}>
         <Settings className="h-4 w-4" />
         {dictionary?.dashboard.profile.editProfile}
       </Button>
