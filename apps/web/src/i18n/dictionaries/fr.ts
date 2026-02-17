@@ -193,5 +193,15 @@ export const fr: Dictionary = {
     searchPlaceholder: 'Rechercher des prières, des personnes, des sujets...',
     verseOfTheDayTitle: 'Verset du jour',
     rightSidebarFooter: 'Marche ensemble en foi. Partagez l’amour, répandez l’espoir, construisez la communauté.',
+    profile: {
+      title: 'Profil',
+      editProfile: 'Modifier le profil',
+      joined: 'Rejoint le',
+      privacy: {
+        public: 'Public',
+        private: 'Privé',
+        anonymous: 'Anonyme',
+      },
+    },
   },
 };
