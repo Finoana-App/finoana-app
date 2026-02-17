@@ -13,7 +13,7 @@ export default function ProfilePage() {
         <h1 className="text-xl font-semibold">Profile</h1>
         <span className="text-muted-foreground text-sm">0 posts</span>
       </header>
-      <Banner currentUser={currentUser} isLoading={isLoading} />
+      <Banner user={currentUser} isLoading={isLoading} />
     </section>
   );
 }
