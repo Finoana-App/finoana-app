@@ -6,8 +6,9 @@ import { AuthRequest } from '@/common/middlewares/auth';
 import { ServiceResponse } from '@/common/models/service-response';
 import { logger } from '@/server';
 
-import { RegisterInputSchema } from './user.model';
+import { RegisterInputSchema, UpdateProfileSchema } from './user.model';
 import { UserRepository } from './user.repository';
+import { userUtils } from './utils';
 
 class UserService {
   private readonly userRepository: UserRepository;
@@ -63,7 +64,7 @@ class UserService {
           return ServiceResponse.failure('Username already taken. Please choose another.', null, StatusCodes.CONFLICT);
         }
       } else {
-        username = await this.generateUniqueUsername(firstName, familyName);
+        username = await userUtils.generateUniqueUsername(firstName, familyName);
       }
 
       const userData = {
@@ -117,46 +118,27 @@ class UserService {
     }
   }
 
-  private async generateUniqueUsername(firstName: string, familyName: string, maxAttempts = 8): Promise<string> {
-    const f = firstName.toLowerCase().replaceAll(/\s+/g, '').trim();
-    const l = familyName.toLowerCase().replaceAll(/\s+/g, '').trim();
+  async update(req: AuthRequest, _res: Response) {
+    try {
+      const validatedData = UpdateProfileSchema.parse(req.body);
 
-    if (!f && !l) {
-      return `user_${Math.random().toString(36).slice(2, 9)}`;
-    }
-
-    const patterns: string[] = [];
-
-    if (l) {
-      patterns.push(`${f}.${l.charAt(0)}`);
-      patterns.push(`${f}${l}`);
-      patterns.push(`${f}.${l}`);
-      patterns.push(`${f}${l.charAt(0)}`);
-      patterns.push(`${f.slice(0, 8)}${l.slice(0, 8)}`);
-    } else if (f) {
-      patterns.push(f);
-      patterns.push(`${f}mg`);
-    } else {
-      patterns.push(l);
-    }
-
-    for (const base of patterns) {
-      if (base.length >= 4 && !(await this.userRepository.usernameExists(base))) {
-        return base;
+      const userId = req.user?.userId;
+      if (!userId) {
+        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
       }
-    }
 
-    const bestBase = patterns[0] || f || l || 'user';
-    for (let i = 2; i <= maxAttempts + 1; i++) {
-      const candidate = `${bestBase}${i}`;
-      if (!(await this.userRepository.usernameExists(candidate))) {
-        return candidate;
-      }
-    }
+      const updatedUser = await this.userRepository.update(userId, validatedData);
 
-    const prefix = (f || l || 'user').slice(0, 7);
-    const random = Math.random().toString(36).slice(2, 8);
-    return `${prefix}${random}`;
+      return ServiceResponse.success('Profile updated successfully', updatedUser);
+    } catch (ex) {
+      const errorMessage = `Error updating profile, ${(ex as Error).message}`;
+      logger.error(errorMessage);
+      return ServiceResponse.failure(
+        'An error occurred while updating profile.',
+        null,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }
 

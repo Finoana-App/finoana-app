@@ -11,3 +11,4 @@ userRouter.post('/register', userController.register);
 userRouter.use(authenticate);
 
 userRouter.get('/me', userController.getProfile);
+userRouter.put('/me', userController.updateProfile);
