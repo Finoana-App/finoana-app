@@ -1,4 +1,4 @@
-import { ApiResponse, RegisterResponse, SignUpInput, User } from '@workspace/types';
+import { ApiResponse, RegisterResponse, SignUpInput, UpdateProfileInput, User } from '@workspace/types';
 
 import { apiClient } from '../client';
 
@@ -17,5 +17,13 @@ export const userService = {
    */
   getCurrentUser: async (): Promise<ApiResponse<User>> => {
     return apiClient.get<User>('/users/me');
+  },
+
+  /**
+   * Update current user profile
+   * Useful for updating user profile
+   */
+  updateProfile: async (data: UpdateProfileInput): Promise<ApiResponse<User>> => {
+    return apiClient.put<User>('/users/me', data);
   },
 };

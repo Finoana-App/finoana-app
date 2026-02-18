@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import type { SignUpInput } from '@workspace/types';
+import type { SignUpInput, UpdateProfileInput } from '@workspace/types';
 
 import { ApiError } from '@/lib/api/client';
 import { userService } from '@/lib/api/services/user.service';
@@ -47,6 +47,22 @@ export function useCurrentUser(enabled: boolean = true) {
         return false;
       }
       return failureCount < 2;
+    },
+  });
+}
+
+export function useUpdateProfile() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: UpdateProfileInput) => userService.updateProfile(data),
+    onSuccess: (response) => {
+      if (response.success) {
+        queryClient.setQueryData(authKeys.currentUser(), response.responseObject);
+      }
+    },
+    onError: (error: ApiError) => {
+      console.error('Update profile error:', error.message);
     },
   });
 }
