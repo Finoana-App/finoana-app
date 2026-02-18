@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import { useAuthContext } from '@/lib/firebase/auth-context';
 
+import { LoadingScreen } from '../shared';
+
 export function withAuth<P extends object>(
   Component: React.ComponentType<P>,
   options?: {
@@ -33,11 +35,7 @@ export function withAuth<P extends object>(
     }, [user, loading, router, redirectTo]);
 
     if (loading) {
-      return (
-        <div className="flex min-h-screen items-center justify-center">
-          <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
-        </div>
-      );
+      return <LoadingScreen />;
     }
 
     if (!user) {
@@ -75,11 +73,7 @@ export function ProtectedRoute({
   }, [user, loading, router, redirectTo, requireAdmin]);
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   if (!user || (requireAdmin && user.role !== 'admin')) {
