@@ -6,7 +6,7 @@ import { Button } from '@workspace/ui/components/button';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
 
-import { UserAvatar } from './user-avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
 
 interface UserIdentityProps {
   user: User;
@@ -63,7 +63,12 @@ export function UserIdentity({ user, dictionary, onEditClick }: Readonly<UserIde
     <div className="flex w-full items-end justify-between gap-4">
       <div className="flex flex-col items-start gap-4">
         <div className="relative">
-          <UserAvatar user={user} />
+          <Avatar className="border-background ring-primary/20 h-24 w-24 border-4 ring-4 sm:h-32 sm:w-32">
+            <AvatarImage src={user.photoUrl ?? undefined} alt={user.displayName ?? 'User avatar'} />
+            <AvatarFallback className="bg-primary/10 text-primary text-2xl sm:text-3xl">
+              {user.displayName?.charAt(0) ?? '?'}
+            </AvatarFallback>
+          </Avatar>
         </div>
         <div className="flex flex-col items-start gap-5 lg:flex-row">
           <div>

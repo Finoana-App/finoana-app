@@ -192,6 +192,15 @@ export const en = {
     profile: {
       title: 'Profile',
       editProfile: 'Edit Profile',
+      editProfileDescription: 'Complete these fields to update your profile',
+      displayName: 'Display name',
+      displayNamePlaceholder: 'Your name',
+      bio: 'Bio',
+      bioPlaceholder: 'Tell people a little about you',
+      privacyLevel: 'Privacy level',
+      privacyLevelPlaceholder: 'Select your privacy level',
+      privacyLevelDescription:
+        'Public: visible to everyone · Private: visible to followers · Anonymous: hides identity',
       joined: 'Joined',
       privacy: {
         public: 'Public',
@@ -199,6 +208,10 @@ export const en = {
         anonymous: 'Anonymous',
       },
     },
+  },
+  common: {
+    cancel: 'Cancel',
+    saveChanges: 'Save changes',
   },
 };
 
