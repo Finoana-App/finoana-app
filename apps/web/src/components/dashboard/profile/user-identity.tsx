@@ -73,7 +73,7 @@ export function UserIdentity({ user, dictionary, onEditClick }: Readonly<UserIde
           <UserPrivacyBadge privacyLevel={user.privacyLevel} dictionary={dictionary} />
         </div>
       </div>
-      <Button variant="outline" className="gap-2 cursor-pointer" onClick={onEditClick}>
+      <Button variant="outline" className="cursor-pointer gap-2" onClick={onEditClick}>
         <Settings className="h-4 w-4" />
         {dictionary?.dashboard.profile.editProfile}
       </Button>
