@@ -2,8 +2,8 @@
   "name": "@workspace/types",
   "version": "1.0.0",
   "main": "index.ts",
-  "scripts": {
-    "build": "tsc"
+  "dependencies": {
+    "zod": "^3.25.76"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"

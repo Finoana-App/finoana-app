@@ -40,9 +40,11 @@ export function EditProfileDialog({
 }: Readonly<EditProfileDialogProps>) {
   const [displayName, setDisplayName] = useState(defaultValues?.displayName ?? '');
   const [bio, setBio] = useState(defaultValues?.bio ?? '');
-  const [privacy, setPrivacy] = useState<PrivacyLevel>(defaultValues?.privacyLevel ?? PrivacyLevel.PUBLIC);
+  const [privacy, setPrivacy] = useState<PrivacyLevel>(
+    (defaultValues?.privacyLevel as PrivacyLevel) ?? PrivacyLevel.PUBLIC
+  );
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | undefined>(defaultValues?.photoUrl);
+  const [preview, setPreview] = useState<string | undefined>(defaultValues?.photoUrl ?? '');
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -119,7 +121,7 @@ export function EditProfileDialog({
     if (!open) {
       setDisplayName(user.displayName ?? '');
       setBio(user.bio ?? '');
-      setPrivacy(user.privacyLevel ?? PrivacyLevel.PUBLIC);
+      setPrivacy((user.privacyLevel as PrivacyLevel) ?? PrivacyLevel.PUBLIC);
       setPreview(user.photoUrl ?? undefined);
       setAvatarFile(null);
     }

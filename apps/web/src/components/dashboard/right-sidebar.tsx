@@ -7,7 +7,7 @@ import { useFocusState } from '@/hooks/use-focus-state';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
 
-import { AnimatedInput } from '../auth';
+import { AnimatedInput } from '../shared';
 import { VerseOfTheDay } from './verse-of-the-day';
 
 export function RightSidebar({ verse }: Readonly<{ verse: VerseOfTheDayType }>) {

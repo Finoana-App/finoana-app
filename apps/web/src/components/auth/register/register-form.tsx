@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { AnimatedInput, Divider, OAuth, PasswordInputWithStrength } from '@/components/auth';
+import { Divider, OAuth, PasswordInputWithStrength } from '@/components/auth';
 
-import { AnimatedButton } from '@/components/shared';
+import { AnimatedButton, AnimatedInput } from '@/components/shared';
 
 import { useDictionary } from '@/hooks/use-dictionary';
 import { useFocusState } from '@/hooks/use-focus-state';
