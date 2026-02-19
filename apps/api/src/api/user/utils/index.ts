@@ -1,3 +1,7 @@
+import { cloudinaryService, MediaType } from '@/common/config/cloudinary';
+import { cleanupTempFile } from '@/common/middlewares/upload';
+import { logger } from '@/server';
+
 import { UserRepository } from '../user.repository';
 
 class UserUtils {
@@ -47,6 +51,37 @@ class UserUtils {
     const prefix = (f || l || 'user').slice(0, 7);
     const random = Math.random().toString(36).slice(2, 8);
     return `${prefix}${random}`;
+  }
+
+  async handleAvatarUpload(file: Express.Multer.File, userId: string): Promise<string | null> {
+    try {
+      const currentUser = await this.userRepository.findById(userId);
+
+      if (currentUser?.photoUrl) {
+        const oldPublicId = cloudinaryService.extractPublicId(currentUser.photoUrl);
+        if (oldPublicId) {
+          await cloudinaryService.deleteFile(oldPublicId);
+        }
+      }
+
+      const uploadResult = await cloudinaryService.uploadFile(file, {
+        mediaType: MediaType.AVATAR,
+        userId,
+      });
+
+      this.cleanupFile(file);
+      return uploadResult.secureUrl;
+    } catch (error) {
+      this.cleanupFile(file);
+      logger.error(`Avatar upload failed: ${(error as Error).message}`);
+      return null;
+    }
+  }
+
+  cleanupFile(file?: Express.Multer.File) {
+    if (file?.path) {
+      cleanupTempFile(file.path);
+    }
   }
 }
 

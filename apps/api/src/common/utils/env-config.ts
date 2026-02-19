@@ -21,6 +21,12 @@ const envSchema = z.object({
   FIREBASE_PRIVATE_KEY: z.string().nonempty(),
   FIREBASE_CLIENT_EMAIL: z.string().nonempty(),
   FIREBASE_PROJECT_ID: z.string().nonempty(),
+
+  CLOUDINARY_CLOUD_NAME: z.string().nonempty(),
+  CLOUDINARY_API_KEY: z.string().nonempty(),
+  CLOUDINARY_API_SECRET: z.string().nonempty(),
+  MAX_FILE_SIZE: z.coerce.number().int().positive().default(10),
+  MAX_FILES_PER_UPLOAD: z.coerce.number().int().positive().default(5),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

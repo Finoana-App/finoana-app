@@ -119,20 +119,37 @@ class UserService {
   }
 
   async update(req: AuthRequest, _res: Response) {
+    const userId = req.user?.userId;
+    if (!userId) {
+      return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+    }
+
     try {
       const validatedData = UpdateProfileSchema.parse(req.body);
 
-      const userId = req.user?.userId;
-      if (!userId) {
-        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+      if (req.file) {
+        const avatarUrl = await userUtils.handleAvatarUpload(req.file, userId);
+        if (!avatarUrl) {
+          return ServiceResponse.failure(
+            'Failed to upload avatar. Please try again.',
+            null,
+            StatusCodes.INTERNAL_SERVER_ERROR
+          );
+        }
+        validatedData.photoUrl = avatarUrl;
       }
 
       const updatedUser = await this.userRepository.update(userId, validatedData);
-
       return ServiceResponse.success('Profile updated successfully', updatedUser);
     } catch (ex) {
-      const errorMessage = `Error updating profile, ${(ex as Error).message}`;
-      logger.error(errorMessage);
+      userUtils.cleanupFile(req.file);
+
+      if (ex instanceof Error && ex.name === 'ZodError') {
+        return ServiceResponse.failure('Validation failed', null, StatusCodes.BAD_REQUEST);
+      }
+
+      logger.error(`Error updating profile: ${(ex as Error).message}`);
+
       return ServiceResponse.failure(
         'An error occurred while updating profile.',
         null,
