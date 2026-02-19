@@ -210,10 +210,16 @@ export const fr: Dictionary = {
         private: 'Privé',
         anonymous: 'Anonyme',
       },
+      errors: {
+        displayNameRequired: "Le nom d'utilisateur est requis",
+        updateFailed: 'Échec de la mise à jour du profil. Veuillez réessayer.',
+        success: 'Profil mis à jour avec succès',
+      },
     },
   },
   common: {
     cancel: 'Annuler',
     saveChanges: 'Enregistrer les modifications',
+    saving: 'Enregistrement...',
   },
 };

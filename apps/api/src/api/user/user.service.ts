@@ -1,6 +1,7 @@
 import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
+import { cloudinaryService } from '@/common/config/cloudinary';
 import { auth } from '@/common/config/firebase';
 import { AuthRequest } from '@/common/middlewares/auth';
 import { ServiceResponse } from '@/common/models/service-response';
@@ -143,15 +144,48 @@ class UserService {
       return ServiceResponse.success('Profile updated successfully', updatedUser);
     } catch (ex) {
       userUtils.cleanupFile(req.file);
-
       if (ex instanceof Error && ex.name === 'ZodError') {
         return ServiceResponse.failure('Validation failed', null, StatusCodes.BAD_REQUEST);
       }
-
       logger.error(`Error updating profile: ${(ex as Error).message}`);
-
       return ServiceResponse.failure(
         'An error occurred while updating profile.',
+        null,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  async deleteAvatar(req: AuthRequest, _res: Response) {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+      }
+
+      const currentUser = await this.userRepository.findById(userId);
+
+      if (!currentUser) {
+        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+      }
+
+      if (currentUser.photoUrl) {
+        const publicId = cloudinaryService.extractPublicId(currentUser.photoUrl);
+        if (publicId) {
+          await cloudinaryService.deleteFile(publicId);
+        }
+      }
+
+      const updatedUser = await this.userRepository.update(userId, {
+        photoUrl: null,
+      });
+
+      return ServiceResponse.success('Avatar deleted successfully', updatedUser);
+    } catch (ex) {
+      const errorMessage = `Error deleting avatar: ${(ex as Error).message}`;
+      logger.error(errorMessage);
+      return ServiceResponse.failure(
+        'An error occurred while deleting avatar.',
         null,
         StatusCodes.INTERNAL_SERVER_ERROR
       );

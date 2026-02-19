@@ -55,10 +55,19 @@ export function useUpdateProfile() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: UpdateProfileInput) => userService.updateProfile(data),
+    mutationFn: (data: FormData | UpdateProfileInput) => userService.updateProfile(data),
     onSuccess: (response) => {
-      if (response.success) {
-        queryClient.setQueryData(authKeys.currentUser(), response.responseObject);
+      if (response?.success) {
+        const updatedUser = Array.isArray(response.responseObject)
+          ? response.responseObject[0]
+          : response.responseObject;
+
+        queryClient.setQueryData(authKeys.currentUser(), updatedUser);
+
+        queryClient.invalidateQueries({
+          queryKey: authKeys.currentUser(),
+          refetchType: 'active',
+        });
       }
     },
     onError: (error: ApiError) => {

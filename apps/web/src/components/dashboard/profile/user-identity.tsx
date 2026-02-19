@@ -72,7 +72,9 @@ export function UserIdentity({ user, dictionary, onEditClick }: Readonly<UserIde
         <div className="flex flex-col items-start gap-5 lg:flex-row">
           <div>
             <h2 className="text-xl font-bold sm:text-2xl">{user.displayName}</h2>
-            <p className="text-muted-foreground text-sm sm:text-base">@{user.username.replaceAll(/\s/g, '')}</p>
+            <p className="text-muted-foreground text-sm sm:text-base">
+              @{user.username ? user.username.replaceAll(/\s/g, '') : ''}
+            </p>
           </div>
           <UserPrivacyBadge privacyLevel={user.privacyLevel} dictionary={dictionary} />
         </div>

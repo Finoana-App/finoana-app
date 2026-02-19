@@ -17,6 +17,11 @@ interface BannerProps {
 }
 
 export function Banner({ user, isLoading, dictionary, onEditProfile }: Readonly<BannerProps>) {
+  const formattedJoinDate = (() => {
+    if (!user?.createdAt) return '...';
+    return formatJoinDate(user.createdAt);
+  })();
+
   if (isLoading) return <BannerSkeleton />;
   if (!user) return null;
 
@@ -31,7 +36,7 @@ export function Banner({ user, isLoading, dictionary, onEditProfile }: Readonly<
         <div className="text-muted-foreground mb-4 flex flex-wrap gap-4 text-sm">
           <span className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
-            {dictionary?.dashboard.profile.joined} {formatJoinDate(user.createdAt)}
+            {dictionary?.dashboard.profile.joined} {formattedJoinDate}
           </span>
         </div>
       </div>

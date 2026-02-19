@@ -49,9 +49,6 @@ export interface UploadResult {
 class Cloudinary {
   private readonly baseFolder = 'finoana';
 
-  /**
-   * Get folder path based on media type
-   */
   private getFolderPath(mediaType: MediaType, userId?: string): string {
     const folders: Record<MediaType, string> = {
       [MediaType.AVATAR]: `${this.baseFolder}/avatars`,
@@ -72,9 +69,6 @@ class Cloudinary {
     return folder;
   }
 
-  /**
-   * Get default transformation based on media type
-   */
   private getDefaultTransformation(mediaType: MediaType) {
     const transformations: Record<MediaType, any> = {
       [MediaType.AVATAR]: {
@@ -134,9 +128,6 @@ class Cloudinary {
     return transformations[mediaType];
   }
 
-  /**
-   * Upload single file to Cloudinary
-   */
   async uploadFile(file: Express.Multer.File, options: UploadOptions): Promise<UploadResult> {
     try {
       const folder = options.folder || this.getFolderPath(options.mediaType, options.userId);
@@ -170,9 +161,6 @@ class Cloudinary {
     }
   }
 
-  /**
-   * Upload multiple files to Cloudinary
-   */
   async uploadMultipleFiles(files: Express.Multer.File[], options: UploadOptions): Promise<UploadResult[]> {
     try {
       const uploadPromises = files.map((file) => this.uploadFile(file, options));
@@ -185,9 +173,6 @@ class Cloudinary {
     }
   }
 
-  /**
-   * Optimize image with Sharp before uploading
-   */
   private async optimizeImage(filePath: string): Promise<string> {
     const ext = path.extname(filePath);
     const optimizedPath = filePath.replace(ext, `-optimized${ext}`);
@@ -206,9 +191,6 @@ class Cloudinary {
     }
   }
 
-  /**
-   * Delete file from Cloudinary
-   */
   async deleteFile(publicId: string): Promise<void> {
     try {
       await cloudinary.uploader.destroy(publicId);
@@ -226,17 +208,11 @@ class Cloudinary {
     }
   }
 
-  /**
-   * Extract public ID from Cloudinary URL
-   */
   extractPublicId(url: string): string | null {
     const match = url.match(/\/v\d+\/(.+)\.\w+$/);
     return match?.[1] ?? null;
   }
 
-  /**
-   * Clean up local temp file
-   */
   private cleanupFile(filePath: string): void {
     try {
       if (fs.existsSync(filePath)) {
@@ -247,9 +223,6 @@ class Cloudinary {
     }
   }
 
-  /**
-   * Get file info from Cloudinary
-   */
   async getFileInfo(publicId: string) {
     try {
       const result = await cloudinary.api.resource(publicId);
@@ -268,9 +241,6 @@ class Cloudinary {
     }
   }
 
-  /**
-   * Generate transformation URL (without uploading)
-   */
   generateTransformationUrl(
     publicId: string,
     transformation: {

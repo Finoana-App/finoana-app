@@ -207,11 +207,17 @@ export const en = {
         private: 'Private',
         anonymous: 'Anonymous',
       },
+      errors: {
+        displayNameRequired: 'Display name is required',
+        updateFailed: 'Failed to update profile. Please try again.',
+        success: 'Profile updated successfully',
+      },
     },
   },
   common: {
     cancel: 'Cancel',
     saveChanges: 'Save changes',
+    saving: 'Saving...',
   },
 };
 

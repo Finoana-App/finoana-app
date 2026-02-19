@@ -23,7 +23,7 @@ export const userService = {
    * Update current user profile
    * Useful for updating user profile
    */
-  updateProfile: async (data: UpdateProfileInput): Promise<ApiResponse<User>> => {
+  updateProfile: async (data: FormData | UpdateProfileInput): Promise<ApiResponse<User>> => {
     return apiClient.put<User>('/users/me', data);
   },
 };
