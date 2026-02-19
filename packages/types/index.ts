@@ -82,6 +82,14 @@ export interface SignUpInput {
   username?: string;
 }
 
+/* Update profile input */
+export interface UpdateProfileInput {
+  displayName?: string;
+  photoUrl?: string;
+  bio?: string;
+  privacyLevel?: PrivacyLevel;
+}
+
 /**
  * Payload sent to your backend's /register endpoint
  * (after Firebase Auth user is created)

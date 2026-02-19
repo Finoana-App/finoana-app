@@ -192,13 +192,32 @@ export const en = {
     profile: {
       title: 'Profile',
       editProfile: 'Edit Profile',
+      editProfileDescription: 'Complete these fields to update your profile',
+      displayName: 'Display name',
+      displayNamePlaceholder: 'Your name',
+      bio: 'Bio',
+      bioPlaceholder: 'Tell people a little about you',
+      privacyLevel: 'Privacy level',
+      privacyLevelPlaceholder: 'Select your privacy level',
+      privacyLevelDescription:
+        'Public: visible to everyone · Private: visible to followers · Anonymous: hides identity',
       joined: 'Joined',
       privacy: {
         public: 'Public',
         private: 'Private',
         anonymous: 'Anonymous',
       },
+      errors: {
+        displayNameRequired: 'Display name is required',
+        updateFailed: 'Failed to update profile. Please try again.',
+        success: 'Profile updated successfully',
+      },
     },
+  },
+  common: {
+    cancel: 'Cancel',
+    saveChanges: 'Save changes',
+    saving: 'Saving...',
   },
 };
 

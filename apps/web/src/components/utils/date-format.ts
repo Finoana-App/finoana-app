@@ -30,7 +30,7 @@ export function formatRelativeJoinDate(date: string | Date): string {
   return `${diffYears} ${diffYears === 1 ? 'year' : 'years'} ago`;
 }
 
-export function formatJoinDate(date: string | Date): string {
+export function formatJoinDate(date: string | Date | undefined | null): string {
   const dateObj = toValidDate(date);
 
   if (!dateObj) {
@@ -44,7 +44,16 @@ export function formatJoinDate(date: string | Date): string {
   });
 }
 
-function toValidDate(date: string | Date): Date | null {
+function toValidDate(date: string | Date | undefined | null): Date | null {
+  if (date == null) {
+    return null;
+  }
+
   const d = typeof date === 'string' ? new Date(date) : date;
-  return Number.isNaN(d.getTime()) ? null : d;
+
+  if (!(d instanceof Date) || Number.isNaN(d.getTime())) {
+    return null;
+  }
+
+  return d;
 }

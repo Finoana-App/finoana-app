@@ -30,7 +30,7 @@ export default function ProfilePage() {
         isLoading={isLoading}
         onEditProfile={() => setEditOpen(true)}
       />
-      {currentUser && <EditProfileDialog open={isEditOpen} onOpenChange={setEditOpen} />}
+      {currentUser && <EditProfileDialog open={isEditOpen} onOpenChange={setEditOpen} user={currentUser} />}
     </section>
   );
 }

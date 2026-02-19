@@ -1,13 +1,15 @@
 import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
+import { cloudinaryService } from '@/common/config/cloudinary';
 import { auth } from '@/common/config/firebase';
 import { AuthRequest } from '@/common/middlewares/auth';
 import { ServiceResponse } from '@/common/models/service-response';
 import { logger } from '@/server';
 
-import { RegisterInputSchema } from './user.model';
+import { RegisterInputSchema, UpdateProfileSchema } from './user.model';
 import { UserRepository } from './user.repository';
+import { userUtils } from './utils';
 
 class UserService {
   private readonly userRepository: UserRepository;
@@ -63,7 +65,7 @@ class UserService {
           return ServiceResponse.failure('Username already taken. Please choose another.', null, StatusCodes.CONFLICT);
         }
       } else {
-        username = await this.generateUniqueUsername(firstName, familyName);
+        username = await userUtils.generateUniqueUsername(firstName, familyName);
       }
 
       const userData = {
@@ -117,46 +119,77 @@ class UserService {
     }
   }
 
-  private async generateUniqueUsername(firstName: string, familyName: string, maxAttempts = 8): Promise<string> {
-    const f = firstName.toLowerCase().replaceAll(/\s+/g, '').trim();
-    const l = familyName.toLowerCase().replaceAll(/\s+/g, '').trim();
-
-    if (!f && !l) {
-      return `user_${Math.random().toString(36).slice(2, 9)}`;
+  async update(req: AuthRequest, _res: Response) {
+    const userId = req.user?.userId;
+    if (!userId) {
+      return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
     }
 
-    const patterns: string[] = [];
+    try {
+      const validatedData = UpdateProfileSchema.parse(req.body);
 
-    if (l) {
-      patterns.push(`${f}.${l.charAt(0)}`);
-      patterns.push(`${f}${l}`);
-      patterns.push(`${f}.${l}`);
-      patterns.push(`${f}${l.charAt(0)}`);
-      patterns.push(`${f.slice(0, 8)}${l.slice(0, 8)}`);
-    } else if (f) {
-      patterns.push(f);
-      patterns.push(`${f}mg`);
-    } else {
-      patterns.push(l);
-    }
-
-    for (const base of patterns) {
-      if (base.length >= 4 && !(await this.userRepository.usernameExists(base))) {
-        return base;
+      if (req.file) {
+        const avatarUrl = await userUtils.handleAvatarUpload(req.file, userId);
+        if (!avatarUrl) {
+          return ServiceResponse.failure(
+            'Failed to upload avatar. Please try again.',
+            null,
+            StatusCodes.INTERNAL_SERVER_ERROR
+          );
+        }
+        validatedData.photoUrl = avatarUrl;
       }
-    }
 
-    const bestBase = patterns[0] || f || l || 'user';
-    for (let i = 2; i <= maxAttempts + 1; i++) {
-      const candidate = `${bestBase}${i}`;
-      if (!(await this.userRepository.usernameExists(candidate))) {
-        return candidate;
+      const updatedUser = await this.userRepository.update(userId, validatedData);
+      return ServiceResponse.success('Profile updated successfully', updatedUser);
+    } catch (ex) {
+      userUtils.cleanupFile(req.file);
+      if (ex instanceof Error && ex.name === 'ZodError') {
+        return ServiceResponse.failure('Validation failed', null, StatusCodes.BAD_REQUEST);
       }
+      logger.error(`Error updating profile: ${(ex as Error).message}`);
+      return ServiceResponse.failure(
+        'An error occurred while updating profile.',
+        null,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
     }
+  }
 
-    const prefix = (f || l || 'user').slice(0, 7);
-    const random = Math.random().toString(36).slice(2, 8);
-    return `${prefix}${random}`;
+  async deleteAvatar(req: AuthRequest, _res: Response) {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+      }
+
+      const currentUser = await this.userRepository.findById(userId);
+
+      if (!currentUser) {
+        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+      }
+
+      if (currentUser.photoUrl) {
+        const publicId = cloudinaryService.extractPublicId(currentUser.photoUrl);
+        if (publicId) {
+          await cloudinaryService.deleteFile(publicId);
+        }
+      }
+
+      const updatedUser = await this.userRepository.update(userId, {
+        photoUrl: null,
+      });
+
+      return ServiceResponse.success('Avatar deleted successfully', updatedUser);
+    } catch (ex) {
+      const errorMessage = `Error deleting avatar: ${(ex as Error).message}`;
+      logger.error(errorMessage);
+      return ServiceResponse.failure(
+        'An error occurred while deleting avatar.',
+        null,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }
 

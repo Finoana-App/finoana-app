@@ -3,6 +3,8 @@ import { and, eq, sql } from 'drizzle-orm';
 import { db } from '@/common/databases';
 import { usersTable } from '@/common/databases/schema';
 
+import { UpdateProfileInput } from './user.model';
+
 export class UserRepository {
   async create(
     firebaseUid: string,
@@ -77,5 +79,16 @@ export class UserRepository {
       .where(eq(usersTable.username, username.toLowerCase()));
 
     return Number(result[0]?.count ?? 0) > 0;
+  }
+
+  async update(id: string, data: UpdateProfileInput) {
+    return await db
+      .update(usersTable)
+      .set({
+        ...data,
+        updatedAt: new Date(),
+      })
+      .where(eq(usersTable.id, id))
+      .returning();
   }
 }

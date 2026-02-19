@@ -196,12 +196,30 @@ export const fr: Dictionary = {
     profile: {
       title: 'Profil',
       editProfile: 'Modifier le profil',
+      editProfileDescription: 'Remplissez ces champs pour mettre à jour votre profil',
+      displayName: "Nom d'utilisateur",
+      displayNamePlaceholder: 'Ton nom',
+      bio: 'Biographie',
+      bioPlaceholder: 'Parle un peu de toi',
+      privacyLevel: 'Niveau de confidentialité',
+      privacyLevelPlaceholder: 'Sélectionnez votre niveau de confidentialité',
+      privacyLevelDescription: "Public: visible à tous · Privé: visible aux abonnés · Anonyme: masque l'identité",
       joined: 'Rejoint le',
       privacy: {
         public: 'Public',
         private: 'Privé',
         anonymous: 'Anonyme',
       },
+      errors: {
+        displayNameRequired: "Le nom d'utilisateur est requis",
+        updateFailed: 'Échec de la mise à jour du profil. Veuillez réessayer.',
+        success: 'Profil mis à jour avec succès',
+      },
     },
+  },
+  common: {
+    cancel: 'Annuler',
+    saveChanges: 'Enregistrer les modifications',
+    saving: 'Enregistrement...',
   },
 };
