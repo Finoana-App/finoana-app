@@ -96,6 +96,9 @@ importers:
       '@workspace/eslint-config':
         specifier: workspace:^
         version: link:../../packages/eslint-config
+      '@workspace/types':
+        specifier: workspace:*
+        version: link:../../packages/types
       '@workspace/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
@@ -241,6 +244,9 @@ importers:
       typescript:
         specifier: ^5.0.0
         version: 5.9.3
+      zod:
+        specifier: ^3.25.76
+        version: 3.25.76
 
   packages/typescript-config: {}
 

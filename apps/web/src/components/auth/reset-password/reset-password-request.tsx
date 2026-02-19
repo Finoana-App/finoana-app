@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Mail } from 'lucide-react';
 import { motion } from 'motion/react';
 
-import { AnimatedButton } from '@/components/shared';
-import { AnimatedInput } from '@/components/shared/animated-input';
+import { AnimatedButton, AnimatedInput } from '@/components/shared';
 
 import { useFocusState } from '@/hooks/use-focus-state';
 
