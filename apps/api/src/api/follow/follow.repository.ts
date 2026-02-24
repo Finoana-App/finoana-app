@@ -152,8 +152,8 @@ export class FollowRepository {
       .where(eq(userFollowsTable.followerId, userId));
 
     return {
-      followers: followerCount?.count,
-      following: followingCount?.count,
+      followersCount: followerCount?.count,
+      followingCount: followingCount?.count,
     };
   }
 
