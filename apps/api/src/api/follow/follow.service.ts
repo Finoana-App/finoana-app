@@ -71,6 +71,23 @@ class FollowService {
     }
   }
 
+  async getFollowers(req: AuthRequest, _res: Response) {
+    try {
+      const { userId } = req.params as { userId: string };
+      const { page, limit } = req.query as { page?: string; limit?: string };
+
+      const result = await this.followRepository.getFollowers(userId, {
+        page: page ? Number.parseInt(page) : undefined,
+        limit: limit ? Number.parseInt(limit) : undefined,
+      });
+
+      return ServiceResponse.success('Followers retrieved successfully', result, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get followers error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to get followers', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   async getComprehensiveSuggestions(req: AuthRequest, _res: Response) {
     try {
       const userId = req.user!.userId;
