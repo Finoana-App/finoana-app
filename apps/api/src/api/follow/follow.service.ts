@@ -71,7 +71,24 @@ class FollowService {
     }
   }
 
-  async getFriendsOfFriends(req: AuthRequest, res: Response) {
+  async getPopularUsers(req: AuthRequest, _res: Response) {
+    try {
+      const userId = req.user!.userId;
+      const { limit } = req.query;
+
+      const suggestions = await this.followRepository.getPopularUsers(
+        userId,
+        limit ? Number.parseInt(limit as string) : 10
+      );
+
+      return ServiceResponse.success('Popular users retrieved successfully', suggestions, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get popular users error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to get popular users', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getFriendsOfFriends(req: AuthRequest, _res: Response) {
     try {
       const userId = req.user!.userId;
       const { limit } = req.query;
@@ -84,7 +101,6 @@ class FollowService {
       return ServiceResponse.success('Friends of friends retrieved successfully', suggestions, StatusCodes.OK);
     } catch (ex) {
       logger.error(`Get friends of friends error: ${(ex as Error).message}`);
-
       return ServiceResponse.failure('Failed to get friends of friends', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }

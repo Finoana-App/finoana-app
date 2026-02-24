@@ -49,6 +49,46 @@ export class FollowRepository {
     return result[0];
   }
 
+  async getPopularUsers(userId: string, limit = 10) {
+    const currentlyFollowingIds = await db
+      .select({ id: userFollowsTable.followingId })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followerId, userId));
+
+    const followingIdsList = currentlyFollowingIds.map((f) => f.id);
+
+    const popularUsers = await db
+      .select({
+        id: usersTable.id,
+        displayName: usersTable.displayName,
+        photoUrl: usersTable.photoUrl,
+        bio: usersTable.bio,
+        followerCount: sql`(
+          SELECT COUNT(*)::int
+          FROM ${userFollowsTable}
+          WHERE ${userFollowsTable.followingId} = ${usersTable.id}
+        )`,
+      })
+      .from(usersTable)
+      .where(
+        and(
+          ne(usersTable.id, userId),
+          eq(usersTable.isActive, true),
+          followingIdsList.length > 0
+            ? notInArray(usersTable.id, [...followingIdsList, userId])
+            : ne(usersTable.id, userId)
+        )
+      )
+      .orderBy(desc(sql`follower_count`))
+      .limit(limit);
+
+    return popularUsers.map((user) => ({
+      ...user,
+      suggestionReason: 'Popular in community',
+      suggestionType: 'popular' as const,
+    }));
+  }
+
   async getFriendsOfFriends(userId: string, limit = 10) {
     const following = await db
       .select({ id: userFollowsTable.followingId })

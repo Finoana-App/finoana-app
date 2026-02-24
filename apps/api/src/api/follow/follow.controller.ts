@@ -15,6 +15,11 @@ class FollowController {
     return res.status(serviceResponse.statusCode).json(serviceResponse);
   };
 
+  public getPopularUsers = async (req: AuthRequest, res: Response) => {
+    const serviceResponse = await followService.getPopularUsers(req, res);
+    return res.status(serviceResponse.statusCode).json(serviceResponse);
+  };
+
   public getFriendsOfFriends = async (req: AuthRequest, res: Response) => {
     const serviceResponse = await followService.getFriendsOfFriends(req, res);
     return res.status(serviceResponse.statusCode).json(serviceResponse);
