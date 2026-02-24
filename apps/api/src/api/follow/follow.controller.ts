@@ -25,6 +25,11 @@ class FollowController {
     return res.status(serviceResponse.statusCode).json(serviceResponse);
   };
 
+  public getFollowCounts = async (req: AuthRequest, res: Response) => {
+    const serviceResponse = await followService.getFollowCounts(req, res);
+    return res.status(serviceResponse.statusCode).json(serviceResponse);
+  };
+
   public getComprehensiveSuggestions = async (req: AuthRequest, res: Response) => {
     const serviceResponse = await followService.getComprehensiveSuggestions(req, res);
     return res.status(serviceResponse.statusCode).json(serviceResponse);

@@ -193,6 +193,19 @@ class FollowService {
       return ServiceResponse.failure('Failed to get new users', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async getFollowCounts(req: AuthRequest, res: Response) {
+    try {
+      const { userId } = req.params;
+
+      const counts = await this.followRepository.getFollowCounts(userId as string);
+
+      return ServiceResponse.success('Follow counts retrieved successfully', counts, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get follow counts error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to get follow counts', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
 
 export const followService = new FollowService();

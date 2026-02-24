@@ -140,6 +140,23 @@ export class FollowRepository {
     };
   }
 
+  async getFollowCounts(userId: string) {
+    const [followerCount] = await db
+      .select({ count: sql`count(*)::int` })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followingId, userId));
+
+    const [followingCount] = await db
+      .select({ count: sql`count(*)::int` })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followerId, userId));
+
+    return {
+      followers: followerCount?.count,
+      following: followingCount?.count,
+    };
+  }
+
   async getPopularUsers(userId: string, limit = 10) {
     const currentlyFollowingIds = await db
       .select({ id: userFollowsTable.followingId })
