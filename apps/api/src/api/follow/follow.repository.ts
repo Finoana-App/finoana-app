@@ -175,4 +175,40 @@ export class FollowRepository {
       suggestionType: 'recently_active' as const,
     }));
   }
+
+  async getNewUsers(userId: string, limit = 10) {
+    const currentlyFollowingIds = await db
+      .select({ id: userFollowsTable.followingId })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followerId, userId));
+
+    const followingIdsList = currentlyFollowingIds.map((f) => f.id);
+
+    const newUsers = await db
+      .select({
+        id: usersTable.id,
+        displayName: usersTable.displayName,
+        photoUrl: usersTable.photoUrl,
+        bio: usersTable.bio,
+        createdAt: usersTable.createdAt,
+      })
+      .from(usersTable)
+      .where(
+        and(
+          ne(usersTable.id, userId),
+          eq(usersTable.isActive, true),
+          followingIdsList.length > 0
+            ? notInArray(usersTable.id, [...followingIdsList, userId])
+            : ne(usersTable.id, userId)
+        )
+      )
+      .orderBy(desc(usersTable.createdAt))
+      .limit(limit);
+
+    return newUsers.map((user) => ({
+      ...user,
+      suggestionReason: 'New to Finoana',
+      suggestionType: 'new_user' as const,
+    }));
+  }
 }

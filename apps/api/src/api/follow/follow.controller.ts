@@ -29,6 +29,11 @@ class FollowController {
     const serviceResponse = await followService.getRecentlyActiveUsers(req, res);
     return res.status(serviceResponse.statusCode).json(serviceResponse);
   };
+
+  public getNewUsers = async (req: AuthRequest, res: Response) => {
+    const serviceResponse = await followService.getNewUsers(req, res);
+    return res.status(serviceResponse.statusCode).json(serviceResponse);
+  };
 }
 
 export const followController = new FollowController();
