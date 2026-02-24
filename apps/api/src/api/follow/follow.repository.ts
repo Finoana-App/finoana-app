@@ -138,4 +138,41 @@ export class FollowRepository {
       suggestionType: 'friends_of_friends' as const,
     }));
   }
+
+  async getRecentlyActiveUsers(userId: string, limit = 10) {
+    const currentlyFollowingIds = await db
+      .select({ id: userFollowsTable.followingId })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followerId, userId));
+
+    const followingIdsList = currentlyFollowingIds.map((f) => f.id);
+
+    const recentUsers = await db
+      .select({
+        id: usersTable.id,
+        displayName: usersTable.displayName,
+        photoUrl: usersTable.photoUrl,
+        bio: usersTable.bio,
+        lastSeenAt: usersTable.lastSeenAt,
+      })
+      .from(usersTable)
+      .where(
+        and(
+          ne(usersTable.id, userId),
+          eq(usersTable.isActive, true),
+          sql`${usersTable.lastSeenAt} IS NOT NULL`,
+          followingIdsList.length > 0
+            ? notInArray(usersTable.id, [...followingIdsList, userId])
+            : ne(usersTable.id, userId)
+        )
+      )
+      .orderBy(desc(usersTable.lastSeenAt))
+      .limit(limit);
+
+    return recentUsers.map((user) => ({
+      ...user,
+      suggestionReason: 'Recently active',
+      suggestionType: 'recently_active' as const,
+    }));
+  }
 }
