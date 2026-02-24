@@ -73,10 +73,10 @@ class FollowService {
 
   async getFollowers(req: AuthRequest, _res: Response) {
     try {
-      const { userId } = req.params as { userId: string };
+      const { userId } = req.params;
       const { page, limit } = req.query as { page?: string; limit?: string };
 
-      const result = await this.followRepository.getFollowers(userId, {
+      const result = await this.followRepository.getFollowers(userId as string, {
         page: page ? Number.parseInt(page) : undefined,
         limit: limit ? Number.parseInt(limit) : undefined,
       });
@@ -85,6 +85,23 @@ class FollowService {
     } catch (ex) {
       logger.error(`Get followers error: ${(ex as Error).message}`);
       return ServiceResponse.failure('Failed to get followers', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getFollowing(req: AuthRequest, _res: Response) {
+    try {
+      const { userId } = req.params;
+      const { page, limit } = req.query;
+
+      const result = await this.followRepository.getFollowing(userId as string, {
+        page: page ? Number.parseInt(page as string) : undefined,
+        limit: limit ? Number.parseInt(limit as string) : undefined,
+      });
+
+      return ServiceResponse.success('Following retrieved successfully', result, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get following error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to get following', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
 

@@ -97,6 +97,49 @@ export class FollowRepository {
     };
   }
 
+  async getFollowing(userId: string, options: { page?: number; limit?: number } = {}) {
+    const { page = 1, limit = 20 } = options;
+    const offset = (page - 1) * limit;
+
+    const whereCondition = eq(userFollowsTable.followerId, userId);
+
+    const [following, countResult] = await Promise.all([
+      db
+        .select({
+          id: usersTable.id,
+          displayName: usersTable.displayName,
+          photoUrl: usersTable.photoUrl,
+          bio: usersTable.bio,
+          followedAt: userFollowsTable.createdAt,
+        })
+        .from(userFollowsTable)
+        .innerJoin(usersTable, eq(userFollowsTable.followingId, usersTable.id))
+        .where(whereCondition)
+        .orderBy(desc(userFollowsTable.createdAt))
+        .limit(limit)
+        .offset(offset),
+
+      db
+        .select({
+          count: sql<number>`count(*)::int`,
+        })
+        .from(userFollowsTable)
+        .where(whereCondition),
+    ]);
+
+    const total = countResult[0]?.count ?? 0;
+
+    return {
+      following,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  }
+
   async getPopularUsers(userId: string, limit = 10) {
     const currentlyFollowingIds = await db
       .select({ id: userFollowsTable.followingId })

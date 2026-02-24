@@ -12,6 +12,7 @@ followRouter.post('/:userId', followController.follow);
 followRouter.delete('/:userId', followController.unfollow);
 
 followRouter.get('/:userId/followers', followController.getFollowers);
+followRouter.get('/:userId/following', followController.getFollowing);
 
 followRouter.get('/suggestions/comprehensive', followController.getComprehensiveSuggestions);
 followRouter.get('/suggestions/popular', followController.getPopularUsers);
