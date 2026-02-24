@@ -13,3 +13,4 @@ followRouter.delete('/:userId', followController.unfollow);
 
 followRouter.get('/suggestions/popular', followController.getPopularUsers);
 followRouter.get('/suggestions/friends-of-friends', followController.getFriendsOfFriends);
+followRouter.get('/suggestions/recently-active', followController.getRecentlyActiveUsers);

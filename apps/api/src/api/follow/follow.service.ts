@@ -104,6 +104,23 @@ class FollowService {
       return ServiceResponse.failure('Failed to get friends of friends', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async getRecentlyActiveUsers(req: AuthRequest, _res: Response) {
+    try {
+      const userId = req.user!.userId;
+      const { limit } = req.query;
+
+      const suggestions = await this.followRepository.getRecentlyActiveUsers(
+        userId,
+        limit ? Number.parseInt(limit as string) : 10
+      );
+
+      return ServiceResponse.success('Recently active users retrieved successfully', suggestions, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get recently active users error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to get recently active users', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
 
 export const followService = new FollowService();

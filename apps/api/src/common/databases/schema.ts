@@ -18,6 +18,7 @@ export const usersTable = pgTable('users', {
   role: userRoleEnum('role').default('user').notNull(),
   privacyLevel: privacyLevelEnum('privacy_level').default('public').notNull(),
   isActive: boolean('is_active').default(true).notNull(),
+  lastSeenAt: timestamp('last_seen_at'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
