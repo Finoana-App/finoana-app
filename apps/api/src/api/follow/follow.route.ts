@@ -10,3 +10,5 @@ followRouter.use(authenticate);
 
 followRouter.post('/:userId', followController.follow);
 followRouter.delete('/:userId', followController.unfollow);
+
+followRouter.get('/suggestions/friends-of-friends', followController.getFriendsOfFriends);
