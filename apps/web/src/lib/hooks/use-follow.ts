@@ -45,12 +45,24 @@ export function useFollowUser() {
 
   return useMutation({
     mutationFn: (userId: string) => followService.followUser(userId),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: followKeys.all });
+
+      const previousSuggestions = queryClient.getQueryData(followKeys.suggestions());
+
+      // Optimistically update the cache
+      // Note: In suggestions, we usually REMOVE the user once followed,
+      // or we update a 'isFollowing' property if your API returns one.
+      return { previousSuggestions };
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: followKeys.suggestions() });
+      queryClient.invalidateQueries({ queryKey: followKeys.all });
       queryClient.invalidateQueries({ queryKey: ['auth', 'currentUser'] });
     },
-    onError: (error: ApiError) => {
-      console.error('Follow error:', error.message);
+    onError: (_err, _userId, context) => {
+      if (context?.previousSuggestions) {
+        queryClient.setQueryData(followKeys.suggestions(), context.previousSuggestions);
+      }
     },
   });
 }

@@ -1,13 +1,14 @@
 'use client';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
-import { Button } from '@workspace/ui/components/button';
 import { Card } from '@workspace/ui/components/card';
 import { Skeleton } from '@workspace/ui/components/skeleton';
 
+import { FollowButton } from '@/components/shared';
+
 import { useDictionary } from '@/hooks/use-dictionary';
 
-import { useFollowUser, useSuggestions } from '@/lib/hooks/use-follow';
+import { useSuggestions } from '@/lib/hooks/use-follow';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
 
@@ -15,8 +16,6 @@ export function PeopleToFollow() {
   const { dictionary } = useDictionary<Dictionary>();
 
   const { data: users, isLoading, isError } = useSuggestions('comprehensive');
-
-  const { mutate: follow } = useFollowUser();
 
   if (isLoading) {
     return (
@@ -56,15 +55,7 @@ export function PeopleToFollow() {
               <p className="truncate text-sm font-medium">{user.displayName}</p>
               <p className="text-muted-foreground truncate text-xs">@{user.username}</p>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={false}
-              onClick={() => follow(user.id)}
-              className="border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground h-8 px-3 text-xs"
-            >
-              {dictionary?.common.follow}
-            </Button>
+            <FollowButton userId={user.id} initialIsFollowing={false} />
           </div>
         ))}
       </div>
