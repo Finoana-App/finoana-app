@@ -12,6 +12,12 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "next.config.ts", "**/*.ts", "**/*.tsx", "src/components/dashboard/suggestions.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "next.config.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/dashboard/people-to-follow.tsx"
+  ],
   "exclude": ["node_modules", ".next"]
 }

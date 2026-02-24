@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { followService } from "@/lib/api/services/follow.service";
-import { ApiError } from "@/lib/api/client";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+import { ApiError } from '@/lib/api/client';
+import { followService } from '@/lib/api/services/follow.service';
 
 export const followKeys = {
   all: ['follow'] as const,
@@ -14,11 +15,20 @@ export function useSuggestions(type: 'comprehensive' | 'popular' | 'friends-of-f
     queryFn: async () => {
       let response;
       switch (type) {
-        case 'popular': response = await followService.getPopularUsers(); break;
-        case 'friends-of-friends': response = await followService.getFriendsOfFriends(); break;
-        case 'recently-active': response = await followService.getRecentlyActive(); break;
-        case 'new': response = await followService.getNewUsers(); break;
-        default: response = await followService.getComprehensiveSuggestions();
+        case 'popular':
+          response = await followService.getPopularUsers();
+          break;
+        case 'friends-of-friends':
+          response = await followService.getFriendsOfFriends();
+          break;
+        case 'recently-active':
+          response = await followService.getRecentlyActive();
+          break;
+        case 'new':
+          response = await followService.getNewUsers();
+          break;
+        default:
+          response = await followService.getComprehensiveSuggestions();
       }
 
       if (!response.success) {

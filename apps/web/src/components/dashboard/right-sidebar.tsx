@@ -2,7 +2,7 @@
 
 import { VerseOfTheDay as VerseOfTheDayType } from '@workspace/types';
 
-import { Suggestions, VerseOfTheDay } from '@/components/dashboard';
+import { PeopleToFollow, VerseOfTheDay } from '@/components/dashboard';
 import { AnimatedInput } from '@/components/shared';
 
 import { useDictionary } from '@/hooks/use-dictionary';
@@ -29,7 +29,7 @@ export function RightSidebar({ verse }: Readonly<{ verse: VerseOfTheDayType }>) 
         />
       </div>
       <VerseOfTheDay title={dictionary?.dashboard.verseOfTheDayTitle as string} verse={verse} />
-      <Suggestions />
+      <PeopleToFollow />
       <div className="mt-6 px-2">
         <p className="text-muted-foreground text-xs leading-relaxed">{dictionary?.dashboard.rightSidebarFooter}</p>
         <p className="text-muted-foreground mt-2 text-xs">© {currentYear} Finoana</p>

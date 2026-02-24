@@ -188,6 +188,7 @@ export const en = {
     } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
     searchPlaceholder: 'Search prayers, people, topics...',
     verseOfTheDayTitle: 'Verse of the day',
+    peopleToFollowTitle: 'People to follow',
     rightSidebarFooter: 'Walking together in faith. Share love, spread hope, build community.',
     profile: {
       title: 'Profile',
@@ -218,6 +219,7 @@ export const en = {
     cancel: 'Cancel',
     saveChanges: 'Save changes',
     saving: 'Saving...',
+    follow: 'Follow',
   },
 };
 

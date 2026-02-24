@@ -192,6 +192,7 @@ export const fr: Dictionary = {
     } satisfies Record<NavigationKey | 'faithCommunity' | 'shareThought' | 'logout', string>,
     searchPlaceholder: 'Rechercher des prières, des personnes, des sujets...',
     verseOfTheDayTitle: 'Verset du jour',
+    peopleToFollowTitle: 'Personnes à suivre',
     rightSidebarFooter: 'Marche ensemble en foi. Partagez l’amour, répandez l’espoir, construisez la communauté.',
     profile: {
       title: 'Profil',
@@ -221,5 +222,6 @@ export const fr: Dictionary = {
     cancel: 'Annuler',
     saveChanges: 'Enregistrer les modifications',
     saving: 'Enregistrement...',
+    follow: 'Suivre',
   },
 };
