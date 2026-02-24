@@ -211,4 +211,21 @@ export class FollowRepository {
       suggestionType: 'new_user' as const,
     }));
   }
+
+  async getComprehensiveSuggestions(userId: string, limit = 10) {
+    const [friendsOfFriends, popularUsers, recentlyActive, newUsers] = await Promise.all([
+      this.getFriendsOfFriends(userId, 5),
+      this.getPopularUsers(userId, 5),
+      this.getRecentlyActiveUsers(userId, 3),
+      this.getNewUsers(userId, 2),
+    ]);
+
+    const allSuggestions = [...friendsOfFriends, ...popularUsers, ...recentlyActive, ...newUsers];
+
+    const uniqueSuggestions = allSuggestions.filter(
+      (user, index, self) => index === self.findIndex((u) => u.id === user.id)
+    );
+
+    return uniqueSuggestions.slice(0, limit);
+  }
 }

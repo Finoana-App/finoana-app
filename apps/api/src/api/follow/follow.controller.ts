@@ -15,6 +15,11 @@ class FollowController {
     return res.status(serviceResponse.statusCode).json(serviceResponse);
   };
 
+  public getComprehensiveSuggestions = async (req: AuthRequest, res: Response) => {
+    const serviceResponse = await followService.getComprehensiveSuggestions(req, res);
+    return res.status(serviceResponse.statusCode).json(serviceResponse);
+  };
+
   public getPopularUsers = async (req: AuthRequest, res: Response) => {
     const serviceResponse = await followService.getPopularUsers(req, res);
     return res.status(serviceResponse.statusCode).json(serviceResponse);

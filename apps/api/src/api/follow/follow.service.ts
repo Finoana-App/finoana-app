@@ -71,6 +71,27 @@ class FollowService {
     }
   }
 
+  async getComprehensiveSuggestions(req: AuthRequest, _res: Response) {
+    try {
+      const userId = req.user!.userId;
+      const { limit } = req.query;
+
+      const suggestions = await this.followRepository.getComprehensiveSuggestions(
+        userId,
+        limit ? Number.parseInt(limit as string) : 10
+      );
+
+      return ServiceResponse.success('Comprehensive suggestions retrieved successfully', suggestions, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get comprehensive suggestions error: ${(ex as Error).message}`);
+      return ServiceResponse.failure(
+        'Failed to get comprehensive suggestions',
+        null,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
   async getPopularUsers(req: AuthRequest, _res: Response) {
     try {
       const userId = req.user!.userId;
