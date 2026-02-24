@@ -67,6 +67,7 @@ export class FollowRepository {
       .select({
         id: usersTable.id,
         displayName: usersTable.displayName,
+        username: usersTable.username,
         photoUrl: usersTable.photoUrl,
         bio: usersTable.bio,
         followerCount: followerCountSql,
@@ -116,6 +117,7 @@ export class FollowRepository {
       .select({
         id: usersTable.id,
         displayName: usersTable.displayName,
+        username: usersTable.username,
         photoUrl: usersTable.photoUrl,
         bio: usersTable.bio,
         mutualFollowersCount: mutualCountSql,
@@ -155,6 +157,7 @@ export class FollowRepository {
       .select({
         id: usersTable.id,
         displayName: usersTable.displayName,
+        username: usersTable.username,
         photoUrl: usersTable.photoUrl,
         bio: usersTable.bio,
         lastSeenAt: usersTable.lastSeenAt,
@@ -192,6 +195,7 @@ export class FollowRepository {
       .select({
         id: usersTable.id,
         displayName: usersTable.displayName,
+        username: usersTable.username,
         photoUrl: usersTable.photoUrl,
         bio: usersTable.bio,
         createdAt: usersTable.createdAt,
