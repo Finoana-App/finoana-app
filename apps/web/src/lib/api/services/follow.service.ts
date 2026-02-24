@@ -1,5 +1,6 @@
-import { ApiResponse, User } from "@workspace/types";
-import { apiClient } from "../client";
+import { ApiResponse, User } from '@workspace/types';
+
+import { apiClient } from '../client';
 
 export const followService = {
   follow: async (userId: string): Promise<ApiResponse<User>> => {
@@ -13,4 +14,4 @@ export const followService = {
   getComprehensiveSuggestions: async (): Promise<ApiResponse<User[]>> => {
     return apiClient.get<User[]>(`/follows/suggestions/comprehensive`);
   },
-}
+};

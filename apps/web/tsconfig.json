@@ -12,6 +12,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "next.config.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "next.config.ts", "**/*.ts", "**/*.tsx", "src/components/dashboard/suggestions.tsx"],
   "exclude": ["node_modules", ".next"]
 }
