@@ -97,3 +97,21 @@ export function useUserList(userId: string, type: 'followers' | 'following', pag
     staleTime: 1 * 60 * 1000,
   });
 }
+
+export function useFollowCounts(userId: string | undefined) {
+  return useQuery({
+    queryKey: ['follow-counts', userId],
+    queryFn: async () => {
+      if (!userId) throw new Error('User ID is required');
+      const response = await followService.getFollowCounts(userId);
+
+      if (!response.success) {
+        throw new Error(response.message);
+      }
+
+      return response.responseObject;
+    },
+    enabled: !!userId,
+    staleTime: 60 * 1000,
+  });
+}

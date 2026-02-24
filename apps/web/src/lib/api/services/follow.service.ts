@@ -2,6 +2,11 @@ import { ApiResponse, PaginatedUserResponse, User } from '@workspace/types';
 
 import { apiClient } from '@/lib/api/client';
 
+type FollowCounts = {
+  followersCount: number;
+  followingCount: number;
+};
+
 export const followService = {
   followUser: async (userId: string): Promise<ApiResponse<void>> => {
     return apiClient.post<void>(`/follows/${userId}`);
@@ -17,6 +22,10 @@ export const followService = {
 
   getFollowing: async (userId: string, page = 1): Promise<ApiResponse<PaginatedUserResponse>> => {
     return apiClient.get(`/follow/${userId}/following?page=${page}`);
+  },
+
+  getFollowCounts: async (userId: string): Promise<ApiResponse<FollowCounts>> => {
+    return apiClient.get(`/follows/${userId}/counts`);
   },
 
   getComprehensiveSuggestions: async (): Promise<ApiResponse<User[]>> => {

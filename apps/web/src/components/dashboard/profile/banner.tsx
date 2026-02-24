@@ -4,6 +4,8 @@ import { User } from '@workspace/types';
 
 import { formatJoinDate } from '@/components/utils/date-format';
 
+import { useFollowCounts } from '@/lib/hooks/use-follow';
+
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 import { BannerSkeleton } from './banner-skeleton';
@@ -14,9 +16,20 @@ interface BannerProps {
   isLoading?: boolean;
   dictionary: Dictionary | null;
   onEditProfile?: () => void;
+  onViewFollowers?: () => void;
+  onViewFollowing?: () => void;
 }
 
-export function Banner({ user, isLoading, dictionary, onEditProfile }: Readonly<BannerProps>) {
+export function Banner({
+  user,
+  isLoading,
+  dictionary,
+  onEditProfile,
+  onViewFollowers,
+  onViewFollowing,
+}: Readonly<BannerProps>) {
+  const { data: counts } = useFollowCounts(user?.id);
+
   const formattedJoinDate = (() => {
     if (!user?.createdAt) return '...';
     return formatJoinDate(user.createdAt);
@@ -24,6 +37,9 @@ export function Banner({ user, isLoading, dictionary, onEditProfile }: Readonly<
 
   if (isLoading) return <BannerSkeleton />;
   if (!user) return null;
+
+  const followingCount = counts?.followingCount;
+  const followersCount = counts?.followersCount;
 
   return (
     <section className="relative">
@@ -38,6 +54,16 @@ export function Banner({ user, isLoading, dictionary, onEditProfile }: Readonly<
             <Calendar className="h-4 w-4" />
             {dictionary?.dashboard.profile.joined} {formattedJoinDate}
           </span>
+        </div>
+        <div className="flex gap-4 text-sm">
+          <button onClick={onViewFollowing} className="transition-all hover:underline active:scale-95">
+            <span className="text-foreground font-semibold">{followingCount}</span>{' '}
+            <span className="text-muted-foreground">{dictionary?.dashboard.profile.following}</span>
+          </button>
+          <button onClick={onViewFollowers} className="transition-all hover:underline active:scale-95">
+            <span className="text-foreground font-semibold">{followersCount}</span>{' '}
+            <span className="text-muted-foreground">{dictionary?.dashboard.profile.followers}</span>
+          </button>
         </div>
       </div>
     </section>
