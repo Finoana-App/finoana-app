@@ -3,6 +3,7 @@ import express, { type Express } from 'express';
 import helmet from 'helmet';
 import { pino } from 'pino';
 
+import { followRouter } from '@/api/follow/follow.route';
 import { healthCheckRouter } from '@/api/health-check/health-check.route';
 import { userRouter } from '@/api/user/user.route';
 import { ErrorHandler, RequestLogger } from '@/common/middlewares';
@@ -22,6 +23,7 @@ app.use(RequestLogger);
 
 app.use('/', healthCheckRouter);
 app.use('/users', userRouter);
+app.use('/follows', followRouter);
 
 app.use(ErrorHandler());
 

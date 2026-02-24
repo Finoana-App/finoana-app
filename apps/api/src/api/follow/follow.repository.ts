@@ -1,0 +1,101 @@
+import { and, desc, eq, inArray, ne, notInArray, sql } from 'drizzle-orm';
+
+import { db } from '@/common/databases';
+import { userFollowsTable, usersTable } from '@/common/databases/schema';
+
+export class FollowRepository {
+  async follow(followerId: string, followingId: string) {
+    if (followerId === followingId) {
+      throw new Error('You cannot follow yourself');
+    }
+
+    const [existingFollow] = await db
+      .select()
+      .from(userFollowsTable)
+      .where(and(eq(userFollowsTable.followerId, followerId), eq(userFollowsTable.followingId, followingId)))
+      .limit(1);
+
+    if (existingFollow) {
+      throw new Error('You are already following this user');
+    }
+
+    const [targetUser] = await db.select().from(usersTable).where(eq(usersTable.id, followingId)).limit(1);
+
+    if (!targetUser) {
+      throw new Error('User not found');
+    }
+
+    const [follow] = await db
+      .insert(userFollowsTable)
+      .values({
+        followerId,
+        followingId,
+      })
+      .returning();
+
+    return follow;
+  }
+
+  async unfollow(followerId: string, followingId: string) {
+    const result = await db
+      .delete(userFollowsTable)
+      .where(and(eq(userFollowsTable.followerId, followerId), eq(userFollowsTable.followingId, followingId)))
+      .returning();
+
+    if (result.length === 0) {
+      throw new Error('You are not following this user');
+    }
+
+    return result[0];
+  }
+
+  async getFriendsOfFriends(userId: string, limit = 10) {
+    const following = await db
+      .select({ id: userFollowsTable.followingId })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followerId, userId));
+
+    if (following.length === 0) {
+      return [];
+    }
+
+    const followingIds = following.map((f) => f.id);
+
+    const currentlyFollowingIds = await db
+      .select({ id: userFollowsTable.followingId })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followerId, userId));
+
+    const followingIdsList = currentlyFollowingIds.map((f) => f.id);
+
+    const friendsOfFriends = await db
+      .select({
+        id: usersTable.id,
+        displayName: usersTable.displayName,
+        photoUrl: usersTable.photoUrl,
+        bio: usersTable.bio,
+        mutualFollowersCount: sql`COUNT(DISTINCT ${userFollowsTable.followerId})::int`,
+      })
+      .from(userFollowsTable)
+      .innerJoin(usersTable, eq(userFollowsTable.followingId, usersTable.id))
+      .where(
+        and(
+          inArray(userFollowsTable.followerId, followingIds),
+          ne(usersTable.id, userId),
+          eq(usersTable.isActive, true),
+          followingIdsList.length > 0
+            ? notInArray(usersTable.id, [...followingIdsList, userId])
+            : ne(usersTable.id, userId)
+        )
+      )
+      .groupBy(usersTable.id, usersTable.displayName, usersTable.photoUrl, usersTable.bio)
+      .orderBy(desc(sql`mutual_followers_count`))
+      .limit(limit);
+
+    return friendsOfFriends.map((user) => ({
+      ...user,
+      suggestionReason: `Followed by ${user.mutualFollowersCount} people you follow`,
+      suggestionType: 'friends_of_friends' as const,
+    }));
+  }
+}
