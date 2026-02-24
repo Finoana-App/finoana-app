@@ -2,13 +2,13 @@
 
 import { VerseOfTheDay as VerseOfTheDayType } from '@workspace/types';
 
+import { PeopleToFollow, VerseOfTheDay } from '@/components/dashboard';
+import { AnimatedInput } from '@/components/shared';
+
 import { useDictionary } from '@/hooks/use-dictionary';
 import { useFocusState } from '@/hooks/use-focus-state';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
-
-import { AnimatedInput } from '../shared';
-import { VerseOfTheDay } from './verse-of-the-day';
 
 export function RightSidebar({ verse }: Readonly<{ verse: VerseOfTheDayType }>) {
   const { setFocused, clearFocus, isFocused } = useFocusState();
@@ -29,6 +29,7 @@ export function RightSidebar({ verse }: Readonly<{ verse: VerseOfTheDayType }>) 
         />
       </div>
       <VerseOfTheDay title={dictionary?.dashboard.verseOfTheDayTitle as string} verse={verse} />
+      <PeopleToFollow />
       <div className="mt-6 px-2">
         <p className="text-muted-foreground text-xs leading-relaxed">{dictionary?.dashboard.rightSidebarFooter}</p>
         <p className="text-muted-foreground mt-2 text-xs">© {currentYear} Finoana</p>

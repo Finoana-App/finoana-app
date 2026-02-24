@@ -57,17 +57,20 @@ export class FollowRepository {
 
     const followingIdsList = currentlyFollowingIds.map((f) => f.id);
 
+    const followerCountSql = sql<number>`(
+      SELECT COUNT(*)::int
+      FROM ${userFollowsTable}
+      WHERE ${userFollowsTable.followingId} = ${usersTable.id}
+    )`;
+
     const popularUsers = await db
       .select({
         id: usersTable.id,
         displayName: usersTable.displayName,
+        username: usersTable.username,
         photoUrl: usersTable.photoUrl,
         bio: usersTable.bio,
-        followerCount: sql`(
-          SELECT COUNT(*)::int
-          FROM ${userFollowsTable}
-          WHERE ${userFollowsTable.followingId} = ${usersTable.id}
-        )`,
+        followerCount: followerCountSql,
       })
       .from(usersTable)
       .where(
@@ -79,7 +82,7 @@ export class FollowRepository {
             : ne(usersTable.id, userId)
         )
       )
-      .orderBy(desc(sql`follower_count`))
+      .orderBy(desc(followerCountSql))
       .limit(limit);
 
     return popularUsers.map((user) => ({
@@ -108,13 +111,16 @@ export class FollowRepository {
 
     const followingIdsList = currentlyFollowingIds.map((f) => f.id);
 
+    const mutualCountSql = sql`COUNT(DISTINCT ${userFollowsTable.followerId})::int`;
+
     const friendsOfFriends = await db
       .select({
         id: usersTable.id,
         displayName: usersTable.displayName,
+        username: usersTable.username,
         photoUrl: usersTable.photoUrl,
         bio: usersTable.bio,
-        mutualFollowersCount: sql`COUNT(DISTINCT ${userFollowsTable.followerId})::int`,
+        mutualFollowersCount: mutualCountSql,
       })
       .from(userFollowsTable)
       .innerJoin(usersTable, eq(userFollowsTable.followingId, usersTable.id))
@@ -129,7 +135,7 @@ export class FollowRepository {
         )
       )
       .groupBy(usersTable.id, usersTable.displayName, usersTable.photoUrl, usersTable.bio)
-      .orderBy(desc(sql`mutual_followers_count`))
+      .orderBy(desc(mutualCountSql))
       .limit(limit);
 
     return friendsOfFriends.map((user) => ({
@@ -151,6 +157,7 @@ export class FollowRepository {
       .select({
         id: usersTable.id,
         displayName: usersTable.displayName,
+        username: usersTable.username,
         photoUrl: usersTable.photoUrl,
         bio: usersTable.bio,
         lastSeenAt: usersTable.lastSeenAt,
@@ -188,6 +195,7 @@ export class FollowRepository {
       .select({
         id: usersTable.id,
         displayName: usersTable.displayName,
+        username: usersTable.username,
         photoUrl: usersTable.photoUrl,
         bio: usersTable.bio,
         createdAt: usersTable.createdAt,
