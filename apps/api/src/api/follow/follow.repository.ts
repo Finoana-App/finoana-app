@@ -3,6 +3,11 @@ import { and, desc, eq, inArray, ne, notInArray, sql } from 'drizzle-orm';
 import { db } from '@/common/databases';
 import { userFollowsTable, usersTable } from '@/common/databases/schema';
 
+const isSuggestible = and(
+  eq(usersTable.isActive, true),
+  ne(usersTable.privacyLevel, 'anonymous')
+);
+
 export class FollowRepository {
   async follow(followerId: string, followingId: string) {
     if (followerId === followingId) {
@@ -76,6 +81,7 @@ export class FollowRepository {
       .where(
         and(
           ne(usersTable.id, userId),
+          isSuggestible,
           eq(usersTable.isActive, true),
           followingIdsList.length > 0
             ? notInArray(usersTable.id, [...followingIdsList, userId])
@@ -128,6 +134,7 @@ export class FollowRepository {
         and(
           inArray(userFollowsTable.followerId, followingIds),
           ne(usersTable.id, userId),
+          isSuggestible,
           eq(usersTable.isActive, true),
           followingIdsList.length > 0
             ? notInArray(usersTable.id, [...followingIdsList, userId])
@@ -166,6 +173,7 @@ export class FollowRepository {
       .where(
         and(
           ne(usersTable.id, userId),
+          isSuggestible,
           eq(usersTable.isActive, true),
           sql`${usersTable.lastSeenAt} IS NOT NULL`,
           followingIdsList.length > 0
@@ -204,6 +212,7 @@ export class FollowRepository {
       .where(
         and(
           ne(usersTable.id, userId),
+          isSuggestible,
           eq(usersTable.isActive, true),
           followingIdsList.length > 0
             ? notInArray(usersTable.id, [...followingIdsList, userId])
