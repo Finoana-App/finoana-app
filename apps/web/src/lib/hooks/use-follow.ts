@@ -81,3 +81,19 @@ export function useUnfollowUser() {
     },
   });
 }
+
+export function useUserList(userId: string, type: 'followers' | 'following', page = 1) {
+  return useQuery({
+    queryKey: [...followKeys.all, type, userId, page],
+    queryFn: async () => {
+      const response =
+        type === 'followers'
+          ? await followService.getFollowers(userId, page)
+          : await followService.getFollowing(userId, page);
+
+      if (!response.success) throw new Error(response.message);
+      return response.responseObject;
+    },
+    staleTime: 1 * 60 * 1000,
+  });
+}

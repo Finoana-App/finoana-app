@@ -1,4 +1,4 @@
-import { ApiResponse, User } from '@workspace/types';
+import { ApiResponse, PaginatedUserResponse, User } from '@workspace/types';
 
 import { apiClient } from '@/lib/api/client';
 
@@ -9,6 +9,14 @@ export const followService = {
 
   unfollowUser: async (userId: string): Promise<ApiResponse<void>> => {
     return apiClient.delete<void>(`/follows/${userId}`);
+  },
+
+  getFollowers: async (userId: string, page = 1): Promise<ApiResponse<PaginatedUserResponse>> => {
+    return apiClient.get(`/follow/${userId}/followers?page=${page}`);
+  },
+
+  getFollowing: async (userId: string, page = 1): Promise<ApiResponse<PaginatedUserResponse>> => {
+    return apiClient.get(`/follow/${userId}/following?page=${page}`);
   },
 
   getComprehensiveSuggestions: async (): Promise<ApiResponse<User[]>> => {
