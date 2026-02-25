@@ -109,7 +109,7 @@ export function PeopleToFollow() {
             <div className="min-w-0 flex-1">
               <Tooltip content={<UserDetails user={user} />}>
                 <Link
-                  href={`/profile/${user.id}`}
+                  href={`/dashboard/profile/${user.id}`}
                   className="cursor-pointer truncate text-sm font-medium hover:underline"
                 >
                   {user.displayName}

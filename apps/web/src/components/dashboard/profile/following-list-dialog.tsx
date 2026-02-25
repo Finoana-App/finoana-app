@@ -45,7 +45,7 @@ function UserItem({ user }: Readonly<{ user: User }>) {
       </Avatar>
       <div className="min-w-0 flex-1">
         <Link
-          href={`/profile/${user.id}`}
+          href={`/dashboard/profile/${user.id}`}
           className="mb-1 cursor-pointer truncate text-sm leading-none font-semibold hover:underline"
         >
           {user.displayName}

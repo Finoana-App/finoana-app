@@ -75,3 +75,17 @@ export function useUpdateProfile() {
     },
   });
 }
+
+export function useGetUserById(id: string) {
+  return useQuery({
+    queryKey: ['user', id],
+    queryFn: async () => {
+      const response = await userService.getUserById(id);
+      if (!response.success) {
+        throw new ApiError(response.message, response.statusCode);
+      }
+      return response.responseObject;
+    },
+    enabled: !!id,
+  });
+}
