@@ -82,7 +82,7 @@ export function useUnfollowUser() {
   });
 }
 
-export function useUserList(userId: string, type: 'followers' | 'following', page = 1) {
+export function useFollowUserList(userId: string, type: 'followers' | 'following', page = 1) {
   return useQuery({
     queryKey: [...followKeys.all, type, userId, page],
     queryFn: async () => {

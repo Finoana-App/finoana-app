@@ -108,6 +108,7 @@ export class FollowRepository {
         .select({
           id: usersTable.id,
           displayName: usersTable.displayName,
+          username: usersTable.username,
           photoUrl: usersTable.photoUrl,
           bio: usersTable.bio,
           followedAt: userFollowsTable.createdAt,

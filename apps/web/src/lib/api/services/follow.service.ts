@@ -17,11 +17,11 @@ export const followService = {
   },
 
   getFollowers: async (userId: string, page = 1): Promise<ApiResponse<PaginatedUserResponse>> => {
-    return apiClient.get(`/follow/${userId}/followers?page=${page}`);
+    return apiClient.get(`/follows/${userId}/followers?page=${page}`);
   },
 
   getFollowing: async (userId: string, page = 1): Promise<ApiResponse<PaginatedUserResponse>> => {
-    return apiClient.get(`/follow/${userId}/following?page=${page}`);
+    return apiClient.get(`/follows/${userId}/following?page=${page}`);
   },
 
   getFollowCounts: async (userId: string): Promise<ApiResponse<FollowCounts>> => {

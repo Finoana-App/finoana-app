@@ -56,11 +56,11 @@ export function Banner({
           </span>
         </div>
         <div className="flex gap-4 text-sm">
-          <button onClick={onViewFollowing} className="transition-all hover:underline active:scale-95">
+          <button onClick={onViewFollowing} className="cursor-pointer transition-all hover:underline active:scale-95">
             <span className="text-foreground font-semibold">{followingCount}</span>{' '}
             <span className="text-muted-foreground">{dictionary?.dashboard.profile.following}</span>
           </button>
-          <button onClick={onViewFollowers} className="transition-all hover:underline active:scale-95">
+          <button onClick={onViewFollowers} className="cursor-pointer transition-all hover:underline active:scale-95">
             <span className="text-foreground font-semibold">{followersCount}</span>{' '}
             <span className="text-muted-foreground">{dictionary?.dashboard.profile.followers}</span>
           </button>
