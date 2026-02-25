@@ -353,12 +353,7 @@ export class FollowRepository {
   async removeFollower(userId: string, followerId: string) {
     const result = await db
       .delete(userFollowsTable)
-      .where(
-        and(
-          eq(userFollowsTable.followerId, followerId),
-          eq(userFollowsTable.followingId, userId)
-        )
-      )
+      .where(and(eq(userFollowsTable.followerId, followerId), eq(userFollowsTable.followingId, userId)))
       .returning();
 
     if (result.length === 0) {

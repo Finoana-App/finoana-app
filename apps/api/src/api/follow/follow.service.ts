@@ -211,9 +211,9 @@ class FollowService {
     try {
       const { followerId } = req.params;
       const userId = req.user!.userId;
-      
+
       await this.followRepository.removeFollower(userId, followerId as string);
-      
+
       return ServiceResponse.success('Follower removed successfully', null, StatusCodes.OK);
     } catch (ex) {
       logger.error(`Remove follower error: ${(ex as Error).message}`);

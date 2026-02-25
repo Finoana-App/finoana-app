@@ -2,6 +2,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tansta
 
 import { ApiError } from '@/lib/api/client';
 import { followService } from '@/lib/api/services/follow.service';
+import { toast } from 'sonner';
 
 export const followKeys = {
   all: ['follow'] as const,
@@ -131,9 +132,17 @@ export function useRemoveFollower() {
     mutationFn: (followerId: string) => followService.removeFollower(followerId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['follow-counts'] });
+      toast.success('Follower removed successfully', {
+        position: 'top-center',
+        duration: 5000,
+      });
     },
     onError: (error: ApiError) => {
       console.error('Remove follower error:', error.message);
+      toast.error('Failed to remove follower', {
+        position: 'top-center',
+        duration: 5000,
+      });
     },
   });
 }
