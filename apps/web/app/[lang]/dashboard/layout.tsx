@@ -23,7 +23,7 @@ export default async function DashboardLayout({
           <AppSidebar />
         </div>
         <main className="border-border min-w-0 flex-1 border-x pb-20 lg:pb-0">{children}</main>
-        <div className="hidden shrink-0 xl:block xl:w-80">
+        <div className="hidden shrink-0 overflow-visible xl:block xl:w-80">
           <RightSidebar verse={verse as VerseOfTheDay} />
         </div>
       </div>
