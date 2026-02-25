@@ -206,8 +206,15 @@ export const fr: Dictionary = {
       privacyLevelPlaceholder: 'Sélectionnez votre niveau de confidentialité',
       privacyLevelDescription: "Public: visible à tous · Privé: visible aux abonnés · Anonyme: masque l'identité",
       joined: 'Rejoint le',
-      following: 'Suivis',
-      followers: 'Abonnés',
+      following: {
+        title: 'Suivis',
+        description: 'Utilisateurs que vous suivez',
+      },
+      followers: {
+        title: 'Abonnés',
+        description: 'Utilisateurs qui vous suivent',
+        removeFollower: "Supprimer l'abonné",
+      },
       privacy: {
         public: 'Public',
         private: 'Privé',
@@ -225,5 +232,7 @@ export const fr: Dictionary = {
     saveChanges: 'Enregistrer les modifications',
     saving: 'Enregistrement...',
     follow: 'Suivre',
+    emptyUser: 'Aucun utilisateur trouvé',
+    openMenu: 'Ouvrir le menu',
   },
 };

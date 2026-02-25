@@ -1,8 +1,8 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { ApiError } from '@/lib/api/client';
 import { followService } from '@/lib/api/services/follow.service';
-import { toast } from 'sonner';
 
 export const followKeys = {
   all: ['follow'] as const,

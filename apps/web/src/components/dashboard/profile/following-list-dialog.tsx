@@ -7,7 +7,11 @@ import { Skeleton } from '@workspace/ui/components/skeleton';
 
 import { FollowButton } from '@/components/shared';
 
+import { useDictionary } from '@/hooks/use-dictionary';
+
 import { useFollowUserList } from '@/lib/hooks/use-follow';
+
+import { Dictionary } from '@/i18n/dictionaries/en';
 
 interface FollowingListDialogProps {
   open: boolean;
@@ -53,6 +57,8 @@ function LoadingSkeletons({ count = 5 }: { count?: number }) {
 
 export function FollowingListDialog({ open, onOpenChange, user }: Readonly<FollowingListDialogProps>) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useFollowUserList(user?.id, 'following');
+
+  const { dictionary } = useDictionary<Dictionary>();
 
   const observerTarget = useRef<HTMLDivElement>(null);
   const users = data?.pages.flatMap((page) => page.following ?? []) ?? [];
@@ -103,8 +109,8 @@ export function FollowingListDialog({ open, onOpenChange, user }: Readonly<Follo
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex max-h-125 flex-col overflow-hidden p-0">
         <DialogHeader className="p-6 pb-2">
-          <DialogTitle>Following</DialogTitle>
-          <DialogDescription>Users followed by {user.displayName}</DialogDescription>
+          <DialogTitle>{dictionary?.dashboard.profile.following.title}</DialogTitle>
+          <DialogDescription>{dictionary?.dashboard.profile.following.description}</DialogDescription>
         </DialogHeader>
         <div className="flex-1 overflow-y-auto px-6 pb-6">
           <div className="flex flex-col gap-4">{renderContent()}</div>

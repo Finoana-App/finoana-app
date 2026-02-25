@@ -203,8 +203,15 @@ export const en = {
       privacyLevelDescription:
         'Public: visible to everyone · Private: visible to followers · Anonymous: hides identity',
       joined: 'Joined',
-      following: 'Following',
-      followers: 'Followers',
+      following: {
+        title: 'Following',
+        description: 'Users you follow',
+      },
+      followers: {
+        title: 'Followers',
+        description: 'Users who follow you',
+        removeFollower: 'Remove follower',
+      },
       privacy: {
         public: 'Public',
         private: 'Private',
@@ -222,6 +229,8 @@ export const en = {
     saveChanges: 'Save changes',
     saving: 'Saving...',
     follow: 'Follow',
+    emptyUser: 'No user found',
+    openMenu: 'Open menu',
   },
 };
 

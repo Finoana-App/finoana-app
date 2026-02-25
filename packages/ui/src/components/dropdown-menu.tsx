@@ -7,15 +7,15 @@ import { DropdownMenu as DropdownMenuPrimitive } from 'radix-ui';
 
 import { cn } from '@workspace/ui/lib/utils';
 
-function DropdownMenu({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
+function DropdownMenu({ ...props }: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.Root>>) {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
 }
 
-function DropdownMenuPortal({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Portal>) {
+function DropdownMenuPortal({ ...props }: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.Portal>>) {
   return <DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
 }
 
-function DropdownMenuTrigger({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {
+function DropdownMenuTrigger({ ...props }: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>>) {
   return <DropdownMenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
 }
 
@@ -24,7 +24,7 @@ function DropdownMenuContent({
   align = 'start',
   sideOffset = 4,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {
+}: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.Content>>) {
   return (
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
@@ -41,7 +41,7 @@ function DropdownMenuContent({
   );
 }
 
-function DropdownMenuGroup({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Group>) {
+function DropdownMenuGroup({ ...props }: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.Group>>) {
   return <DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
 }
 
@@ -50,10 +50,12 @@ function DropdownMenuItem({
   inset,
   variant = 'default',
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Item> & {
-  inset?: boolean;
-  variant?: 'default' | 'destructive';
-}) {
+}: Readonly<
+  React.ComponentProps<typeof DropdownMenuPrimitive.Item> & {
+    inset?: boolean;
+    variant?: 'default' | 'destructive';
+  }
+>) {
   return (
     <DropdownMenuPrimitive.Item
       data-slot="dropdown-menu-item"
@@ -74,9 +76,11 @@ function DropdownMenuCheckboxItem({
   checked,
   inset,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem> & {
-  inset?: boolean;
-}) {
+}: Readonly<
+  React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem> & {
+    inset?: boolean;
+  }
+>) {
   return (
     <DropdownMenuPrimitive.CheckboxItem
       data-slot="dropdown-menu-checkbox-item"
@@ -101,7 +105,7 @@ function DropdownMenuCheckboxItem({
   );
 }
 
-function DropdownMenuRadioGroup({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>) {
+function DropdownMenuRadioGroup({ ...props }: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>>) {
   return <DropdownMenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
 }
 
@@ -110,9 +114,11 @@ function DropdownMenuRadioItem({
   children,
   inset,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem> & {
-  inset?: boolean;
-}) {
+}: Readonly<
+  React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem> & {
+    inset?: boolean;
+  }
+>) {
   return (
     <DropdownMenuPrimitive.RadioItem
       data-slot="dropdown-menu-radio-item"
@@ -140,9 +146,11 @@ function DropdownMenuLabel({
   className,
   inset,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Label> & {
-  inset?: boolean;
-}) {
+}: Readonly<
+  React.ComponentProps<typeof DropdownMenuPrimitive.Label> & {
+    inset?: boolean;
+  }
+>) {
   return (
     <DropdownMenuPrimitive.Label
       data-slot="dropdown-menu-label"
@@ -153,7 +161,10 @@ function DropdownMenuLabel({
   );
 }
 
-function DropdownMenuSeparator({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
+function DropdownMenuSeparator({
+  className,
+  ...props
+}: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.Separator>>) {
   return (
     <DropdownMenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
@@ -163,7 +174,7 @@ function DropdownMenuSeparator({ className, ...props }: React.ComponentProps<typ
   );
 }
 
-function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<'span'>) {
+function DropdownMenuShortcut({ className, ...props }: Readonly<React.ComponentProps<'span'>>) {
   return (
     <span
       data-slot="dropdown-menu-shortcut"
@@ -176,7 +187,7 @@ function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<'spa
   );
 }
 
-function DropdownMenuSub({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Sub>) {
+function DropdownMenuSub({ ...props }: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.Sub>>) {
   return <DropdownMenuPrimitive.Sub data-slot="dropdown-menu-sub" {...props} />;
 }
 
@@ -185,9 +196,11 @@ function DropdownMenuSubTrigger({
   inset,
   children,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & {
-  inset?: boolean;
-}) {
+}: Readonly<
+  React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & {
+    inset?: boolean;
+  }
+>) {
   return (
     <DropdownMenuPrimitive.SubTrigger
       data-slot="dropdown-menu-sub-trigger"
@@ -207,12 +220,12 @@ function DropdownMenuSubTrigger({
 function DropdownMenuSubContent({
   className,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) {
+}: Readonly<React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>>) {
   return (
     <DropdownMenuPrimitive.SubContent
       data-slot="dropdown-menu-sub-content"
       className={cn(
-        'data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 ring-foreground/10 bg-popover text-popover-foreground z-50 min-w-[96px] origin-(--radix-dropdown-menu-content-transform-origin) overflow-hidden rounded-lg p-1 shadow-lg ring-1 duration-100',
+        'data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 ring-foreground/10 bg-popover text-popover-foreground z-50 min-w-24 origin-(--radix-dropdown-menu-content-transform-origin) overflow-hidden rounded-lg p-1 shadow-lg ring-1 duration-100',
         className
       )}
       {...props}
