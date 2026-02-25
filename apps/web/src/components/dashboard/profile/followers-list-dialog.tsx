@@ -1,5 +1,7 @@
 import { useEffect, useId, useRef } from 'react';
 
+import Link from 'next/link';
+
 import { MoreHorizontal, UserMinus } from 'lucide-react';
 
 import { User } from '@workspace/types';
@@ -51,7 +53,12 @@ function UserItem({ user: item, dictionary }: Readonly<{ user: User; dictionary:
         <AvatarFallback>{avatarFallback}</AvatarFallback>
       </Avatar>
       <div className="min-w-0 flex-1">
-        <p className="mb-1 truncate text-sm leading-none font-semibold">{item.displayName}</p>
+        <Link
+          href={`/profile/${item.id}`}
+          className="mb-1 cursor-pointer truncate text-sm leading-none font-semibold hover:underline"
+        >
+          {item.displayName}
+        </Link>
         <p className="text-muted-foreground truncate text-xs">@{item.username}</p>
       </div>
       <DropdownMenu>

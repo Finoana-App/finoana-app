@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import { CalendarDays, Mail, UserPlus, Users } from 'lucide-react';
 
 import { User } from '@workspace/types';
@@ -106,7 +108,12 @@ export function PeopleToFollow() {
             </Avatar>
             <div className="min-w-0 flex-1">
               <Tooltip content={<UserDetails user={user} />}>
-                <p className="cursor-pointer truncate text-sm font-medium hover:underline">{user.displayName}</p>
+                <Link
+                  href={`/profile/${user.id}`}
+                  className="cursor-pointer truncate text-sm font-medium hover:underline"
+                >
+                  {user.displayName}
+                </Link>
               </Tooltip>
               <p className="text-muted-foreground truncate text-xs">@{user.username}</p>
             </div>
