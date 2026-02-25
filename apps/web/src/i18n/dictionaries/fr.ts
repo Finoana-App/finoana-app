@@ -206,6 +206,8 @@ export const fr: Dictionary = {
       privacyLevelPlaceholder: 'Sélectionnez votre niveau de confidentialité',
       privacyLevelDescription: "Public: visible à tous · Privé: visible aux abonnés · Anonyme: masque l'identité",
       joined: 'Rejoint le',
+      following: 'Suivis',
+      followers: 'Abonnés',
       privacy: {
         public: 'Public',
         private: 'Privé',

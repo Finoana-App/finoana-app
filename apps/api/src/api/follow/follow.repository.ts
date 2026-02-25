@@ -3,10 +3,7 @@ import { and, desc, eq, inArray, ne, notInArray, sql } from 'drizzle-orm';
 import { db } from '@/common/databases';
 import { userFollowsTable, usersTable } from '@/common/databases/schema';
 
-const isSuggestible = and(
-  eq(usersTable.isActive, true),
-  ne(usersTable.privacyLevel, 'anonymous')
-);
+const isSuggestible = and(eq(usersTable.isActive, true), ne(usersTable.privacyLevel, 'anonymous'));
 
 export class FollowRepository {
   async follow(followerId: string, followingId: string) {
@@ -52,6 +49,113 @@ export class FollowRepository {
     }
 
     return result[0];
+  }
+
+  async getFollowers(userId: string, options: { page?: number; limit?: number } = {}) {
+    const { page = 1, limit = 20 } = options;
+    const offset = (page - 1) * limit;
+
+    const baseCondition = eq(userFollowsTable.followingId, userId);
+
+    const [followers, countResult] = await Promise.all([
+      db
+        .select({
+          id: usersTable.id,
+          displayName: usersTable.displayName,
+          username: usersTable.username,
+          photoUrl: usersTable.photoUrl,
+          bio: usersTable.bio,
+          followedAt: userFollowsTable.createdAt,
+          privacyLevel: usersTable.privacyLevel,
+        })
+        .from(userFollowsTable)
+        .innerJoin(usersTable, eq(userFollowsTable.followerId, usersTable.id))
+        .where(and(baseCondition, eq(usersTable.isActive, true), ne(usersTable.privacyLevel, 'anonymous')))
+        .orderBy(desc(userFollowsTable.createdAt))
+        .limit(limit)
+        .offset(offset),
+
+      db
+        .select({
+          count: sql<number>`count(*)::int`,
+        })
+        .from(userFollowsTable)
+        .innerJoin(usersTable, eq(userFollowsTable.followerId, usersTable.id))
+        .where(and(baseCondition, eq(usersTable.isActive, true))),
+    ]);
+
+    const total = countResult[0]?.count ?? 0;
+
+    return {
+      followers,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  async getFollowing(userId: string, options: { page?: number; limit?: number } = {}) {
+    const { page = 1, limit = 20 } = options;
+    const offset = (page - 1) * limit;
+
+    const whereCondition = eq(userFollowsTable.followerId, userId);
+
+    const [following, countResult] = await Promise.all([
+      db
+        .select({
+          id: usersTable.id,
+          displayName: usersTable.displayName,
+          username: usersTable.username,
+          photoUrl: usersTable.photoUrl,
+          bio: usersTable.bio,
+          followedAt: userFollowsTable.createdAt,
+        })
+        .from(userFollowsTable)
+        .innerJoin(usersTable, eq(userFollowsTable.followingId, usersTable.id))
+        .where(whereCondition)
+        .orderBy(desc(userFollowsTable.createdAt))
+        .limit(limit)
+        .offset(offset),
+
+      db
+        .select({
+          count: sql<number>`count(*)::int`,
+        })
+        .from(userFollowsTable)
+        .where(whereCondition),
+    ]);
+
+    const total = countResult[0]?.count ?? 0;
+
+    return {
+      following,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  }
+
+  async getFollowCounts(userId: string) {
+    const [followerCount] = await db
+      .select({ count: sql`count(*)::int` })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followingId, userId));
+
+    const [followingCount] = await db
+      .select({ count: sql`count(*)::int` })
+      .from(userFollowsTable)
+      .where(eq(userFollowsTable.followerId, userId));
+
+    return {
+      followersCount: followerCount?.count,
+      followingCount: followingCount?.count,
+    };
   }
 
   async getPopularUsers(userId: string, limit = 10) {

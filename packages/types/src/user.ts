@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { PrivacyLevelEnum, UserRoleEnum } from './enums';
+import { PaginationMeta } from './pagination';
 
 /**
  * Full User schema (matches DB entity exactly)
@@ -43,3 +44,12 @@ export const UserPreviewSchema = z.object({
  * Shape of minimal user info
  */
 export type UserPreview = z.infer<typeof UserPreviewSchema>;
+
+export interface PaginatedUserResponse {
+  followers?: UserPreview[];
+  following?: UserPreview[];
+
+  items: UserPreview[];
+
+  pagination: PaginationMeta;
+}

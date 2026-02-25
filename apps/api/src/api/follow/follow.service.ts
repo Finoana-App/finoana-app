@@ -71,6 +71,40 @@ class FollowService {
     }
   }
 
+  async getFollowers(req: AuthRequest, _res: Response) {
+    try {
+      const { userId } = req.params;
+      const { page, limit } = req.query as { page?: string; limit?: string };
+
+      const result = await this.followRepository.getFollowers(userId as string, {
+        page: page ? Number.parseInt(page) : undefined,
+        limit: limit ? Number.parseInt(limit) : undefined,
+      });
+
+      return ServiceResponse.success('Followers retrieved successfully', result, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get followers error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to get followers', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getFollowing(req: AuthRequest, _res: Response) {
+    try {
+      const { userId } = req.params;
+      const { page, limit } = req.query;
+
+      const result = await this.followRepository.getFollowing(userId as string, {
+        page: page ? Number.parseInt(page as string) : undefined,
+        limit: limit ? Number.parseInt(limit as string) : undefined,
+      });
+
+      return ServiceResponse.success('Following retrieved successfully', result, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get following error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to get following', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   async getComprehensiveSuggestions(req: AuthRequest, _res: Response) {
     try {
       const userId = req.user!.userId;
@@ -157,6 +191,19 @@ class FollowService {
     } catch (ex) {
       logger.error(`Get new users error: ${(ex as Error).message}`);
       return ServiceResponse.failure('Failed to get new users', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async getFollowCounts(req: AuthRequest, res: Response) {
+    try {
+      const { userId } = req.params;
+
+      const counts = await this.followRepository.getFollowCounts(userId as string);
+
+      return ServiceResponse.success('Follow counts retrieved successfully', counts, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Get follow counts error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to get follow counts', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
 }

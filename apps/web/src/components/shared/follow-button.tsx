@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 
+import { ApiError } from 'next/dist/server/api-utils';
+
 import { Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { Button } from '@workspace/ui/components/button';
 
@@ -19,31 +22,37 @@ export function FollowButton({ userId, initialIsFollowing = false }: Readonly<Fo
   const followMutation = useFollowUser();
   const unfollowMutation = useUnfollowUser();
 
-  const handleToggle = () => {
-    if (isFollowing) {
-      setIsFollowing(false);
-      unfollowMutation.mutate(userId, {
-        onError: () => setIsFollowing(true),
-      });
-    } else {
-      setIsFollowing(true);
-      followMutation.mutate(userId, {
-        onError: () => setIsFollowing(false),
-      });
-    }
+  const isLoading = followMutation.isPending || unfollowMutation.isPending;
+  const mutation = isFollowing ? unfollowMutation : followMutation;
+
+  const handleError = (error: ApiError, action: 'follow' | 'unfollow') => {
+    setIsFollowing(!isFollowing);
+    toast.error(error?.message || `Failed to ${action} user. Please try again.`, {
+      position: 'top-center',
+      duration: 5000,
+    });
   };
 
-  const isLoading = followMutation.isPending || unfollowMutation.isPending;
+  const handleToggle = () => {
+    const action = isFollowing ? 'unfollow' : 'follow';
+    const newState = !isFollowing;
 
-  let buttonContent;
+    setIsFollowing(newState);
+    mutation.mutate(userId, {
+      onError: (error: ApiError) => handleError(error, action),
+    });
+  };
 
-  if (isLoading) {
-    buttonContent = <Loader2 className="h-3 w-3 animate-spin" />;
-  } else if (isFollowing) {
-    buttonContent = 'Unfollow';
-  } else {
-    buttonContent = 'Follow';
-  }
+  const getButtonContent = () => {
+    if (isLoading) return <Loader2 className="h-3 w-3 animate-spin" />;
+    return isFollowing ? 'Unfollow' : 'Follow';
+  };
+
+  const buttonClasses = `h-8 cursor-pointer px-3 text-xs transition-all ${
+    isFollowing
+      ? 'text-muted-foreground hover:text-destructive'
+      : 'border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground'
+  }`;
 
   return (
     <Button
@@ -51,13 +60,9 @@ export function FollowButton({ userId, initialIsFollowing = false }: Readonly<Fo
       size="sm"
       onClick={handleToggle}
       disabled={isLoading}
-      className={`h-8 cursor-pointer px-3 text-xs transition-all ${
-        isFollowing
-          ? 'text-muted-foreground hover:text-destructive'
-          : 'border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground'
-      }`}
+      className={buttonClasses}
     >
-      {buttonContent}
+      {getButtonContent()}
     </Button>
   );
 }
