@@ -14,3 +14,5 @@ userRouter.use(authenticate);
 userRouter.get('/me', userController.getProfile);
 userRouter.put('/me', uploadAvatar, handleUploadError, userController.updateProfile);
 userRouter.delete('/me/avatar', uploadAvatar, handleUploadError, userController.deleteAvatar);
+
+userRouter.get('/:id', userController.getUserById);
