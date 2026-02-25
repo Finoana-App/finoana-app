@@ -119,6 +119,23 @@ class UserService {
     }
   }
 
+  async findById(req: AuthRequest, _res: Response) {
+    try {
+      const { id } = req.params;
+      const user = await this.userRepository.findById(id as string);
+
+      if (!user || user.privacyLevel === 'anonymous') {
+        return ServiceResponse.failure('User not found', null, StatusCodes.NOT_FOUND);
+      }
+
+      return ServiceResponse.success('User found', user);
+    } catch (ex) {
+      const errorMessage = `Error finding user, ${(ex as Error).message}`;
+      logger.error(errorMessage);
+      return ServiceResponse.failure('An error occurred while finding user.', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
   async update(req: AuthRequest, _res: Response) {
     const userId = req.user?.userId;
     if (!userId) {
