@@ -20,3 +20,5 @@ followRouter.get('/suggestions/popular', followController.getPopularUsers);
 followRouter.get('/suggestions/friends-of-friends', followController.getFriendsOfFriends);
 followRouter.get('/suggestions/recently-active', followController.getRecentlyActiveUsers);
 followRouter.get('/suggestions/new', followController.getNewUsers);
+
+followRouter.delete('/followers/:followerId', followController.removeFollower);
