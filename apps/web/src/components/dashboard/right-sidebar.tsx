@@ -18,7 +18,7 @@ export function RightSidebar({ verse }: Readonly<{ verse: VerseOfTheDayType }>) 
   const currentYear = new Date().getFullYear();
 
   return (
-    <aside className="bg-background scrollbar-peaceful sticky top-0 h-screen w-80 overflow-y-auto px-4 py-6">
+    <aside className="bg-background scrollbar-peaceful sticky top-0 h-screen w-80 overflow-visible px-4 py-6">
       <div className="mb-6">
         <AnimatedInput
           placeholder={dictionary?.dashboard.searchPlaceholder}
