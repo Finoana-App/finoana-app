@@ -194,7 +194,7 @@ class FollowService {
     }
   }
 
-  async getFollowCounts(req: AuthRequest, res: Response) {
+  async getFollowCounts(req: AuthRequest, _res: Response) {
     try {
       const { userId } = req.params;
 
@@ -204,6 +204,20 @@ class FollowService {
     } catch (ex) {
       logger.error(`Get follow counts error: ${(ex as Error).message}`);
       return ServiceResponse.failure('Failed to get follow counts', null, StatusCodes.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  async removeFollower(req: AuthRequest, _res: Response) {
+    try {
+      const { followerId } = req.params;
+      const userId = req.user!.userId;
+
+      await this.followRepository.removeFollower(userId, followerId as string);
+
+      return ServiceResponse.success('Follower removed successfully', null, StatusCodes.OK);
+    } catch (ex) {
+      logger.error(`Remove follower error: ${(ex as Error).message}`);
+      return ServiceResponse.failure('Failed to remove follower', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
 }

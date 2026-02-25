@@ -349,4 +349,17 @@ export class FollowRepository {
 
     return uniqueSuggestions.slice(0, limit);
   }
+
+  async removeFollower(userId: string, followerId: string) {
+    const result = await db
+      .delete(userFollowsTable)
+      .where(and(eq(userFollowsTable.followerId, followerId), eq(userFollowsTable.followingId, userId)))
+      .returning();
+
+    if (result.length === 0) {
+      throw new Error('This user is not following you');
+    }
+
+    return result[0];
+  }
 }

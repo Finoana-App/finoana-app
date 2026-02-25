@@ -1,4 +1,5 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { ApiError } from '@/lib/api/client';
 import { followService } from '@/lib/api/services/follow.service';
@@ -121,5 +122,27 @@ export function useFollowCounts(userId: string | undefined) {
     },
     enabled: !!userId,
     staleTime: 60 * 1000,
+  });
+}
+
+export function useRemoveFollower() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (followerId: string) => followService.removeFollower(followerId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['follow-counts'] });
+      toast.success('Follower removed successfully', {
+        position: 'top-center',
+        duration: 5000,
+      });
+    },
+    onError: (error: ApiError) => {
+      console.error('Remove follower error:', error.message);
+      toast.error('Failed to remove follower', {
+        position: 'top-center',
+        duration: 5000,
+      });
+    },
   });
 }
