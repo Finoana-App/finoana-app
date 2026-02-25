@@ -123,3 +123,17 @@ export function useFollowCounts(userId: string | undefined) {
     staleTime: 60 * 1000,
   });
 }
+
+export function useRemoveFollower() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (followerId: string) => followService.removeFollower(followerId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['follow-counts'] });
+    },
+    onError: (error: ApiError) => {
+      console.error('Remove follower error:', error.message);
+    },
+  });
+}

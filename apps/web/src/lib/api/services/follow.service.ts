@@ -47,4 +47,8 @@ export const followService = {
   getNewUsers: async (): Promise<ApiResponse<User[]>> => {
     return apiClient.get<User[]>('/follows/suggestions/new');
   },
+
+  removeFollower: async (followerId: string): Promise<ApiResponse<void>> => {
+    return apiClient.delete<void>(`/follows/followers/${followerId}`);
+  },
 };
