@@ -1,6 +1,9 @@
+import { useEffect, useId, useRef } from 'react';
+
 import { User } from '@workspace/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@workspace/ui/components/dialog';
+import { Skeleton } from '@workspace/ui/components/skeleton';
 
 import { FollowButton } from '@/components/shared';
 
@@ -12,34 +15,99 @@ interface FollowersListDialogProps {
   user: User;
 }
 
+function UserSkeleton() {
+  return (
+    <div className="flex items-center gap-3">
+      <Skeleton className="h-10 w-10 rounded-full" />
+      <div className="flex-1 space-y-2">
+        <Skeleton className="h-3 w-1/2" />
+        <Skeleton className="h-2 w-1/3" />
+      </div>
+      <Skeleton className="h-8 w-16 rounded-md" />
+    </div>
+  );
+}
+
+function UserItem({ user: item }: Readonly<{ user: User }>) {
+  const avatarFallback = (item.displayName || item.username)?.charAt(0);
+
+  return (
+    <div className="flex items-center gap-3">
+      <Avatar className="h-10 w-10 border">
+        <AvatarImage src={item.photoUrl ?? undefined} />
+        <AvatarFallback>{avatarFallback}</AvatarFallback>
+      </Avatar>
+      <div className="min-w-0 flex-1">
+        <p className="mb-1 truncate text-sm leading-none font-semibold">{item.displayName}</p>
+        <p className="text-muted-foreground truncate text-xs">@{item.username}</p>
+      </div>
+      <FollowButton userId={item.id} />
+    </div>
+  );
+}
+
+function LoadingSkeletons({ count = 5 }: { count?: number }) {
+  const id = useId();
+  return Array.from({ length: count }).map((_, i) => <UserSkeleton key={`${id}-${i}`} />);
+}
+
 export function FollowersListDialog({ open, onOpenChange, user }: Readonly<FollowersListDialogProps>) {
-  const { data: followers, isLoading } = useFollowUserList(user?.id, 'followers');
-  const followersList = followers?.followers ?? [];
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useFollowUserList(user?.id, 'followers');
+
+  const observerTarget = useRef<HTMLDivElement>(null);
+  const users = data?.pages.flatMap((page) => page.followers ?? []) ?? [];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const renderContent = () => {
+    if (isLoading) {
+      return <LoadingSkeletons />;
+    }
+
+    if (users.length === 0) {
+      return <p className="text-muted-foreground py-8 text-center text-sm">No users found.</p>;
+    }
+
+    return (
+      <>
+        {users.map((item) => (
+          <UserItem key={item.id} user={item as User} />
+        ))}
+        <div ref={observerTarget} className="min-h-5 w-full">
+          {isFetchingNextPage && (
+            <div className="flex flex-col gap-4 pt-4">
+              <LoadingSkeletons count={2} />
+            </div>
+          )}
+        </div>
+      </>
+    );
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[80vh] overflow-y-auto">
-        <DialogHeader className="mb-4">
+      <DialogContent className="flex max-h-125 flex-col overflow-hidden p-0">
+        <DialogHeader className="p-6 pb-2">
           <DialogTitle>Followers</DialogTitle>
           <DialogDescription>Users who follow {user.displayName}</DialogDescription>
         </DialogHeader>
-        <div className="flex flex-col gap-4">
-          {followersList.map((user) => (
-            <div key={user.id} className="flex items-center gap-3">
-              <Avatar className="h-10 w-10">
-                <AvatarImage src={user.photoUrl ?? undefined} alt={user.displayName ?? ''} />
-                <AvatarFallback>{user.displayName?.charAt(0) || user.username?.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div className="min-w-0 flex-1">
-                <p className="text-foreground truncate text-sm leading-none font-semibold">{user.displayName}</p>
-                <p className="text-muted-foreground truncate text-xs">@{user.username}</p>
-              </div>
-              <FollowButton userId={user.id} initialIsFollowing={true} />
-            </div>
-          ))}
-          {!isLoading && followersList.length === 0 && (
-            <p className="text-muted-foreground py-4 text-center text-sm">No followers found.</p>
-          )}
+        <div className="flex-1 overflow-y-auto px-6 pb-6">
+          <div className="flex flex-col gap-4">{renderContent()}</div>
         </div>
       </DialogContent>
     </Dialog>
