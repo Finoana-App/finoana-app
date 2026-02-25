@@ -1,5 +1,7 @@
 import { useEffect, useId, useRef } from 'react';
 
+import Link from 'next/link';
+
 import { User } from '@workspace/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@workspace/ui/components/dialog';
@@ -42,7 +44,12 @@ function UserItem({ user }: Readonly<{ user: User }>) {
         <AvatarFallback>{avatarFallback}</AvatarFallback>
       </Avatar>
       <div className="min-w-0 flex-1">
-        <p className="mb-1 truncate text-sm leading-none font-semibold">{user.displayName}</p>
+        <Link
+          href={`/profile/${user.id}`}
+          className="mb-1 cursor-pointer truncate text-sm leading-none font-semibold hover:underline"
+        >
+          {user.displayName}
+        </Link>
         <p className="text-muted-foreground truncate text-xs">@{user.username}</p>
       </div>
       <FollowButton userId={user.id} initialIsFollowing />
