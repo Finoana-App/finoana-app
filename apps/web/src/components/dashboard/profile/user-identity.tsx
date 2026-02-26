@@ -11,6 +11,7 @@ interface UserIdentityProps {
   user: User;
   dictionary: Dictionary | null;
   onEditClick?: () => void;
+  isCurrentUser?: boolean;
 }
 
 interface UserPrivacyBadgeProps {
@@ -57,7 +58,7 @@ export function UserPrivacyBadge({ privacyLevel, dictionary }: Readonly<UserPriv
   );
 }
 
-export function UserIdentity({ user, dictionary, onEditClick }: Readonly<UserIdentityProps>) {
+export function UserIdentity({ user, dictionary, onEditClick, isCurrentUser }: Readonly<UserIdentityProps>) {
   return (
     <div className="flex w-full items-end justify-between gap-4">
       <div className="flex flex-col items-start gap-4">
@@ -79,10 +80,12 @@ export function UserIdentity({ user, dictionary, onEditClick }: Readonly<UserIde
           <UserPrivacyBadge privacyLevel={user.privacyLevel} dictionary={dictionary} />
         </div>
       </div>
-      <Button variant="outline" className="cursor-pointer gap-2" onClick={onEditClick}>
-        <Settings className="h-4 w-4" />
-        {dictionary?.dashboard.profile.actions.edit.title}
-      </Button>
+      {isCurrentUser && (
+        <Button variant="outline" className="cursor-pointer gap-2" onClick={onEditClick}>
+          <Settings className="h-4 w-4" />
+          {dictionary?.dashboard.profile.actions.edit.title}
+        </Button>
+      )}
     </div>
   );
 }
