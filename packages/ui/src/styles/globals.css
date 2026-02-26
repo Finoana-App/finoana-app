@@ -42,6 +42,19 @@
 
   --radius: 0.42rem;
 
+  --prayer: oklch(42.024% 0.00005 271.152);
+  --prayer-foreground: oklch(98.511% 0.00011 271.152);
+  --devotional: oklch(32.109% 0.00004 271.152);
+  --devotional-foreground: oklch(98.511% 0.00011 271.152);
+  --testimony: oklch(42.024% 0.00005 271.152);
+  --testimony-foreground: oklch(98.511% 0.00011 271.152);
+  --reflection: oklch(52.024% 0.00005 271.152);
+  --reflection-foreground: oklch(98.511% 0.00011 271.152);
+
+  --shadow-soft: 0 2px 8px -2px hsl(0 0% 9% / 0.06);
+  --shadow-card: 0 4px 20px -4px hsl(0 0% 9% / 0.08);
+  --shadow-elevated: 0 8px 30px -6px hsl(0 0% 9% / 0.12);
+
   --section-spacing: 8rem;
   --content-max-width: 72rem;
 

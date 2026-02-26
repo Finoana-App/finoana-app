@@ -32,3 +32,13 @@ export enum PrivacyLevel {
  * Post type Zod enum
  */
 export const PostTypeEnum = z.enum(['general', 'prayer_request', 'testimony', 'devotion']);
+
+/**
+ * Post type TypeScript enum (for runtime use)
+ */
+export enum PostType {
+  GENERAL = 'general',
+  PRAYER_REQUEST = 'prayer_request',
+  TESTIMONY = 'testimony',
+  DEVOTION = 'devotion',
+}
