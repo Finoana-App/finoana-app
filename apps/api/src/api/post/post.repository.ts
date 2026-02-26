@@ -23,7 +23,7 @@ export class PostRepository {
           authorId: userId,
           content: data.content,
           postType: data.postType,
-          mediaUrls: mediaUrls,
+          ...(mediaUrls.length > 0 && { mediaUrls }),
           isAnonymous: data.isAnonymous || false,
         })
         .returning();
