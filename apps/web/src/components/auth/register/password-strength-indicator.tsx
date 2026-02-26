@@ -31,7 +31,7 @@ export function PasswordStrengthIndicator({ password, dictionary }: Readonly<Pas
         ))}
       </div>
       {config?.label && (
-        <p className="text-muted-foreground text-xs">{dictionary?.auth.passwordStrength[config.label] || ''}</p>
+        <p className="text-muted-foreground text-xs">{dictionary?.auth.passwordStrength[config.label]}</p>
       )}
     </motion.div>
   );

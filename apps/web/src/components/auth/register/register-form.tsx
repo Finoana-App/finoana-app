@@ -47,21 +47,21 @@ export function RegisterForm() {
     if (!dictionary) return newErrors;
 
     if (!name.trim()) {
-      newErrors.name = dictionary.auth.errors.nameRequired;
+      newErrors.name = dictionary.auth.validation.nameRequired;
     }
 
     if (!firstName.trim()) {
-      newErrors.firstName = dictionary.auth.errors.firstNameRequired;
+      newErrors.firstName = dictionary.auth.validation.firstNameRequired;
     }
 
     if (!email.trim()) {
-      newErrors.email = dictionary.auth.errors.emailRequired;
+      newErrors.email = dictionary.auth.validation.emailRequired;
     }
 
     if (!password.trim()) {
-      newErrors.password = dictionary.auth.errors.passwordRequired;
+      newErrors.password = dictionary.auth.validation.passwordRequired;
     } else if (password.length < 6) {
-      newErrors.password = dictionary.auth.errors.passwordMin;
+      newErrors.password = dictionary.auth.validation.passwordMin;
     }
 
     return newErrors;
@@ -88,7 +88,7 @@ export function RegisterForm() {
       });
       router.push('/dashboard');
     } catch (err: unknown) {
-      const fallback = dictionary?.auth.errors.registrationFailed;
+      const fallback = dictionary?.auth.validation.genericError;
       const message = err instanceof Error && err.message ? err.message : fallback;
 
       setErrors({ general: message });
@@ -107,7 +107,7 @@ export function RegisterForm() {
       await signInWithGoogle();
       router.push('/dashboard');
     } catch (err: unknown) {
-      const fallback = dictionary?.auth.errors.googleFailed;
+      const fallback = dictionary?.auth.validation.googleFailed;
       const message = err instanceof Error && err.message ? err.message : fallback;
 
       setErrors({ general: message });
@@ -125,8 +125,8 @@ export function RegisterForm() {
         <AnimatedInput
           id="name"
           type="text"
-          label={dictionary?.auth.name as string}
-          placeholder={dictionary?.auth.namePlaceholder as string}
+          label={dictionary?.auth.fields.name}
+          placeholder={dictionary?.auth.fields.namePlaceholder}
           value={name}
           onChange={(e) => setName(e.target.value)}
           focused={isFocused('name')}
@@ -137,8 +137,8 @@ export function RegisterForm() {
         <AnimatedInput
           id="firstName"
           type="text"
-          label={dictionary?.auth.firstName as string}
-          placeholder={dictionary?.auth.firstNamePlaceholder as string}
+          label={dictionary?.auth.fields.firstName}
+          placeholder={dictionary?.auth.fields.firstNamePlaceholder}
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           focused={isFocused('firstName')}
@@ -150,8 +150,8 @@ export function RegisterForm() {
       <AnimatedInput
         id="email"
         type="email"
-        label={dictionary?.auth.email as string}
-        placeholder={dictionary?.auth.emailPlaceholder as string}
+        label={dictionary?.auth.fields.email}
+        placeholder={dictionary?.auth.fields.emailPlaceholder}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         focused={isFocused('email')}
@@ -161,7 +161,7 @@ export function RegisterForm() {
       />
       <PasswordInputWithStrength
         id="password"
-        label={dictionary?.auth.password as string}
+        label={dictionary?.auth.fields.password}
         placeholder="••••••••"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -173,13 +173,13 @@ export function RegisterForm() {
       <AnimatedButton
         type="submit"
         loading={loading}
-        loadingText={dictionary?.auth.creatingAccount}
+        loadingText={dictionary?.auth.actions.creatingAccount}
         icon={<ArrowRight className="h-4 w-4" />}
       >
-        {dictionary?.auth.createAccount}
+        {dictionary?.auth.actions.createAccount}
       </AnimatedButton>
-      <Divider text={dictionary?.auth.divider as string} />
-      <OAuth text={dictionary?.auth.google as string} onClick={handleGoogleSignIn} />
+      <Divider text={dictionary?.auth.actions.divider as string} />
+      <OAuth text={dictionary?.auth.actions.google as string} onClick={handleGoogleSignIn} />
     </form>
   );
 }

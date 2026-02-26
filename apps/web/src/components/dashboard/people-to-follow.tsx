@@ -75,7 +75,7 @@ export function PeopleToFollow() {
   if (isLoading) {
     return (
       <Card className="shadow-soft p-4">
-        <h3 className="mb-4 text-sm font-semibold">{dictionary?.dashboard.peopleToFollowTitle}</h3>
+        <h3 className="mb-4 text-sm font-semibold">{dictionary?.dashboard.ui.followTitle}</h3>
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
             <div key={i} className="flex items-center gap-3">
@@ -98,7 +98,7 @@ export function PeopleToFollow() {
 
   return (
     <Card className="shadow-soft overflow-visible p-4">
-      <h3 className="mb-4 text-sm font-semibold">{dictionary?.dashboard.peopleToFollowTitle}</h3>
+      <h3 className="mb-4 text-sm font-semibold">{dictionary?.dashboard.ui.followTitle}</h3>
       <div className="space-y-4">
         {suggestedUsers.map((user) => (
           <div key={user.id} className="flex items-start gap-3">

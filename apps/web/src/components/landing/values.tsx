@@ -54,10 +54,10 @@ export function Values({ dict }: Readonly<{ dict: Dictionary }>) {
   }, []);
 
   const values = [
-    { title: dict.values.faith.title, desc: dict.values.faith.desc },
-    { title: dict.values.simplicity.title, desc: dict.values.simplicity.desc },
-    { title: dict.values.privacy.title, desc: dict.values.privacy.desc },
-    { title: dict.values.community.title, desc: dict.values.community.desc },
+    { title: dict.values.items.faith.title, desc: dict.values.items.faith.desc },
+    { title: dict.values.items.simplicity.title, desc: dict.values.items.simplicity.desc },
+    { title: dict.values.items.privacy.title, desc: dict.values.items.privacy.desc },
+    { title: dict.values.items.community.title, desc: dict.values.items.community.desc },
   ];
 
   return (

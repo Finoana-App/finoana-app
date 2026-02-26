@@ -43,13 +43,13 @@ export function LoginForm() {
     if (!dictionary) return newErrors;
 
     if (!email.trim()) {
-      newErrors.email = dictionary?.auth.errors.emailRequired;
+      newErrors.email = dictionary?.auth.validation.emailRequired;
     }
 
     if (!password.trim()) {
-      newErrors.password = dictionary?.auth.errors.passwordRequired;
+      newErrors.password = dictionary?.auth.validation.passwordRequired;
     } else if (password.length < 6) {
-      newErrors.password = dictionary?.auth.errors.passwordMin;
+      newErrors.password = dictionary?.auth.validation.passwordMin;
     }
 
     return newErrors;
@@ -70,7 +70,7 @@ export function LoginForm() {
       await signIn({ email, password });
       router.push('/dashboard');
     } catch (err: unknown) {
-      const fallback = dictionary?.auth.errors.loginFailed;
+      const fallback = dictionary?.auth.validation.genericError;
       const message = err instanceof Error && err.message ? err.message : fallback;
 
       setErrors({ general: message });
@@ -89,7 +89,7 @@ export function LoginForm() {
       await signInWithGoogle();
       router.push('/dashboard');
     } catch (err: unknown) {
-      const fallback = dictionary?.auth.errors.googleFailed;
+      const fallback = dictionary?.auth.validation.googleFailed;
       const message = err instanceof Error && err.message ? err.message : fallback;
 
       setErrors({ general: message });
@@ -106,8 +106,8 @@ export function LoginForm() {
       <AnimatedInput
         id="email"
         type="email"
-        label={dictionary?.auth.email as string}
-        placeholder={dictionary?.auth.emailPlaceholder}
+        label={dictionary?.auth.fields.email}
+        placeholder={dictionary?.auth.fields.emailPlaceholder}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         focused={isFocused('email')}
@@ -117,7 +117,7 @@ export function LoginForm() {
       />
       <PasswordInput
         id="password"
-        label={dictionary?.auth.password as string}
+        label={dictionary?.auth.fields.password}
         placeholder="••••••••"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
@@ -130,13 +130,13 @@ export function LoginForm() {
       <AnimatedButton
         type="submit"
         loading={loading}
-        loadingText={dictionary?.auth.connexion}
+        loadingText={dictionary?.auth.actions.loading}
         icon={<ArrowRight className="h-4 w-4" />}
       >
-        {dictionary?.auth.continue}
+        {dictionary?.auth.actions.continue}
       </AnimatedButton>
-      <Divider text={dictionary?.auth.divider as string} />
-      <OAuth text={dictionary?.auth.google as string} onClick={handleGoogleSignIn} />
+      <Divider text={dictionary?.auth.actions.divider} />
+      <OAuth text={dictionary?.auth.actions.google} onClick={handleGoogleSignIn} />
     </form>
   );
 }

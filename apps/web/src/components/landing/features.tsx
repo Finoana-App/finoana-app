@@ -55,33 +55,33 @@ export function Features({ dict }: Readonly<{ dict: Dictionary }>) {
 
   const features = [
     {
-      title: dict.features.prayer.title,
-      desc: dict.features.prayer.desc,
+      title: dict.features.items.prayer.title,
+      desc: dict.features.items.prayer.desc,
       number: '01',
     },
     {
-      title: dict.features.testimony.title,
-      desc: dict.features.testimony.desc,
+      title: dict.features.items.testimony.title,
+      desc: dict.features.items.testimony.desc,
       number: '02',
     },
     {
-      title: dict.features.groups.title,
-      desc: dict.features.groups.desc,
+      title: dict.features.items.groups.title,
+      desc: dict.features.items.groups.desc,
       number: '03',
     },
     {
-      title: dict.features.resources.title,
-      desc: dict.features.resources.desc,
+      title: dict.features.items.resources.title,
+      desc: dict.features.items.resources.desc,
       number: '04',
     },
     {
-      title: dict.features.moments.title,
-      desc: dict.features.moments.desc,
+      title: dict.features.items.moments.title,
+      desc: dict.features.items.moments.desc,
       number: '05',
     },
     {
-      title: dict.features.safe.title,
-      desc: dict.features.safe.desc,
+      title: dict.features.items.safe.title,
+      desc: dict.features.items.safe.desc,
       number: '06',
     },
   ];
@@ -91,17 +91,17 @@ export function Features({ dict }: Readonly<{ dict: Dictionary }>) {
       <div className="container-docs">
         <div className="mb-16 max-w-3xl md:mb-24">
           <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="feature-header badge-mono">
-            {dict.features.badge}
+            {dict.features.header.badge}
           </motion.span>
           <motion.h2 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="feature-header mt-6 text-balance">
-            {dict.features.title}
+            {dict.features.header.title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="feature-header text-muted-foreground mt-4 text-lg"
           >
-            {dict.features.subtitle}
+            {dict.features.header.subtitle}
           </motion.p>
         </div>
         <div className="features-grid bg-border grid gap-px overflow-hidden rounded-lg md:grid-cols-2 lg:grid-cols-3">

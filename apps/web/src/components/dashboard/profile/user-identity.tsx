@@ -27,19 +27,19 @@ export function UserPrivacyBadge({ privacyLevel, dictionary }: Readonly<UserPriv
         return {
           icon: <ShieldCheck className="h-3 w-3" />,
           variant: 'default',
-          label: dictionary?.dashboard.profile.privacy.public ?? 'Public',
+          label: dictionary?.dashboard.profile.privacyLevels.public ?? 'Public',
         };
       case 'private':
         return {
           icon: <Shield className="h-3 w-3" />,
           variant: 'secondary',
-          label: dictionary?.dashboard.profile.privacy.private ?? 'Private',
+          label: dictionary?.dashboard.profile.privacyLevels.private ?? 'Private',
         };
       case 'anonymous':
         return {
           icon: <ShieldX className="h-3 w-3" />,
           variant: 'destructive',
-          label: dictionary?.dashboard.profile.privacy.anonymous ?? 'Anonymous',
+          label: dictionary?.dashboard.profile.privacyLevels.anonymous ?? 'Anonymous',
         };
       default:
         return null;
@@ -81,7 +81,7 @@ export function UserIdentity({ user, dictionary, onEditClick }: Readonly<UserIde
       </div>
       <Button variant="outline" className="cursor-pointer gap-2" onClick={onEditClick}>
         <Settings className="h-4 w-4" />
-        {dictionary?.dashboard.profile.editProfile}
+        {dictionary?.dashboard.profile.actions.edit.title}
       </Button>
     </div>
   );

@@ -116,8 +116,8 @@ export function FollowingListDialog({ open, onOpenChange, user }: Readonly<Follo
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex max-h-125 flex-col overflow-hidden p-0">
         <DialogHeader className="p-6 pb-2">
-          <DialogTitle>{dictionary?.dashboard.profile.following.title}</DialogTitle>
-          <DialogDescription>{dictionary?.dashboard.profile.following.description}</DialogDescription>
+          <DialogTitle>{dictionary?.dashboard.profile.labels.following.title}</DialogTitle>
+          <DialogDescription>{dictionary?.dashboard.profile.labels.following.description}</DialogDescription>
         </DialogHeader>
         <div className="flex-1 overflow-y-auto px-6 pb-6">
           <div className="flex flex-col gap-4">{renderContent()}</div>

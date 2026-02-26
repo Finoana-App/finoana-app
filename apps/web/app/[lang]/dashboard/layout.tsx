@@ -1,4 +1,4 @@
-import { VerseOfTheDay } from '@workspace/types';
+import { VerseOfTheDay as VerseOfTheDayType } from '@workspace/types';
 
 import { ProtectedRoute } from '@/components/auth';
 
@@ -24,7 +24,7 @@ export default async function DashboardLayout({
         </div>
         <main className="border-border min-w-0 flex-1 border-x pb-20 lg:pb-0">{children}</main>
         <div className="hidden shrink-0 overflow-visible xl:block xl:w-80">
-          <RightSidebar verse={verse as VerseOfTheDay} />
+          <RightSidebar verse={verse as VerseOfTheDayType} />
         </div>
       </div>
     </ProtectedRoute>

@@ -53,8 +53,8 @@ export function ResetPasswordRequest({
       <AnimatedInput
         id="email"
         type="email"
-        label={dictionary?.auth.email as string}
-        placeholder={dictionary?.auth.emailPlaceholder as string}
+        label={dictionary?.auth.fields.email}
+        placeholder={dictionary?.auth.fields.emailPlaceholder}
         value={email}
         onChange={(e) => onEmailChange(e.target.value)}
         focused={isFocused('email')}
@@ -64,15 +64,15 @@ export function ResetPasswordRequest({
       <AnimatedButton
         type="submit"
         loading={isLoading}
-        loadingText={dictionary?.auth.resetPassword.sending}
+        loadingText={dictionary?.auth.actions.sending}
         icon={<ArrowRight className="h-4 w-4" />}
         disabled={!email}
       >
-        {dictionary?.auth.resetPassword.sendResetLink}
+        {dictionary?.auth.resetPassword.action}
       </AnimatedButton>
       <Link href="/login" className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
         <ArrowLeft className="h-4 w-4" />
-        {dictionary?.auth.resetPassword.backToSignIn}
+        {dictionary?.auth.resetPassword.back}
       </Link>
     </motion.form>
   );

@@ -67,7 +67,7 @@ export function ProtectedRoute({
       if (!user) {
         router.push(redirectTo);
       } else if (requireAdmin && user.role !== 'admin') {
-        router.push('/unauthorized');
+        router.push('/dashboard/unauthorized');
       }
     }
   }, [user, loading, router, redirectTo, requireAdmin]);
