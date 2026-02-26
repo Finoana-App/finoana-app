@@ -1,7 +1,8 @@
-import { cloudinaryService, MediaType } from "@/common/config/cloudinary";
-import { db } from "@/common/databases";
-import { postsTable, userActivitiesTable } from "@/common/databases/schema";
-import { CreatePostInput } from "@workspace/types";
+import { CreatePostInput } from '@workspace/types';
+
+import { cloudinaryService, MediaType } from '@/common/config/cloudinary';
+import { db } from '@/common/databases';
+import { postsTable, userActivitiesTable } from '@/common/databases/schema';
 
 export class PostRepository {
   async create(userId: string, data: CreatePostInput, files?: Express.Multer.File[]) {
@@ -12,7 +13,7 @@ export class PostRepository {
         const uploadResults = await cloudinaryService.uploadMultipleFiles(files, {
           mediaType: MediaType.POST_IMAGE,
           userId: userId,
-        })
+        });
         mediaUrls = uploadResults.map((result) => result.secureUrl);
       }
 

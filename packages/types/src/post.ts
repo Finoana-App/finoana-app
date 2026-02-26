@@ -2,13 +2,13 @@ import { z } from 'zod';
 
 import { PostTypeEnum } from './enums';
 
-/* 
+/*
  * Post schema
  */
 export const PostSchema = z.object({
   id: z.string().uuid(),
   authorId: z.string().uuid(),
-  content: z.string().min(1, "Content is required"),
+  content: z.string().min(1, 'Content is required'),
   postType: PostTypeEnum.default('general'),
   mediaUrls: z.array(z.string()).default([]),
   isAnonymous: z.boolean().default(false),
@@ -32,10 +32,10 @@ export type Post = z.infer<typeof PostSchema>;
  * Input schema for creating a post
  */
 export const CreatePostSchema = z.object({
-  content: z.string().min(1, "Content is required"),
+  content: z.string().min(1, 'Content is required'),
   postType: PostTypeEnum.default('general'),
   isAnonymous: z.boolean().default(false),
-})
+});
 
 /**
  * Input type for creating a post
