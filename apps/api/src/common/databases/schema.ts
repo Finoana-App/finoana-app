@@ -77,7 +77,9 @@ export const postsTable = pgTable(
       .notNull(),
     content: text('content').notNull(),
     postType: postTypeEnum('post_type').default('general').notNull(),
-    mediaUrls: jsonb('media_urls').$type<string[]>().default(sql`'[]'::jsonb`),
+    mediaUrls: jsonb('media_urls')
+      .$type<string[]>()
+      .default(sql`'[]'::jsonb`),
     isAnonymous: boolean('is_anonymous').default(false).notNull(),
     isPinned: boolean('is_pinned').default(false).notNull(),
     isPrayerAnswered: boolean('is_prayer_answered').default(false),

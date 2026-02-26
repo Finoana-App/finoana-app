@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { CreatePostInput } from '@workspace/types';
-
 import { postService } from '../api/services/post.service';
 
 export const queryKeys = {
@@ -18,7 +16,7 @@ export function useCreatePost() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (post: CreatePostInput) => postService.createPost(post),
+    mutationFn: (post: FormData) => postService.createPost(post),
     onSuccess: (response) => {
       if (response.success) {
         queryClient.invalidateQueries({ queryKey: queryKeys.posts.lists() });

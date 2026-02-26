@@ -35,6 +35,7 @@ export const CreatePostSchema = z.object({
   content: z.string().min(1, 'Content is required'),
   postType: PostTypeEnum.default('general'),
   isAnonymous: z.boolean().default(false),
+  mediaUrls: z.array(z.string()).default([]),
 });
 
 /**
