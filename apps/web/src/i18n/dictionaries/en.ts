@@ -234,6 +234,10 @@ export const en = {
         updateFailed: 'Failed to update profile. Please try again.',
       },
     },
+    post: {
+      createPost: 'Create post',
+      category: 'Category : ',
+    },
   },
   common: {
     cancel: 'Cancel',
@@ -241,6 +245,7 @@ export const en = {
     loading: 'Loading...',
     empty: 'No data found',
     openMenu: 'Open menu',
+    share: 'Share',
   },
 };
 

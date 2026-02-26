@@ -1,9 +1,9 @@
 import { and, eq, sql } from 'drizzle-orm';
 
+import { UpdateProfileInput } from '@workspace/types';
+
 import { db } from '@/common/databases';
 import { usersTable } from '@/common/databases/schema';
-
-import { UpdateProfileInput } from './user.model';
 
 export class UserRepository {
   async create(

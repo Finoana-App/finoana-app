@@ -5,6 +5,7 @@ import { pino } from 'pino';
 
 import { followRouter } from '@/api/follow/follow.route';
 import { healthCheckRouter } from '@/api/health-check/health-check.route';
+import { postRouter } from '@/api/post/post.route';
 import { userRouter } from '@/api/user/user.route';
 import { ErrorHandler, RequestLogger } from '@/common/middlewares';
 import { env } from '@/common/utils';
@@ -24,6 +25,7 @@ app.use(RequestLogger);
 app.use('/', healthCheckRouter);
 app.use('/users', userRouter);
 app.use('/follows', followRouter);
+app.use('/posts', postRouter);
 
 app.use(ErrorHandler());
 

@@ -1,13 +1,14 @@
 import { Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
+import { RegisterInputSchema, UpdateProfileSchema } from '@workspace/types';
+
 import { cloudinaryService } from '@/common/config/cloudinary';
 import { auth } from '@/common/config/firebase';
 import { AuthRequest } from '@/common/middlewares/auth';
 import { ServiceResponse } from '@/common/models/service-response';
 import { logger } from '@/server';
 
-import { RegisterInputSchema, UpdateProfileSchema } from './user.model';
 import { UserRepository } from './user.repository';
 import { userUtils } from './utils';
 

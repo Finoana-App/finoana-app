@@ -247,6 +247,10 @@ export const fr: Dictionary = {
         updateFailed: 'Une erreur est survenue. Veuillez réessayer.',
       },
     },
+    post: {
+      createPost: 'Créer un post',
+      category: 'Catégorie :',
+    },
   },
   common: {
     cancel: 'Annuler',
@@ -254,5 +258,6 @@ export const fr: Dictionary = {
     loading: 'Chargement...',
     empty: 'Aucun utilisateur trouvé',
     openMenu: 'Ouvrir le menu',
+    share: 'Partager',
   },
 };
