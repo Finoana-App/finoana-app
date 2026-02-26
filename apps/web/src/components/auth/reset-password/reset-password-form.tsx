@@ -3,7 +3,8 @@
 import { AnimatePresence } from 'motion/react';
 
 import { useDictionary } from '@/hooks/use-dictionary';
-import { useResetPassword } from '@/hooks/use-reset-password';
+
+import { useResetPassword } from '@/lib/hooks/use-user';
 
 import { Dictionary } from '@/i18n/dictionaries/en';
 

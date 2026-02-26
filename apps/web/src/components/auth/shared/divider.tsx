@@ -1,4 +1,4 @@
-export function Divider({ text }: Readonly<{ text: string }>) {
+export function Divider({ text }: Readonly<{ text?: string }>) {
   return (
     <div className="relative py-4">
       <div className="absolute inset-0 flex items-center">

@@ -2,15 +2,15 @@ import { VerseOfTheDay as VerseOfTheDayType } from '@workspace/types';
 import { TextGenerateEffect } from '@workspace/ui/aceternity/text-generate-effect';
 import { Card } from '@workspace/ui/components/card';
 
-export function VerseOfTheDay({ title, verse }: Readonly<{ title: string; verse: VerseOfTheDayType }>) {
-  const words = `"${verse.passage}"`;
+export function VerseOfTheDay({ title, verse }: Readonly<{ title?: string; verse?: VerseOfTheDayType }>) {
+  const words = `"${verse?.passage}"`;
 
   return (
     <Card className="from-primary/5 to-accent/10 border-primary/10 shadow-soft mb-6 bg-linear-to-br p-5">
       <p className="text-primary mb-3 text-xs font-medium tracking-wider uppercase">{title}</p>
       <TextGenerateEffect className="text-foreground mb-3 font-serif text-base leading-relaxed italic" words={words} />
       <p className="text-primary text-sm font-medium">
-        {verse.citation} | {verse.version}
+        {verse?.citation} | {verse?.version}
       </p>
     </Card>
   );

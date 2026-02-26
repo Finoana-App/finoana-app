@@ -16,7 +16,7 @@ import { Dictionary } from '@/i18n/dictionaries/en';
 
 interface PasswordInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   id: string;
-  label: string;
+  label?: string;
   focused?: boolean;
   error?: string;
   showForgotPassword?: boolean;
@@ -52,7 +52,7 @@ export function PasswordInput({
             href={forgotPasswordHref}
             className="text-muted-foreground hover:text-foreground text-xs transition-colors"
           >
-            {dictionary?.auth.resetPassword.forgot}
+            {dictionary?.auth.actions.forgotPassword}
           </Link>
         )}
       </div>

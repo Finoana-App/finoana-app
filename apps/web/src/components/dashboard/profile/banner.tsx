@@ -52,17 +52,17 @@ export function Banner({
         <div className="text-muted-foreground mb-4 flex flex-wrap gap-4 text-sm">
           <span className="flex items-center gap-1">
             <Calendar className="h-4 w-4" />
-            {dictionary?.dashboard.profile.joined} {formattedJoinDate}
+            {dictionary?.dashboard.profile.labels.joined} {formattedJoinDate}
           </span>
         </div>
         <div className="flex gap-4 text-sm">
           <button onClick={onViewFollowing} className="cursor-pointer transition-all hover:underline active:scale-95">
             <span className="text-foreground font-semibold">{followingCount}</span>{' '}
-            <span className="text-muted-foreground">{dictionary?.dashboard.profile.following.title}</span>
+            <span className="text-muted-foreground">{dictionary?.dashboard.profile.labels.following.title}</span>
           </button>
           <button onClick={onViewFollowers} className="cursor-pointer transition-all hover:underline active:scale-95">
             <span className="text-foreground font-semibold">{followersCount}</span>{' '}
-            <span className="text-muted-foreground">{dictionary?.dashboard.profile.followers.title}</span>
+            <span className="text-muted-foreground">{dictionary?.dashboard.profile.labels.followers.title}</span>
           </button>
         </div>
       </div>

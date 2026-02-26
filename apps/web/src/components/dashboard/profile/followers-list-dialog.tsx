@@ -78,7 +78,7 @@ function UserItem({ user: item, dictionary }: Readonly<{ user: User; dictionary:
             className="text-destructive focus:text-destructive focus:bg-destructive/10 cursor-pointer transition-all"
           >
             <UserMinus className="mr-2 h-4 w-4" />
-            <span>{dictionary?.dashboard.profile.followers.removeFollower}</span>
+            <span>{dictionary?.dashboard.profile.actions.removeFollower}</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -122,7 +122,7 @@ export function FollowersListDialog({ open, onOpenChange, user }: Readonly<Follo
     }
 
     if (users.length === 0) {
-      return <p className="text-muted-foreground py-8 text-center text-sm">{dictionary?.common.emptyUser}</p>;
+      return <p className="text-muted-foreground py-8 text-center text-sm">{dictionary?.common.empty}</p>;
     }
 
     return (
@@ -145,8 +145,8 @@ export function FollowersListDialog({ open, onOpenChange, user }: Readonly<Follo
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="flex max-h-125 flex-col overflow-hidden p-0">
         <DialogHeader className="p-6 pb-2">
-          <DialogTitle>{dictionary?.dashboard.profile.followers.title}</DialogTitle>
-          <DialogDescription>{dictionary?.dashboard.profile.followers.description}</DialogDescription>
+          <DialogTitle>{dictionary?.dashboard.profile.labels.followers.title}</DialogTitle>
+          <DialogDescription>{dictionary?.dashboard.profile.labels.followers.description}</DialogDescription>
         </DialogHeader>
         <div className="flex-1 overflow-y-auto px-6 pb-6">
           <div className="flex flex-col gap-4">{renderContent()}</div>

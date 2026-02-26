@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import type { SignUpInput, UpdateProfileInput } from '@workspace/types';
@@ -28,6 +30,36 @@ export function useRegister() {
       console.error('Registration error:', error.message);
     },
   });
+}
+
+export function useResetPassword() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+
+  const submit = async () => {
+    if (!email) return;
+
+    setStatus('loading');
+    await new Promise((r) => setTimeout(r, 1500));
+    setStatus('success');
+
+    console.log('Password reset requested for:', email);
+  };
+
+  const reset = () => {
+    setStatus('idle');
+    setEmail('');
+  };
+
+  return {
+    email,
+    setEmail,
+    status,
+    isLoading: status === 'loading',
+    isSuccess: status === 'success',
+    submit,
+    reset,
+  };
 }
 
 export function useCurrentUser(enabled: boolean = true) {

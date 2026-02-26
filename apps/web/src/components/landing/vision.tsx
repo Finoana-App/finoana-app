@@ -56,18 +56,18 @@ export function Vision({ dict }: Readonly<{ dict: Dictionary }>) {
 
   const principles = [
     {
-      title: dict.vision.principle1.title,
-      desc: dict.vision.principle1.desc,
+      title: dict.vision.principles.community.title,
+      desc: dict.vision.principles.community.desc,
       icon: '◯',
     },
     {
-      title: dict.vision.principle2.title,
-      desc: dict.vision.principle2.desc,
+      title: dict.vision.principles.scripture.title,
+      desc: dict.vision.principles.scripture.desc,
       icon: '◇',
     },
     {
-      title: dict.vision.principle3.title,
-      desc: dict.vision.principle3.desc,
+      title: dict.vision.principles.accessible.title,
+      desc: dict.vision.principles.accessible.desc,
       icon: '△',
     },
   ];

@@ -18,7 +18,7 @@ import { PasswordStrengthIndicator } from './password-strength-indicator';
 
 interface PasswordInputWithStrengthProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
   id: string;
-  label: string;
+  label?: string;
   focused?: boolean;
   error?: string;
   showForgotPassword?: boolean;
@@ -60,7 +60,7 @@ export function PasswordInputWithStrength({
               href={forgotPasswordHref}
               className="text-muted-foreground hover:text-foreground text-xs transition-colors"
             >
-              {dictionary?.auth.resetPassword.forgot}
+              {dictionary?.auth.resetPassword.title}
             </Link>
           )}
         </div>

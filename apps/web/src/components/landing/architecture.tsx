@@ -56,22 +56,30 @@ export function Architecture({ dict }: Readonly<{ dict: Dictionary }>) {
   const blocks = [
     {
       id: 1,
-      title: dict.architecture.security.title,
-      items: [dict.architecture.security.item1, dict.architecture.security.item2, dict.architecture.security.item3],
+      title: dict.architecture.sections.security.title,
+      items: [
+        dict.architecture.sections.security.items[0],
+        dict.architecture.sections.security.items[1],
+        dict.architecture.sections.security.items[2],
+      ],
     },
     {
       id: 2,
-      title: dict.architecture.performance.title,
+      title: dict.architecture.sections.performance.title,
       items: [
-        dict.architecture.performance.item1,
-        dict.architecture.performance.item2,
-        dict.architecture.performance.item3,
+        dict.architecture.sections.performance.items[0],
+        dict.architecture.sections.performance.items[1],
+        dict.architecture.sections.performance.items[2],
       ],
     },
     {
       id: 3,
-      title: dict.architecture.scale.title,
-      items: [dict.architecture.scale.item1, dict.architecture.scale.item2, dict.architecture.scale.item3],
+      title: dict.architecture.sections.scale.title,
+      items: [
+        dict.architecture.sections.scale.items[0],
+        dict.architecture.sections.scale.items[1],
+        dict.architecture.sections.scale.items[2],
+      ],
     },
   ];
 

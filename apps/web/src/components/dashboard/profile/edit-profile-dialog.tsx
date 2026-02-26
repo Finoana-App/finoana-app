@@ -64,7 +64,7 @@ export function EditProfileDialog({
 
     const trimmedDisplayName = displayName.trim();
     if (!trimmedDisplayName) {
-      toast.error(dictionary?.dashboard.profile.errors?.displayNameRequired || 'Display name is required', {
+      toast.error(dictionary?.dashboard.profile.message.displayNameRequired, {
         position: 'top-center',
         duration: 5000,
       });
@@ -87,7 +87,7 @@ export function EditProfileDialog({
             ? response.responseObject[0]
             : response.responseObject;
 
-          toast.success(dictionary?.dashboard.profile.errors?.success || 'Profile updated successfully', {
+          toast.success(dictionary?.dashboard.profile.message.profileUpdated, {
             position: 'top-center',
             duration: 5000,
           });
@@ -104,10 +104,7 @@ export function EditProfileDialog({
       onError: (error: ApiError) => {
         console.error('[Update Profile] Error:', error);
 
-        const errorMessage =
-          error?.message ||
-          dictionary?.dashboard.profile.errors?.updateFailed ||
-          'Failed to update profile. Please try again.';
+        const errorMessage = error?.message || dictionary?.dashboard.profile.message.updateFailed;
 
         toast.error(errorMessage, {
           position: 'top-center',
@@ -136,8 +133,8 @@ export function EditProfileDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-lg">
         <DialogHeader className="mb-4">
-          <DialogTitle>{dictionary?.dashboard.profile.editProfile}</DialogTitle>
-          <DialogDescription>{dictionary?.dashboard.profile.editProfileDescription}</DialogDescription>
+          <DialogTitle>{dictionary?.dashboard.profile.actions.edit.title}</DialogTitle>
+          <DialogDescription>{dictionary?.dashboard.profile.actions.edit.description}</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="flex justify-center">
@@ -175,41 +172,41 @@ export function EditProfileDialog({
             <input ref={fileInputRef} type="file" accept="image/*" onChange={handleAvatarChange} className="sr-only" />
           </div>
           <div className="space-y-5">
-            <Label htmlFor="displayName">{dictionary?.dashboard.profile.displayName}</Label>
+            <Label htmlFor="displayName">{dictionary?.dashboard.profile.labels.displayName}</Label>
             <Input
               id="displayName"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              placeholder={dictionary?.dashboard.profile.displayNamePlaceholder}
+              placeholder={dictionary?.dashboard.profile.labels.displayNamePlaceholder}
               disabled={isUpdating}
               required
             />
           </div>
           <div className="space-y-5">
-            <Label htmlFor="bio">{dictionary?.dashboard.profile.bio}</Label>
+            <Label htmlFor="bio">{dictionary?.dashboard.profile.labels.bio}</Label>
             <Textarea
               id="bio"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
-              placeholder={dictionary?.dashboard.profile.bioPlaceholder}
+              placeholder={dictionary?.dashboard.profile.labels.bioPlaceholder}
               rows={3}
               disabled={isUpdating}
               className="resize-none"
             />
           </div>
           <div className="space-y-5">
-            <Label>{dictionary?.dashboard.profile.privacyLevel}</Label>
+            <Label>{dictionary?.dashboard.profile.labels.privacy}</Label>
             <Select value={privacy} onValueChange={(v) => setPrivacy(v as PrivacyLevel)} disabled={isUpdating}>
               <SelectTrigger>
-                <SelectValue placeholder={dictionary?.dashboard.profile.privacyLevelPlaceholder} />
+                <SelectValue placeholder={dictionary?.dashboard.profile.labels.privacyPlaceholder} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="public">{dictionary?.dashboard.profile.privacy.public}</SelectItem>
-                <SelectItem value="private">{dictionary?.dashboard.profile.privacy.private}</SelectItem>
-                <SelectItem value="anonymous">{dictionary?.dashboard.profile.privacy.anonymous}</SelectItem>
+                <SelectItem value="public">{dictionary?.dashboard.profile.privacyLevels.public}</SelectItem>
+                <SelectItem value="private">{dictionary?.dashboard.profile.privacyLevels.private}</SelectItem>
+                <SelectItem value="anonymous">{dictionary?.dashboard.profile.privacyLevels.anonymous}</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-muted-foreground text-xs">{dictionary?.dashboard.profile.privacyLevelDescription}</p>
+            <p className="text-muted-foreground text-xs">{dictionary?.dashboard.profile.privacyLevels.description}</p>
           </div>
           <div className="flex justify-end gap-2 pt-5">
             <Button type="button" variant="ghost" className="cursor-pointer" onClick={handleCancel}>
@@ -217,7 +214,7 @@ export function EditProfileDialog({
             </Button>
             <Button type="submit" className="cursor-pointer" disabled={isUpdating}>
               {isUpdating && <Loader2 className="h-4 w-4 animate-spin" />}
-              {isUpdating ? dictionary?.common.saving : dictionary?.common.saveChanges}
+              {isUpdating ? dictionary?.dashboard.profile.actions.saving : dictionary?.dashboard.profile.actions.save}
             </Button>
           </div>
         </form>

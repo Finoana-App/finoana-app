@@ -104,7 +104,7 @@ export function MobileDownload({ dict }: Readonly<{ dict: Dictionary }>) {
                   suppressHydrationWarning
                 />
                 <span className="text-muted-foreground text-xs tracking-widest uppercase">
-                  {dict.mobile.comingSoon}
+                  {dict.mobile.labels.comingSoon}
                 </span>
               </div>
               <div className="bg-foreground/20 absolute top-3 left-1/2 h-5 w-20 -translate-x-1/2 rounded-full" />
@@ -116,18 +116,18 @@ export function MobileDownload({ dict }: Readonly<{ dict: Dictionary }>) {
               <Apple className="h-6 w-6" />
               <div className="text-left">
                 <span className="text-muted-foreground block text-[10px] tracking-wide uppercase">
-                  {dict.mobile.comingSoon}
+                  {dict.mobile.labels.comingSoon}
                 </span>
-                <span className="text-sm font-medium">{dict.mobile.ios}</span>
+                <span className="text-sm font-medium">{dict.mobile.labels.ios}</span>
               </div>
             </div>
             <div className="bg-background border-border flex cursor-not-allowed items-center gap-3 rounded-xl border px-6 py-3 opacity-60">
               <Play className="h-6 w-6" />
               <div className="text-left">
                 <span className="text-muted-foreground block text-[10px] tracking-wide uppercase">
-                  {dict.mobile.comingSoon}
+                  {dict.mobile.labels.comingSoon}
                 </span>
-                <span className="text-sm font-medium">{dict.mobile.android}</span>
+                <span className="text-sm font-medium">{dict.mobile.labels.android}</span>
               </div>
             </div>
           </div>
@@ -138,20 +138,20 @@ export function MobileDownload({ dict }: Readonly<{ dict: Dictionary }>) {
                 animate={{ opacity: 1, scale: 1 }}
                 className="bg-background border-border rounded-lg border px-6 py-4"
               >
-                <p className="text-muted-foreground text-sm">{dict.mobile.successMessage}</p>
+                <p className="text-muted-foreground text-sm">{dict.mobile.form.successMessage}</p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
                 <Input
                   type="email"
-                  placeholder={dict.mobile.emailPlaceholder}
+                  placeholder={dict.mobile.form.emailPlaceholder}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="bg-background border-border h-12 flex-1"
                   required
                 />
                 <Button type="submit" className="h-12 px-6">
-                  {dict.mobile.notify}
+                  {dict.mobile.labels.notify}
                 </Button>
               </form>
             )}

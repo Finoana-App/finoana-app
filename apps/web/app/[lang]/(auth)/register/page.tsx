@@ -10,12 +10,12 @@ export default async function RegisterPage({ params }: { params: Promise<{ lang:
   const dict = await getDictionary(lang);
 
   return (
-    <RightSideWrapper title={dict.auth.joinUs} subtitle={dict.auth.registerSubtitle}>
+    <RightSideWrapper title={dict.auth.headings.registerTitle} subtitle={dict.auth.headings.registerSubtitle}>
       <RegisterForm />
       <p className="text-muted-foreground pt-4 text-center text-sm">
-        {dict.auth.haveAccount}{' '}
+        {dict.auth.actions.haveAccount}{' '}
         <Link href={`/${lang}/login`} className="text-foreground underline-offset-4 hover:underline">
-          {dict.auth.signin}
+          {dict.auth.actions.signIn}
         </Link>
       </p>
     </RightSideWrapper>
