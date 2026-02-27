@@ -31,7 +31,7 @@ export default function ProfilePage() {
   const { dictionary } = useDictionary<Dictionary>();
 
   let content;
-  const rawPostList = postsData?.responseObject?.posts ?? [];
+  const rawPostList = postsData?.posts ?? [];
 
   const filteredPosts = rawPostList.filter((post) => {
     if (activeTab === 'all') return true;

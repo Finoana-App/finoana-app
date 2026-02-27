@@ -207,6 +207,9 @@ export const fr: Dictionary = {
     },
     profile: {
       badge: 'Profil',
+      anonymous: 'Anonyme',
+      unknownUser: 'Utilisateur Inconnu',
+      unknown: 'Inconnu',
       actions: {
         edit: {
           title: 'Modifier le profil',

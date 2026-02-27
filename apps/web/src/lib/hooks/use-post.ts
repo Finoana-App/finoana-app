@@ -1,7 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
+import { Post } from '@workspace/types';
+
 import { postService } from '@/lib/api/services/post.service';
+
+interface UserPostsResponse {
+  posts: Post[];
+  pagination: {
+    page: number;
+    limit: number;
+    hasMore: boolean;
+  };
+}
 
 export const queryKeys = {
   posts: {
@@ -36,11 +47,15 @@ export function useCreatePost() {
 }
 
 export function useGetUserPosts(userId: string | undefined) {
-  return useQuery({
+  return useQuery<UserPostsResponse>({
     queryKey: queryKeys.posts.list({ userId }),
-    queryFn: () => postService.getUserPosts(userId as string),
-
-    // Crucial: This prevents the query from executing if userId is undefined or empty
+    queryFn: async () => {
+      const response = await postService.getUserPosts(userId as string);
+      if (!response.success || !response.responseObject) {
+        throw new Error(response.message);
+      }
+      return response.responseObject;
+    },
     enabled: !!userId,
   });
 }

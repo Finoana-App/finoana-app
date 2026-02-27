@@ -194,6 +194,9 @@ export const en = {
     },
     profile: {
       badge: 'Profile',
+      anonymous: 'Anonymous',
+      unknownUser: 'Unknown user',
+      unknown: 'Unknown',
       actions: {
         edit: {
           title: 'Edit Profile',

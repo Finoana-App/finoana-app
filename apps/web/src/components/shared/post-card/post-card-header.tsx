@@ -7,15 +7,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/av
 import { Button } from '@workspace/ui/components/button';
 import { cn } from '@workspace/ui/lib/utils';
 
+import { Dictionary } from '@/i18n/dictionaries/en';
+
 interface PostCardHeaderProps {
   post: Post;
+  dictionary: Dictionary | null;
   timeAgo: string;
 }
 
-export function PostCardHeader({ post, timeAgo }: Readonly<PostCardHeaderProps>) {
-  const authorName = post.isAnonymous ? 'Anonymous' : post.author?.displayName || 'Unknown User';
+export function PostCardHeader({ post, dictionary, timeAgo }: Readonly<PostCardHeaderProps>) {
+  const authorName = post.isAnonymous
+    ? dictionary?.dashboard.profile.anonymous
+    : post.author?.displayName || dictionary?.dashboard.profile.unknownUser;
   const authorAvatar = post.isAnonymous ? undefined : post.author?.photoUrl;
-  const authorHandle = post.isAnonymous ? 'anonymous' : post.author?.username || 'unknown';
+  const authorHandle = post.isAnonymous
+    ? dictionary?.dashboard.profile.anonymous
+    : post.author?.username || dictionary?.dashboard.profile.unknown;
 
   return (
     <div className="flex gap-4">
@@ -26,7 +33,7 @@ export function PostCardHeader({ post, timeAgo }: Readonly<PostCardHeaderProps>)
         )}
       >
         <AvatarImage src={authorAvatar || undefined} alt={authorName} />
-        <AvatarFallback className="bg-primary/10 text-primary">{authorName.charAt(0)}</AvatarFallback>
+        <AvatarFallback className="bg-primary/10 text-primary">{authorName?.charAt(0)}</AvatarFallback>
       </Avatar>
       <div className="mb-2 flex min-w-0 flex-1 items-start justify-between gap-2">
         <div className="flex flex-wrap items-center gap-2">
@@ -37,7 +44,7 @@ export function PostCardHeader({ post, timeAgo }: Readonly<PostCardHeaderProps>)
               {authorName}
             </span>
             <div className="flex items-center gap-2">
-              <span className="text-muted-foreground text-sm">@{authorHandle}</span>
+              <span className="text-muted-foreground text-sm">@{authorHandle?.toLowerCase()}</span>
               <span className="text-muted-foreground">·</span>
               <span className="text-muted-foreground text-sm">{timeAgo}</span>
             </div>

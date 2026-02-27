@@ -61,7 +61,7 @@ export function PostCard({ post, dictionary, index = 0 }: Readonly<PostCardProps
       style={{ animationDelay: `${index * 50}ms` }}
     >
       <div className="flex flex-col gap-4">
-        <PostCardHeader post={post} timeAgo={timeAgo} />
+        <PostCardHeader dictionary={dictionary} post={post} timeAgo={timeAgo} />
         <div className="min-w-0 flex-1">
           <PostCardBadges
             postType={post.postType}
