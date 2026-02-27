@@ -1,8 +1,10 @@
-import { CreatePostInput } from '@workspace/types';
+import { and, eq } from 'drizzle-orm';
+
+import { CreatePostInput, PrivacyLevel } from '@workspace/types';
 
 import { cloudinaryService, MediaType } from '@/common/config/cloudinary';
 import { db } from '@/common/databases';
-import { postsTable, userActivitiesTable } from '@/common/databases/schema';
+import { postsTable, userActivitiesTable, userFollowsTable, usersTable } from '@/common/databases/schema';
 
 export class PostRepository {
   async create(userId: string, data: CreatePostInput, files?: Express.Multer.File[]) {
@@ -39,5 +41,35 @@ export class PostRepository {
     } catch (ex) {
       throw new Error((ex as Error).message || 'Failed to create post');
     }
+  }
+
+  async canAccessUserContent(targetUserId: string, requestingUserId?: string) {
+    if (targetUserId === requestingUserId) return true;
+
+    const [targetUser] = await db
+      .select({ privacyLevel: usersTable.privacyLevel })
+      .from(usersTable)
+      .where(eq(usersTable.id, targetUserId))
+      .limit(1);
+
+    if (!targetUser) return false;
+
+    if (targetUser.privacyLevel === PrivacyLevel.PUBLIC) return true;
+
+    if (targetUser.privacyLevel === PrivacyLevel.PRIVATE) {
+      if (!requestingUserId) return false;
+
+      const [follow] = await db
+        .select()
+        .from(userFollowsTable)
+        .where(and(eq(userFollowsTable.followerId, requestingUserId), eq(userFollowsTable.followingId, targetUserId)))
+        .limit(1);
+
+      return !!follow;
+    }
+
+    if (targetUser.privacyLevel === PrivacyLevel.ANONYMOUS) return true;
+
+    return false;
   }
 }
