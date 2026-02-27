@@ -6,10 +6,10 @@ import { formatDistanceToNow } from 'date-fns';
 
 import { Post } from '@workspace/types';
 
-import { PostCardHeader } from './post-card-header';
 import { PostCardActions } from './post-card-actions';
 import { PostCardBadges } from './post-card-badge';
 import { PostCardContent } from './post-card-content';
+import { PostCardHeader } from './post-card-header';
 import { PostCardMedia } from './post-card-media';
 
 interface PostCardProps {
@@ -43,8 +43,7 @@ export function usePostCardState(post: Post) {
 }
 
 export function PostCard({ post, index = 0 }: Readonly<PostCardProps>) {
-  const { likes, isLiked, isExpanded, handleLike, handleToggleExpand } =
-    usePostCardState(post);
+  const { likes, isLiked, isExpanded, handleLike, handleToggleExpand } = usePostCardState(post);
 
   const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
 

@@ -23,12 +23,16 @@ export function PostCardBadges({ postType, isPrayerAnswered }: Readonly<PostCard
   return (
     <div className="mb-3 flex flex-wrap gap-2">
       <span
-        className={cn('inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium', style?.bg, style?.text)}
+        className={cn(
+          'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium',
+          style?.bg,
+          style?.text
+        )}
       >
         {style?.label}
       </span>
       {isPrayerAnswered && (
-        <span className="text-white inline-flex items-center gap-1 rounded-full bg-green-700 px-3 py-1 text-xs font-medium">
+        <span className="inline-flex items-center gap-1 rounded-full bg-green-700 px-3 py-1 text-xs font-medium text-white">
           <CheckCircle2 className="h-3 w-3" />
           Prayer Answered
         </span>

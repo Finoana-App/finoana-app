@@ -1,6 +1,6 @@
 import '@workspace/ui/globals.css';
 
-import { NotFound as NotFoundComponent } from '@/components/not-found';
+import { NotFound as NotFoundComponent } from '@/components/shared';
 
 export default function NotFoundPage() {
   return <NotFoundComponent redirect="/" />;
