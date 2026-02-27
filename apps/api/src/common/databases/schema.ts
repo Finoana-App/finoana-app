@@ -88,12 +88,8 @@ export const postsTable = pgTable(
     commentsCount: integer('comments_count').default(0).notNull(),
     sharesCount: integer('shares_count').default(0).notNull(),
     viewsCount: integer('views_count').default(0).notNull(),
-    createdAt: timestamp('created_at', { withTimezone: true })
-      .defaultNow()
-      .notNull(),
-    updatedAt: timestamp('updated_at', { withTimezone: true })
-      .defaultNow()
-      .notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
     index('posts_author_idx').on(table.authorId),

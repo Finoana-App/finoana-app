@@ -78,10 +78,7 @@ export function PostCard({ post, index = 0 }: Readonly<PostCardProps>) {
           <div className="mb-2 flex items-start justify-between gap-2">
             <div className="flex flex-wrap items-center gap-2">
               <span
-                className={cn(
-                  'text-foreground font-semibold',
-                  !post.isAnonymous && 'cursor-pointer hover:underline'
-                )}
+                className={cn('text-foreground font-semibold', !post.isAnonymous && 'cursor-pointer hover:underline')}
               >
                 {authorName}
               </span>
