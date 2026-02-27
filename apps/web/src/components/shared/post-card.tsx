@@ -20,23 +20,23 @@ interface PostCardProps {
 
 const categoryStyles = {
   prayer_request: {
-    bg: 'bg-blue-100 dark:bg-blue-900/30',
-    text: 'text-blue-600 dark:text-blue-400',
+    bg: 'bg-muted',
+    text: 'text-foreground',
     label: 'Prayer Request',
   },
   devotion: {
-    bg: 'bg-purple-100 dark:bg-purple-900/30',
-    text: 'text-purple-600 dark:text-purple-400',
+    bg: 'bg-muted',
+    text: 'text-foreground',
     label: 'Devotion',
   },
   testimony: {
-    bg: 'bg-green-100 dark:bg-green-900/30',
-    text: 'text-green-600 dark:text-green-400',
+    bg: 'bg-muted',
+    text: 'text-foreground',
     label: 'Testimony',
   },
   general: {
-    bg: 'bg-gray-100 dark:bg-gray-800',
-    text: 'text-gray-600 dark:text-gray-400',
+    bg: 'bg-secondary',
+    text: 'text-secondary-foreground',
     label: 'General',
   },
 };
@@ -44,10 +44,15 @@ const categoryStyles = {
 export function PostCard({ post, index = 0 }: Readonly<PostCardProps>) {
   const [likes, setLikes] = useState(post.likesCount);
   const [isLiked, setIsLiked] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   const categoryStyle = categoryStyles[post.postType] || categoryStyles.general;
   const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
+
+  const CHARACTER_LIMIT = 250;
+  const isTooLong = post.content.length > CHARACTER_LIMIT;
+  const displayedContent = isExpanded ? post.content : `${post.content.slice(0, CHARACTER_LIMIT)}...`;
 
   const handleLike = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -101,13 +106,24 @@ export function PostCard({ post, index = 0 }: Readonly<PostCardProps>) {
               {categoryStyle.label}
             </span>
             {post.isPrayerAnswered && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+              <span className="text-foreground inline-flex items-center gap-1 rounded-full bg-green-700 px-3 py-1 text-xs font-medium">
                 <CheckCircle2 className="h-3 w-3" />
                 Prayer Answered
               </span>
             )}
           </div>
-          <p className="text-foreground mb-3 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+          <p className="text-foreground mb-3 leading-relaxed whitespace-pre-wrap">{displayedContent}</p>
+          {isTooLong && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(!isExpanded);
+              }}
+              className="text-primary mt-1 cursor-pointer text-sm font-semibold hover:underline"
+            >
+              {isExpanded ? 'See less' : 'See more'}
+            </button>
+          )}
           {post.mediaUrls && post.mediaUrls.length > 0 && (
             <AnimatePresence>
               <motion.div
