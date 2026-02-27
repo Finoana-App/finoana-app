@@ -19,7 +19,7 @@ import { useCurrentUser } from '@/lib/hooks/use-user';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState('Posts');
+  const [activeTab, setActiveTab] = useState('All');
   const [isEditOpen, setEditOpen] = useState(false);
   const [followersListOpen, setFollowersListOpen] = useState(false);
   const [followingListOpen, setFollowingListOpen] = useState(false);
