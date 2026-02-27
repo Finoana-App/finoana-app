@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import { formatDistanceToNow } from 'date-fns';
 import { Bookmark, CheckCircle2, Heart, HeartHandshake, MessageCircle, MoreHorizontal, Share2 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 
 import { Post } from '@workspace/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
@@ -78,7 +79,7 @@ export function PostCard({ post, index = 0 }: Readonly<PostCardProps>) {
             <div className="flex flex-wrap items-center gap-2">
               <span
                 className={cn(
-                  'text-foreground font-display font-semibold',
+                  'text-foreground font-semibold',
                   !post.isAnonymous && 'cursor-pointer hover:underline'
                 )}
               >
@@ -109,20 +110,51 @@ export function PostCard({ post, index = 0 }: Readonly<PostCardProps>) {
               </span>
             )}
           </div>
-          <p className="text-foreground mb-3 font-sans leading-relaxed whitespace-pre-wrap">{post.content}</p>
+          <p className="text-foreground mb-3 leading-relaxed whitespace-pre-wrap">{post.content}</p>
           {post.mediaUrls && post.mediaUrls.length > 0 && (
-            <div className="border-border mb-3 grid gap-2 overflow-hidden rounded-xl border">
-              {post.mediaUrls.map((url) => (
-                <Image
-                  width={100}
-                  height={100}
-                  key={url}
-                  src={url}
-                  alt="Post content"
-                  className="max-h-96 w-full object-cover"
-                />
-              ))}
-            </div>
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: 0.2 }}
+                className="border-border bg-muted mb-3 max-w-2xl overflow-hidden rounded-xl border p-2"
+              >
+                <div
+                  className={cn(
+                    'grid gap-2',
+                    post.mediaUrls.length === 1 && 'grid-cols-1',
+                    post.mediaUrls.length === 2 && 'grid-cols-2',
+                    post.mediaUrls.length >= 3 && 'grid-cols-4 grid-rows-2'
+                  )}
+                >
+                  {post.mediaUrls.slice(0, 4).map((url, index) => {
+                    const isLarge = index === 0 && post.mediaUrls.length >= 3;
+                    return (
+                      <motion.div
+                        key={url}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.1 * index }}
+                        className={cn(
+                          'overflow-hidden rounded-lg',
+                          isLarge ? 'col-span-4 row-span-1 h-60' : 'col-span-2 h-32',
+                          post.mediaUrls.length === 1 && 'col-span-1 h-auto',
+                          post.mediaUrls.length === 2 && 'col-span-1 h-48'
+                        )}
+                      >
+                        <Image
+                          width={800}
+                          height={800}
+                          src={url}
+                          alt={`Post image ${index + 1}`}
+                          className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                        />
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            </AnimatePresence>
           )}
           <div className="mt-4 -ml-2 flex items-center justify-between">
             <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary gap-2">
