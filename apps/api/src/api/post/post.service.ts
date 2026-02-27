@@ -46,6 +46,27 @@ class PostService {
       return ServiceResponse.failure('An error occurred while creating post.', null, StatusCodes.INTERNAL_SERVER_ERROR);
     }
   }
+
+  async getUserPosts(req: AuthRequest, _res: Response) {
+    try {
+      const { userId } = req.params as { userId: string };
+      const { page, limit } = req.query;
+
+      const result = await this.postRepository.getUserPosts(userId, req.user?.userId, {
+        page: page ? Number.parseInt(page as string) : undefined,
+        limit: limit ? Number.parseInt(limit as string) : undefined,
+      });
+
+      return ServiceResponse.success('User posts retrieved successfully', result);
+    } catch (ex) {
+      logger.error(`Get user posts error: ${(ex as Error).message}`);
+      return ServiceResponse.failure(
+        'An error occurred while getting user posts.',
+        null,
+        StatusCodes.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 }
 
 export const postService = new PostService();
