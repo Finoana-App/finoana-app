@@ -1,4 +1,4 @@
-import { and, eq } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 
 import { CreatePostInput, PrivacyLevel } from '@workspace/types';
 
@@ -71,5 +71,42 @@ export class PostRepository {
     if (targetUser.privacyLevel === PrivacyLevel.ANONYMOUS) return true;
 
     return false;
+  }
+
+  async getUserPosts(targetUserId: string, requestingUserId?: string, options: { page?: number; limit?: number } = {}) {
+    const { page = 1, limit = 20 } = options;
+    const offset = (page - 1) * limit;
+
+    const canAccess = await this.canAccessUserContent(targetUserId, requestingUserId);
+
+    if (!canAccess) throw new Error("You do not have permission to view this user's posts");
+
+    const userPosts = await db
+      .select({
+        id: postsTable.id,
+        content: postsTable.content,
+        postType: postsTable.postType,
+        mediaUrls: postsTable.mediaUrls,
+        isAnonymous: postsTable.isAnonymous,
+        isPrayerAnswered: postsTable.isPrayerAnswered,
+        likesCount: postsTable.likesCount,
+        commentsCount: postsTable.commentsCount,
+        sharesCount: postsTable.sharesCount,
+        createdAt: postsTable.createdAt,
+      })
+      .from(postsTable)
+      .where(eq(postsTable.authorId, targetUserId))
+      .orderBy(desc(postsTable.createdAt))
+      .limit(limit)
+      .offset(offset);
+
+    return {
+      posts: userPosts,
+      pagination: {
+        page,
+        limit,
+        hasMore: userPosts.length === limit,
+      },
+    };
   }
 }

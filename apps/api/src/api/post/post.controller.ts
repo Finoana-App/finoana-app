@@ -9,6 +9,11 @@ class PostController {
     const serviceResponse = await postService.create(req, res);
     return res.status(serviceResponse.statusCode).json(serviceResponse);
   };
+
+  public getUserPosts: RequestHandler = async (req: AuthRequest, res: Response) => {
+    const serviceResponse = await postService.getUserPosts(req, res);
+    return res.status(serviceResponse.statusCode).json(serviceResponse);
+  };
 }
 
 export const postController = new PostController();

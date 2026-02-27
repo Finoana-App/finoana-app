@@ -10,3 +10,4 @@ export const postRouter: Router = express.Router();
 postRouter.use(authenticate);
 
 postRouter.post('/', uploadMultiple, handleUploadError, postController.create);
+postRouter.get('/user/:userId', postController.getUserPosts);
