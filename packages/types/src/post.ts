@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 import { PostTypeEnum } from './enums';
+import { UserPreviewSchema } from './user';
 
 /*
  * Post schema
@@ -8,13 +9,14 @@ import { PostTypeEnum } from './enums';
 export const PostSchema = z.object({
   id: z.string().uuid(),
   authorId: z.string().uuid(),
+  author: UserPreviewSchema,
   content: z.string().min(1, 'Content is required'),
   postType: PostTypeEnum.default('general'),
   mediaUrls: z.array(z.string()).default([]),
   isAnonymous: z.boolean().default(false),
   isPinned: z.boolean().default(false),
   isPrayerAnswered: z.boolean().nullable().default(false),
-  answeredAt: z.date().nullable().optional(),
+  answeredAt: z.union([z.date(), z.string()]).nullable().optional(),
   likesCount: z.number().int().min(0).default(0),
   commentsCount: z.number().int().min(0).default(0),
   sharesCount: z.number().int().min(0).default(0),
