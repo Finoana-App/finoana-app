@@ -1,4 +1,4 @@
-import { Settings, Shield, ShieldCheck, ShieldX } from 'lucide-react';
+import { Crown, Settings, Shield, ShieldCheck, ShieldX } from 'lucide-react';
 
 import { User } from '@workspace/types';
 import { Avatar, AvatarFallback, AvatarImage } from '@workspace/ui/components/avatar';
@@ -19,7 +19,30 @@ interface UserPrivacyBadgeProps {
   dictionary: Dictionary | null;
 }
 
+interface UserRoleBadgeProps {
+  role: User['role'];
+  dictionary: Dictionary | null;
+}
+
 type BadgeVariant = 'default' | 'secondary' | 'destructive' | 'outline' | 'ghost';
+
+const ROLE_BADGE_CONFIG: Partial<
+  Record<
+    NonNullable<User['role']>,
+    { icon: React.ReactNode; className: string; dictKey: keyof Dictionary['dashboard']['profile']['roles'] }
+  >
+> = {
+  admin: {
+    icon: <Crown className="h-3 w-3" />,
+    className: 'border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-400',
+    dictKey: 'admin',
+  },
+  moderator: {
+    icon: <Shield className="h-3 w-3" />,
+    className: 'border-sky-500/40 bg-sky-500/10 text-sky-600 dark:text-sky-400',
+    dictKey: 'moderator',
+  },
+};
 
 export function UserPrivacyBadge({ privacyLevel, dictionary }: Readonly<UserPrivacyBadgeProps>) {
   const getBadgeVariant = (): { icon: React.ReactNode; variant: BadgeVariant; label: string } | null => {
@@ -58,6 +81,20 @@ export function UserPrivacyBadge({ privacyLevel, dictionary }: Readonly<UserPriv
   );
 }
 
+export function UserRoleBadge({ role, dictionary }: Readonly<UserRoleBadgeProps>) {
+  if (!role) return null;
+
+  const config = ROLE_BADGE_CONFIG[role];
+  if (!config) return null;
+
+  return (
+    <Badge variant="outline" className={`gap-1 ${config.className}`}>
+      {config.icon}
+      <span>{dictionary?.dashboard.profile.roles[config.dictKey] ?? config.dictKey}</span>
+    </Badge>
+  );
+}
+
 export function UserIdentity({ user, dictionary, onEditClick, isCurrentUser }: Readonly<UserIdentityProps>) {
   return (
     <div className="flex w-full items-end justify-between gap-4">
@@ -77,6 +114,7 @@ export function UserIdentity({ user, dictionary, onEditClick, isCurrentUser }: R
               @{user.username ? user.username.replaceAll(/\s/g, '') : ''}
             </p>
           </div>
+          <UserRoleBadge role={user.role} dictionary={dictionary} />
           <UserPrivacyBadge privacyLevel={user.privacyLevel} dictionary={dictionary} />
         </div>
       </div>

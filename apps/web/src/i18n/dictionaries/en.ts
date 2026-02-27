@@ -242,6 +242,11 @@ export const en = {
         testimonies: 'Testimonies',
         devotions: 'Devotions',
       },
+      roles: {
+        admin: 'Admin',
+        moderator: 'Moderator',
+        user: 'User',
+      },
     },
     post: {
       createPost: 'Create post',

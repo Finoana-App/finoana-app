@@ -255,6 +255,11 @@ export const fr: Dictionary = {
         testimonies: 'Témoignages',
         devotions: 'Dévotions',
       },
+      roles: {
+        admin: 'Admin',
+        moderator: 'Modérateur',
+        user: 'Utilisateur',
+      },
     },
     post: {
       createPost: 'Créer un post',

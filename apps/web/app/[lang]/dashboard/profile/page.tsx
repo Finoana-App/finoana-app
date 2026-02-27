@@ -37,6 +37,7 @@ export default function ProfilePage() {
     if (activeTab === 'all') return true;
     if (activeTab === 'prayers') return post.postType === 'prayer_request';
     if (activeTab === 'testimonies') return post.postType === 'testimony';
+    if (activeTab === 'devotions') return post.postType === 'devotion';
     return false;
   });
 
