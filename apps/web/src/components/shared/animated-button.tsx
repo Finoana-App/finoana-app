@@ -40,7 +40,7 @@ export function AnimatedButton({
         onClick={onClick}
         disabled={disabled || loading}
         className={cn(
-          'group h-14 w-full cursor-pointer gap-2 rounded-2xl text-base font-medium transition-all',
+          'group h-14 w-full cursor-pointer gap-2 rounded-2xl text-sm font-medium transition-all',
           variantStyles
         )}
       >

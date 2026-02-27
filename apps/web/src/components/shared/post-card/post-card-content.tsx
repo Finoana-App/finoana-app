@@ -20,7 +20,7 @@ export function PostCardContent({ content, isExpanded, dictionary, onToggleExpan
 
   return (
     <>
-      <p className="text-foreground mb-3 leading-relaxed whitespace-pre-wrap">{displayedContent}</p>
+      <p className="text-foreground mb-3 text-sm leading-relaxed whitespace-pre-wrap">{displayedContent}</p>
       {isTooLong && (
         <button
           onClick={onToggleExpand}

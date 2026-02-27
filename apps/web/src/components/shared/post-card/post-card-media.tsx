@@ -10,49 +10,83 @@ interface PostCardMediaProps {
   mediaUrls: string[];
 }
 
+interface MediaItemProps {
+  url: string;
+  index: number;
+  alt: string;
+  className?: string;
+}
+
+function MediaItem({ url, index, alt, className }: Readonly<MediaItemProps>) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.2, delay: 0.06 * index }}
+      className={cn('group bg-muted relative overflow-hidden rounded-lg', className)}
+    >
+      <Image
+        fill
+        sizes="(max-width: 768px) 50vw, 33vw"
+        src={url}
+        alt={alt}
+        className="object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+    </motion.div>
+  );
+}
+
+const GRID_CONFIGS: Record<number, { containerClass: string; slots: string[] }> = {
+  1: {
+    containerClass: 'grid grid-cols-1',
+    slots: ['aspect-video'],
+  },
+  2: {
+    containerClass: 'grid grid-cols-2 gap-1',
+    slots: ['aspect-square', 'aspect-square'],
+  },
+  3: {
+    containerClass: 'grid grid-cols-2 gap-1',
+    slots: ['aspect-square row-span-2', 'aspect-square', 'aspect-square'],
+  },
+  4: {
+    containerClass: 'grid grid-cols-2 gap-1',
+    slots: ['aspect-square', 'aspect-square', 'aspect-square', 'aspect-square'],
+  },
+};
+
 export function PostCardMedia({ mediaUrls }: Readonly<PostCardMediaProps>) {
   if (!mediaUrls || mediaUrls.length === 0) return null;
+
+  const visible = mediaUrls.slice(0, 4);
+  const config = GRID_CONFIGS[visible.length] ?? GRID_CONFIGS[4];
+  const overflow = mediaUrls.length - 4;
 
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: 0.2 }}
-        className="border-border bg-muted mb-3 max-w-2xl overflow-hidden rounded-xl border p-2"
+        transition={{ duration: 0.25, delay: 0.1 }}
+        className="mb-3 w-full max-w-lg overflow-hidden rounded-xl"
       >
-        <div
-          className={cn(
-            'grid gap-2',
-            mediaUrls.length === 1 && 'grid-cols-1',
-            mediaUrls.length === 2 && 'grid-cols-2',
-            mediaUrls.length >= 3 && 'grid-cols-4 grid-rows-2'
-          )}
-        >
-          {mediaUrls.slice(0, 4).map((url, index) => {
-            const isLarge = index === 0 && mediaUrls.length >= 3;
-
+        <div className={config?.containerClass}>
+          {visible.map((url, index) => {
+            const isLast = index === visible.length - 1 && overflow > 0;
             return (
-              <motion.div
-                key={url}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1 * index }}
-                className={cn(
-                  'overflow-hidden rounded-lg',
-                  isLarge ? 'col-span-4 row-span-1 h-60' : 'col-span-2 h-32',
-                  mediaUrls.length === 1 && 'col-span-1 h-auto',
-                  mediaUrls.length === 2 && 'col-span-1 h-48'
-                )}
-              >
-                <Image
-                  width={800}
-                  height={800}
-                  src={url}
+              <div key={url} className={cn('relative', config?.slots[index])}>
+                <MediaItem
+                  url={url}
+                  index={index}
                   alt={`Post image ${index + 1}`}
-                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                  className="absolute inset-0 h-full w-full rounded-none"
                 />
-              </motion.div>
+                {isLast && (
+                  <div className="absolute inset-0 flex items-center justify-center rounded-none bg-black/50 backdrop-blur-sm">
+                    <span className="text-2xl font-bold text-white">+{overflow}</span>
+                  </div>
+                )}
+              </div>
             );
           })}
         </div>

@@ -47,15 +47,15 @@ export function CreatePostModal({ open, dictionary, onOpenChange }: Readonly<Cre
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="gap-0 overflow-hidden p-0 sm:max-w-150">
-        <DialogHeader className="border-border border-b p-4">
+      <DialogContent className="flex max-h-[90vh] flex-col gap-0 overflow-hidden p-0 sm:max-w-150">
+        <DialogHeader className="border-border shrink-0 border-b p-4">
           <DialogTitle className="font-display text-lg">{dictionary?.dashboard.post.createPost}</DialogTitle>
         </DialogHeader>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
-          className="p-4"
+          className="min-h-0 flex-1 overflow-y-auto p-4"
         >
           <div className="flex gap-4">
             <motion.div
@@ -87,6 +87,8 @@ export function CreatePostModal({ open, dictionary, onOpenChange }: Readonly<Cre
               <CategorySelector dictionary={dictionary} selected={category} onSelect={setCategory} />
             </div>
           </div>
+        </motion.div>
+        <div className="border-border shrink-0 border-t">
           <PostToolbar
             cancelLabel={dictionary?.common.cancel ?? 'Cancel'}
             shareLabel={dictionary?.common.share ?? 'Share'}
@@ -97,7 +99,7 @@ export function CreatePostModal({ open, dictionary, onOpenChange }: Readonly<Cre
             onCancel={handleFormClose}
             onSubmit={handleSubmit}
           />
-        </motion.div>
+        </div>
       </DialogContent>
     </Dialog>
   );
