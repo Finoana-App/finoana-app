@@ -233,20 +233,38 @@ export const en = {
         profileUpdated: 'Profile updated successfully',
         updateFailed: 'Failed to update profile. Please try again.',
       },
+      tabs: {
+        all: 'All',
+        prayers: 'Prayers',
+        testimonies: 'Testimonies',
+        devotions: 'Devotions',
+      },
     },
     post: {
       createPost: 'Create post',
       category: 'Category : ',
       placeholder: 'Share a prayer, thought, or testimony...',
       anonymous: 'Posting anonymously',
-      anonymousDescription: 'Your name won\'t be visible to others',
+      anonymousDescription: "Your name won't be visible to others",
       postingAs: 'Posting as',
       postingAsDescription: 'Tap to hide your identity',
+      actions: {
+        comment: 'Comments',
+        like: 'Likes',
+        share: 'Shares',
+      },
       categories: {
         prayer: 'Prayer',
         devotion: 'Devotional',
         testimony: 'Testimony',
         general: 'General',
+      },
+      badges: {
+        prayerRequest: 'Prayer Request',
+        devotion: 'Devotion',
+        testimony: 'Testimony',
+        general: 'General',
+        prayerAnswered: 'Prayer Answered',
       },
     },
   },
@@ -258,6 +276,8 @@ export const en = {
     openMenu: 'Open menu',
     share: 'Share',
     you: 'you',
+    seeMore: 'See more',
+    seeLess: 'See less',
   },
 };
 

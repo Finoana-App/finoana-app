@@ -246,6 +246,12 @@ export const fr: Dictionary = {
         profileUpdated: 'Profil mis à jour avec succès',
         updateFailed: 'Une erreur est survenue. Veuillez réessayer.',
       },
+      tabs: {
+        all: 'Tout',
+        prayers: 'Prieres',
+        testimonies: 'Témoignages',
+        devotions: 'Dévotions',
+      },
     },
     post: {
       createPost: 'Créer un post',
@@ -255,11 +261,23 @@ export const fr: Dictionary = {
       anonymousDescription: 'Ton nom ne sera pas visible pour les autres',
       postingAs: 'Publié en tant que',
       postingAsDescription: 'Tape pour masquer ton identité',
+      actions: {
+        comment: 'Commentaires',
+        like: "J'adore",
+        share: 'Partages',
+      },
       categories: {
         prayer: 'Prière',
         devotion: 'Dévotion',
         testimony: 'Témoignage',
         general: 'Général',
+      },
+      badges: {
+        prayerRequest: 'Requête de prière',
+        devotion: 'Dévotion',
+        testimony: 'Témoignage',
+        general: 'Général',
+        prayerAnswered: 'Requête de prière répondue',
       },
     },
   },
@@ -271,5 +289,7 @@ export const fr: Dictionary = {
     openMenu: 'Ouvrir le menu',
     share: 'Partager',
     you: 'vous',
+    seeMore: 'Voir plus',
+    seeLess: 'Voir moins',
   },
 };

@@ -81,14 +81,10 @@ export function CreatePostModal({ open, dictionary, onOpenChange }: Readonly<Cre
               <AnonymousToggle
                 dictionary={dictionary}
                 isAnonymous={isAnonymous}
-                displayName={currentUser?.displayName ?? dictionary?.common.you as string}
+                displayName={currentUser?.displayName ?? (dictionary?.common.you as string)}
                 onToggle={toggleAnonymous}
               />
-              <CategorySelector
-                dictionary={dictionary}
-                selected={category}
-                onSelect={setCategory}
-              />
+              <CategorySelector dictionary={dictionary} selected={category} onSelect={setCategory} />
             </div>
           </div>
           <PostToolbar

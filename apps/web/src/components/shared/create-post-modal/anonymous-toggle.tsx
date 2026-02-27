@@ -4,6 +4,7 @@ import { EyeOff, User } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
+
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 interface AnonymousToggleProps {
@@ -64,7 +65,9 @@ export function AnonymousToggle({ isAnonymous, displayName, dictionary, onToggle
               transition={{ duration: 0.15 }}
             >
               <p className="text-xs leading-tight font-semibold">{dictionary?.dashboard.post.anonymous}</p>
-              <p className="mt-0.5 text-[11px] leading-tight opacity-70">{dictionary?.dashboard.post.anonymousDescription}</p>
+              <p className="mt-0.5 text-[11px] leading-tight opacity-70">
+                {dictionary?.dashboard.post.anonymousDescription}
+              </p>
             </motion.div>
           ) : (
             <motion.div
@@ -74,8 +77,12 @@ export function AnonymousToggle({ isAnonymous, displayName, dictionary, onToggle
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.15 }}
             >
-              <p className="text-xs leading-tight font-semibold">{dictionary?.dashboard.post.postingAs} {displayName}</p>
-              <p className="mt-0.5 text-[11px] leading-tight opacity-70">{dictionary?.dashboard.post.postingAsDescription}</p>
+              <p className="text-xs leading-tight font-semibold">
+                {dictionary?.dashboard.post.postingAs} {displayName}
+              </p>
+              <p className="mt-0.5 text-[11px] leading-tight opacity-70">
+                {dictionary?.dashboard.post.postingAsDescription}
+              </p>
             </motion.div>
           )}
         </AnimatePresence>
