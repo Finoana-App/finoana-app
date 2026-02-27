@@ -10,4 +10,8 @@ export const postService = {
       },
     });
   },
+
+  getUserPosts: async (userId: string): Promise<ApiResponse<Post[]>> => {
+    return await apiClient.get<Post[]>(`/posts/user/${userId}`);
+  },
 };

@@ -1,13 +1,13 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { postService } from '../api/services/post.service';
+import { postService } from '@/lib/api/services/post.service';
 
 export const queryKeys = {
   posts: {
     all: () => ['posts'] as const,
     lists: () => ['posts', 'list'] as const,
-    list: (f) => ['posts', 'list', f] as const,
+    list: (f: unknown) => ['posts', 'list', f] as const,
     detail: (id: string) => ['posts', 'detail', id] as const,
   },
 } satisfies Record<string, Record<string, (...args: never[]) => readonly unknown[]>>;
@@ -32,5 +32,15 @@ export function useCreatePost() {
         duration: 5000,
       });
     },
+  });
+}
+
+export function useGetUserPosts(userId: string | undefined) {
+  return useQuery({
+    queryKey: queryKeys.posts.list({ userId }),
+    queryFn: () => postService.getUserPosts(userId as string),
+
+    // Crucial: This prevents the query from executing if userId is undefined or empty
+    enabled: !!userId,
   });
 }
