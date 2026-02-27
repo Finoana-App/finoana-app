@@ -4,14 +4,16 @@ import { EyeOff, User } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
 import { cn } from '@workspace/ui/lib/utils';
+import { Dictionary } from '@/i18n/dictionaries/en';
 
 interface AnonymousToggleProps {
   isAnonymous: boolean;
   displayName: string;
+  dictionary: Dictionary | null;
   onToggle: () => void;
 }
 
-export function AnonymousToggle({ isAnonymous, displayName, onToggle }: Readonly<AnonymousToggleProps>) {
+export function AnonymousToggle({ isAnonymous, displayName, dictionary, onToggle }: Readonly<AnonymousToggleProps>) {
   return (
     <motion.button
       type="button"
@@ -61,8 +63,8 @@ export function AnonymousToggle({ isAnonymous, displayName, onToggle }: Readonly
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.15 }}
             >
-              <p className="text-xs leading-tight font-semibold">Posting anonymously</p>
-              <p className="mt-0.5 text-[11px] leading-tight opacity-70">Your name won&apos;t be visible to others</p>
+              <p className="text-xs leading-tight font-semibold">{dictionary?.dashboard.post.anonymous}</p>
+              <p className="mt-0.5 text-[11px] leading-tight opacity-70">{dictionary?.dashboard.post.anonymousDescription}</p>
             </motion.div>
           ) : (
             <motion.div
@@ -72,8 +74,8 @@ export function AnonymousToggle({ isAnonymous, displayName, onToggle }: Readonly
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.15 }}
             >
-              <p className="text-xs leading-tight font-semibold">Posting as {displayName}</p>
-              <p className="mt-0.5 text-[11px] leading-tight opacity-70">Tap to hide your identity</p>
+              <p className="text-xs leading-tight font-semibold">{dictionary?.dashboard.post.postingAs} {displayName}</p>
+              <p className="mt-0.5 text-[11px] leading-tight opacity-70">{dictionary?.dashboard.post.postingAsDescription}</p>
             </motion.div>
           )}
         </AnimatePresence>

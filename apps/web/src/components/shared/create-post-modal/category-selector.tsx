@@ -5,20 +5,25 @@ import { motion } from 'motion/react';
 import { PostType } from '@workspace/types';
 import { cn } from '@workspace/ui/lib/utils';
 
-import { POST_CATEGORIES } from './constants';
+import { Dictionary } from '@/i18n/dictionaries/en';
+
+import { getPostCategories } from './constants';
 
 interface CategorySelectorProps {
-  label: string;
+  dictionary: Dictionary | null;
   selected: PostType;
   onSelect: (value: PostType) => void;
 }
 
-export function CategorySelector({ label, selected, onSelect }: Readonly<CategorySelectorProps>) {
+export function CategorySelector({ dictionary, selected, onSelect }: Readonly<CategorySelectorProps>) {
+  const categories = getPostCategories(dictionary);
+  const label = dictionary?.dashboard.post.category ?? 'Category';
+
   return (
     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4">
       <p className="text-muted-foreground mb-2 text-xs font-bold">{label}</p>
       <div className="flex flex-wrap gap-2">
-        {POST_CATEGORIES.map((category) => (
+        {categories.map((category) => (
           <motion.button
             key={category.value}
             whileHover={{ scale: 1.02 }}

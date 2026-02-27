@@ -71,7 +71,7 @@ export function CreatePostModal({ open, dictionary, onOpenChange }: Readonly<Cre
             </motion.div>
             <div className="flex-1">
               <Textarea
-                placeholder="Share a prayer, thought, or testimony..."
+                placeholder={dictionary?.dashboard.post.placeholder}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 className="placeholder:text-muted-foreground min-h-30 resize-none border-0 px-2 text-base focus-visible:ring-0"
@@ -79,12 +79,13 @@ export function CreatePostModal({ open, dictionary, onOpenChange }: Readonly<Cre
               />
               <MediaPreview files={files} onRemove={handleRemoveFile} />
               <AnonymousToggle
+                dictionary={dictionary}
                 isAnonymous={isAnonymous}
-                displayName={currentUser?.displayName ?? 'you'}
+                displayName={currentUser?.displayName ?? dictionary?.common.you as string}
                 onToggle={toggleAnonymous}
               />
               <CategorySelector
-                label={dictionary?.dashboard.post.category ?? 'Category'}
+                dictionary={dictionary}
                 selected={category}
                 onSelect={setCategory}
               />

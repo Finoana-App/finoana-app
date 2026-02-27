@@ -210,7 +210,7 @@ export const fr: Dictionary = {
       actions: {
         edit: {
           title: 'Modifier le profil',
-          description: 'Update your profile information',
+          description: 'Mettre à jour les informations de votre profil',
         },
         save: 'Enregistrer',
         saving: 'Enregistrement...',
@@ -250,6 +250,17 @@ export const fr: Dictionary = {
     post: {
       createPost: 'Créer un post',
       category: 'Catégorie :',
+      placeholder: 'Partage une prière, une pensée ou un témoignage...',
+      anonymous: 'Publier anonymement',
+      anonymousDescription: 'Ton nom ne sera pas visible pour les autres',
+      postingAs: 'Publié en tant que',
+      postingAsDescription: 'Tape pour masquer ton identité',
+      categories: {
+        prayer: 'Prière',
+        devotion: 'Dévotion',
+        testimony: 'Témoignage',
+        general: 'Général',
+      },
     },
   },
   common: {
@@ -259,5 +270,6 @@ export const fr: Dictionary = {
     empty: 'Aucun utilisateur trouvé',
     openMenu: 'Ouvrir le menu',
     share: 'Partager',
+    you: 'vous',
   },
 };

@@ -237,6 +237,17 @@ export const en = {
     post: {
       createPost: 'Create post',
       category: 'Category : ',
+      placeholder: 'Share a prayer, thought, or testimony...',
+      anonymous: 'Posting anonymously',
+      anonymousDescription: 'Your name won\'t be visible to others',
+      postingAs: 'Posting as',
+      postingAsDescription: 'Tap to hide your identity',
+      categories: {
+        prayer: 'Prayer',
+        devotion: 'Devotional',
+        testimony: 'Testimony',
+        general: 'General',
+      },
     },
   },
   common: {
@@ -246,6 +257,7 @@ export const en = {
     empty: 'No data found',
     openMenu: 'Open menu',
     share: 'Share',
+    you: 'you',
   },
 };
 

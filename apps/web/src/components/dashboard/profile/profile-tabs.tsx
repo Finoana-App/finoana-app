@@ -7,7 +7,7 @@ interface ProfileTabsProps {
   onChange: (t: string) => void;
 }
 
-const TABS = ['All', 'Prayers', 'Testimonies'];
+const TABS = ['All', 'Prayers', 'Testimonies', 'Devotions'];
 
 export function ProfileTabs({ active, onChange }: Readonly<ProfileTabsProps>) {
   return (
