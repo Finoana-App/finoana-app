@@ -8,7 +8,7 @@ import { Banner } from '@/components/dashboard';
 import { EditProfileDialog } from '@/components/dashboard/profile/edit-profile-dialog';
 import { FollowersListDialog } from '@/components/dashboard/profile/followers-list-dialog';
 import { FollowingListDialog } from '@/components/dashboard/profile/following-list-dialog';
-import { ProfileTabs } from '@/components/dashboard/profile/profile-tabs';
+import { ProfileTabKey, ProfileTabs } from '@/components/dashboard/profile/profile-tabs';
 import { PostCard } from '@/components/shared';
 
 import { useDictionary } from '@/hooks/use-dictionary';
@@ -19,7 +19,7 @@ import { useCurrentUser } from '@/lib/hooks/use-user';
 import { Dictionary } from '@/i18n/dictionaries/en';
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState('All');
+  const [activeTab, setActiveTab] = useState<ProfileTabKey>('all');
   const [isEditOpen, setEditOpen] = useState(false);
   const [followersListOpen, setFollowersListOpen] = useState(false);
   const [followingListOpen, setFollowingListOpen] = useState(false);
@@ -34,16 +34,18 @@ export default function ProfilePage() {
   const rawPostList = postsData?.responseObject?.posts ?? [];
 
   const filteredPosts = rawPostList.filter((post) => {
-    if (activeTab === 'All') return true;
-    if (activeTab === 'Prayers') return post.postType === 'prayer_request';
-    if (activeTab === 'Testimonies') return post.postType === 'testimony';
+    if (activeTab === 'all') return true;
+    if (activeTab === 'prayers') return post.postType === 'prayer_request';
+    if (activeTab === 'testimonies') return post.postType === 'testimony';
     return false;
   });
 
   if (postsLoading) {
     content = <div className="text-muted-foreground py-12 text-center">Loading posts...</div>;
   } else if (filteredPosts.length > 0) {
-    content = filteredPosts.map((post, index) => <PostCard key={post.id} post={post} index={index} />);
+    content = filteredPosts.map((post, index) => (
+      <PostCard dictionary={dictionary} key={post.id} post={post} index={index} />
+    ));
   } else {
     content = (
       <div className="py-12 text-center">
@@ -65,7 +67,7 @@ export default function ProfilePage() {
         onViewFollowers={() => setFollowersListOpen(true)}
         onViewFollowing={() => setFollowingListOpen(true)}
       />
-      <ProfileTabs active={activeTab} onChange={setActiveTab} />
+      <ProfileTabs active={activeTab} dictionary={dictionary} onChange={setActiveTab} />
       <div className="overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div

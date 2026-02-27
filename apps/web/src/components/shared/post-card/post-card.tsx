@@ -3,17 +3,23 @@
 import { useState } from 'react';
 
 import { formatDistanceToNow } from 'date-fns';
+import { enUS, fr } from 'date-fns/locale';
 
 import { Post } from '@workspace/types';
 
-import { PostCardHeader } from './post-card-header';
+import { useDictionary } from '@/hooks/use-dictionary';
+
+import { Dictionary } from '@/i18n/dictionaries/en';
+
 import { PostCardActions } from './post-card-actions';
 import { PostCardBadges } from './post-card-badge';
 import { PostCardContent } from './post-card-content';
+import { PostCardHeader } from './post-card-header';
 import { PostCardMedia } from './post-card-media';
 
 interface PostCardProps {
   post: Post;
+  dictionary: Dictionary | null;
   index?: number;
 }
 
@@ -42,11 +48,12 @@ export function usePostCardState(post: Post) {
   };
 }
 
-export function PostCard({ post, index = 0 }: Readonly<PostCardProps>) {
-  const { likes, isLiked, isExpanded, handleLike, handleToggleExpand } =
-    usePostCardState(post);
+export function PostCard({ post, dictionary, index = 0 }: Readonly<PostCardProps>) {
+  const { likes, isLiked, isExpanded, handleLike, handleToggleExpand } = usePostCardState(post);
 
-  const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
+  const { lang } = useDictionary();
+
+  const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true, locale: lang === 'fr' ? fr : enUS });
 
   return (
     <article
@@ -56,12 +63,22 @@ export function PostCard({ post, index = 0 }: Readonly<PostCardProps>) {
       <div className="flex flex-col gap-4">
         <PostCardHeader post={post} timeAgo={timeAgo} />
         <div className="min-w-0 flex-1">
-          <PostCardBadges postType={post.postType} isPrayerAnswered={post.isPrayerAnswered || false} />
-          <PostCardContent content={post.content} isExpanded={isExpanded} onToggleExpand={handleToggleExpand} />
+          <PostCardBadges
+            postType={post.postType}
+            dictionary={dictionary}
+            isPrayerAnswered={post.isPrayerAnswered || false}
+          />
+          <PostCardContent
+            content={post.content}
+            dictionary={dictionary}
+            isExpanded={isExpanded}
+            onToggleExpand={handleToggleExpand}
+          />
           {post.mediaUrls && <PostCardMedia mediaUrls={post.mediaUrls} />}
           <PostCardActions
             commentsCount={post.commentsCount}
             sharesCount={post.sharesCount}
+            dictionary={dictionary}
             likes={likes}
             isLiked={isLiked}
             onLike={handleLike}

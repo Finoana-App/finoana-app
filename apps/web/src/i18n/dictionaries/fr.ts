@@ -210,7 +210,7 @@ export const fr: Dictionary = {
       actions: {
         edit: {
           title: 'Modifier le profil',
-          description: 'Update your profile information',
+          description: 'Mettre à jour les informations de votre profil',
         },
         save: 'Enregistrer',
         saving: 'Enregistrement...',
@@ -246,10 +246,39 @@ export const fr: Dictionary = {
         profileUpdated: 'Profil mis à jour avec succès',
         updateFailed: 'Une erreur est survenue. Veuillez réessayer.',
       },
+      tabs: {
+        all: 'Tout',
+        prayers: 'Prieres',
+        testimonies: 'Témoignages',
+        devotions: 'Dévotions',
+      },
     },
     post: {
       createPost: 'Créer un post',
       category: 'Catégorie :',
+      placeholder: 'Partage une prière, une pensée ou un témoignage...',
+      anonymous: 'Publier anonymement',
+      anonymousDescription: 'Ton nom ne sera pas visible pour les autres',
+      postingAs: 'Publié en tant que',
+      postingAsDescription: 'Tape pour masquer ton identité',
+      actions: {
+        comment: 'Commentaires',
+        like: "J'adore",
+        share: 'Partages',
+      },
+      categories: {
+        prayer: 'Prière',
+        devotion: 'Dévotion',
+        testimony: 'Témoignage',
+        general: 'Général',
+      },
+      badges: {
+        prayerRequest: 'Requête de prière',
+        devotion: 'Dévotion',
+        testimony: 'Témoignage',
+        general: 'Général',
+        prayerAnswered: 'Requête de prière répondue',
+      },
     },
   },
   common: {
@@ -259,5 +288,8 @@ export const fr: Dictionary = {
     empty: 'Aucun utilisateur trouvé',
     openMenu: 'Ouvrir le menu',
     share: 'Partager',
+    you: 'vous',
+    seeMore: 'Voir plus',
+    seeLess: 'Voir moins',
   },
 };
