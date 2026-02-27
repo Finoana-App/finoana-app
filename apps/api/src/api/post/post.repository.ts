@@ -78,7 +78,6 @@ export class PostRepository {
     const offset = (page - 1) * limit;
 
     const canAccess = await this.canAccessUserContent(targetUserId, requestingUserId);
-
     if (!canAccess) throw new Error("You do not have permission to view this user's posts");
 
     const userPosts = await db
@@ -93,8 +92,16 @@ export class PostRepository {
         commentsCount: postsTable.commentsCount,
         sharesCount: postsTable.sharesCount,
         createdAt: postsTable.createdAt,
+        author: {
+          id: usersTable.id,
+          name: usersTable.name,
+          username: usersTable.username,
+          photoUrl: usersTable.photoUrl,
+          displayName: usersTable.displayName,
+        },
       })
       .from(postsTable)
+      .leftJoin(usersTable, eq(postsTable.authorId, usersTable.id))
       .where(eq(postsTable.authorId, targetUserId))
       .orderBy(desc(postsTable.createdAt))
       .limit(limit)
