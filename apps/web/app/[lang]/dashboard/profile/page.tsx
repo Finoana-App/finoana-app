@@ -31,12 +31,19 @@ export default function ProfilePage() {
   const { dictionary } = useDictionary<Dictionary>();
 
   let content;
-  const postList = postsData?.responseObject?.posts ?? [];
+  const rawPostList = postsData?.responseObject?.posts ?? [];
+
+  const filteredPosts = rawPostList.filter((post) => {
+    if (activeTab === 'All') return true;
+    if (activeTab === 'Prayers') return post.postType === 'prayer_request';
+    if (activeTab === 'Testimonies') return post.postType === 'testimony';
+    return false;
+  });
 
   if (postsLoading) {
     content = <div className="text-muted-foreground py-12 text-center">Loading posts...</div>;
-  } else if (postList.length > 0) {
-    content = postList.map((post, index) => <PostCard key={post.id} post={post} index={index} />);
+  } else if (filteredPosts.length > 0) {
+    content = filteredPosts.map((post, index) => <PostCard key={post.id} post={post} index={index} />);
   } else {
     content = (
       <div className="py-12 text-center">
