@@ -13,7 +13,6 @@ function getFirebaseConfig() {
     throw new Error(
       'NEXT_PUBLIC_FIREBASE_API_KEY is not defined!\n' +
         'Make sure you have a .env.local file in your project root with:\n' +
-        'NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDhuA9T_W-F8SbtUnswoY7F42IF83gEGbI\n\n' +
         'Current env: ' +
         process.env.NODE_ENV
     );

@@ -1,0 +1,2 @@
+@Finoana-App:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${TO_REPLACE_WITH_A_GITHUB_TOKEN_WITH_READ_ONLY_ACCESS}
